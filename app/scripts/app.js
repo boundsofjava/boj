@@ -23,6 +23,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/privacy', {
+        templateUrl: 'views/privacy.html',
+        controller: 'PrivacyCtrl'
+      })
       .when('/contact', {
         templateUrl: 'views/contact.html',
         controller: 'ContactCtrl'

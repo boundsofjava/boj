@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>The Bounds of Java</title>
-    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge programming concepts in depth. Different architectural patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter, presented along with compelling examples and thorough tests.">
+    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge programming concepts in depth. Different architectural patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter, presented along with compelling examples.">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
@@ -13,7 +13,6 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/animations.css">
     <!-- endbuild -->
   </head>
   <body data-ng-app="bojApp">
@@ -39,6 +38,9 @@
             <ul class="nav navbar-nav">
               <li data-ng-class="{active: isActive('/')}"><a href="#/">HOME</a></li>
               <li data-ng-class="{active: isActive('/newsletter')}"><a data-ng-href="#/newsletter">NEWSLETTER</a></li>
+              <li data-ng-class="{active: isActive('/courses')}"><a data-ng-href="#/courses">COURSES</a></li>
+              <li data-ng-class="{active: isActive('/consultancy')}"><a data-ng-href="#/consultancy">CONSULTANCY</a></li>
+              <li data-ng-class="{active: isActive('/blog')}"><a data-ng-href="#/blog">BLOG</a></li>
               <li data-ng-class="{active: isActive('/about')}"><a data-ng-href="#/about">ABOUT</a></li>
             </ul>
           </div>

@@ -37,10 +37,10 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse" data-ng-controller="HeaderCtrl">
             <ul class="nav navbar-nav">
               <li data-ng-class="{active: isActive('/')}"><a href="#/">HOME</a></li>
-              <li data-ng-class="{active: isActive('/newsletter')}"><a data-ng-href="#/newsletter">NEWSLETTER</a></li>
-              <li data-ng-class="{active: isActive('/courses')}"><a data-ng-href="#/courses">COURSES</a></li>
-              <li data-ng-class="{active: isActive('/consultancy')}"><a data-ng-href="#/consultancy">CONSULTANCY</a></li>
-              <li data-ng-class="{active: isActive('/blog')}"><a data-ng-href="#/blog">BLOG</a></li>
+              <li data-ng-if="isEnabled('/newsletter')" data-ng-class="{active: isActive('/newsletter')}"><a data-ng-href="#/newsletter">NEWSLETTER</a></li>
+              <li data-ng-if="isEnabled('/courses')" data-ng-class="{active: isActive('/courses')}"><a data-ng-href="#/courses">COURSES</a></li>
+              <li data-ng-if="isEnabled('/consultancy')" data-ng-class="{active: isActive('/consultancy')}"><a data-ng-href="#/consultancy">CONSULTANCY</a></li>
+              <li data-ng-if="isEnabled('/blog')" data-ng-class="{active: isActive('/blog')}"><a data-ng-href="#/blog">BLOG</a></li>
               <li data-ng-class="{active: isActive('/about')}"><a data-ng-href="#/about">ABOUT</a></li>
             </ul>
           </div>
@@ -101,9 +101,13 @@
     <script src="scripts/controllers/header.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/newsletter.js"></script>
+    <script src="scripts/controllers/courses.js"></script>
+    <script src="scripts/controllers/consultancy.js"></script>
+    <script src="scripts/controllers/blog.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/footer.js"></script>
+    <script src="scripts/controllers/privacy.js"></script>
     <script src="scripts/controllers/contact.js"></script>
+    <script src="scripts/controllers/footer.js"></script>
     <!-- endbuild -->
   </body>
 </html>

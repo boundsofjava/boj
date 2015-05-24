@@ -1,6 +1,6 @@
 'use strict';
 
-describe('MainCtrl', function() {
+describe('NewsletterCtrl', function() {
   beforeEach(module('bojApp'));
 
   var $controller;
@@ -14,7 +14,7 @@ describe('MainCtrl', function() {
 
     beforeEach(function() {
       $scope = {};
-      controller = $controller('MainCtrl', { $scope: $scope });
+      controller = $controller('NewsletterCtrl', { $scope: $scope });
     });
 
     it('always sets dummyStr to "dummy"', function() {

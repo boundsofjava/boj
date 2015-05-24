@@ -1,22 +1,27 @@
 'use strict';
 
-describe('Controller: AboutCtrl', function () {
-
-  // load the controller's module
+describe('AboutCtrl', function() {
   beforeEach(module('bojApp'));
 
-  var AboutCtrl,
-    scope;
+  var $controller;
 
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    AboutCtrl = $controller('AboutCtrl', {
-      $scope: scope
-    });
+  beforeEach(inject(function(_$controller_) {
+    $controller = _$controller_;
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  describe('$scope.dummy', function() {
+    var $scope, controller;
+
+    beforeEach(function() {
+      $scope = {};
+      controller = $controller('AboutCtrl', { $scope: $scope });
+    });
+
+    it('always sets dummyStr to "dummy"', function() {
+      expect($scope.dummyStr).toBeUndefined();
+      $scope.dummy();
+      expect($scope.dummyStr).toEqual('dummy');
+    });
+
   });
 });

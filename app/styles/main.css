@@ -13,6 +13,22 @@ body {
   background-color: #262626;
 }
 
+a, a:hover, a:focus, a img {
+  outline: none;
+}
+
+a {
+  color: #3070c0;
+}
+
+a:hover, a:focus {
+  color: #4080ff;
+}
+
+img {
+  border: 0;
+}
+
 .content-wrapper {
   padding: 110px 10px 10px 10px;
   width: 100%;

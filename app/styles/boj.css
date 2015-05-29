@@ -111,7 +111,7 @@ img {
   float: left; 
   margin-right: 20px; 
   margin-bottom: 10px; 
-  border-radius: 6px;
+  border: 8px solid #e8e8e8;
 }
 
 .navbar-fixed-top {

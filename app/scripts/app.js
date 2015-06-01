@@ -7,8 +7,13 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch', 
+    'LocalStorageModule'
   ])
+  .config(function (localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('boj');
+    localStorageServiceProvider.setStorageCookieDomain(document.domain);
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

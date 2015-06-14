@@ -6,12 +6,18 @@
     border: 8px solid #e8e8e8;
     background-color: #e6e6e6;
     float: left;
+    margin: 0 12px 8px 0;
 }
 
 .slider .slide {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.slide-description {
+    padding: 0px 12px 10px;
+    font-size: larger;
 }
 
 .slider .arrow {

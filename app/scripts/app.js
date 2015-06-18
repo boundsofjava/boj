@@ -24,6 +24,10 @@ angular
         templateUrl: 'views/newsletter.html',
         controller: 'NewsletterCtrl'
       })
+      .when('/newsletter/:post', {
+        templateUrl: 'views/newsletter/post.html',
+        controller: 'NewsletterCtrl'
+      })
       .when('/courses', {
         templateUrl: 'views/courses.html',
         controller: 'CoursesCtrl'

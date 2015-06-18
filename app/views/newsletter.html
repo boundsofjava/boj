@@ -1,8 +1,26 @@
 <div class="paragraphs">
   <div class="row">
-    <div class="span4">
-      <div class="content-heading"><h3>Newsletter</h3></div>
-      <p>No newsletters available yet.</p>
+    <div class="span12">
+      <div class="content-heading"><h3>The Bounds of Java Newsletter</h3></div>
+      <p>
+        Welcome to The Bounds of Java Newsletter! I'm Federico Peralta Schaffner and I'm very glad you've reached this page. For information about me or this site, please visit the <a data-ng-href="#/about">About section</a>.
+      </p>
+      <p>
+        I plan to publish a new post every 2-4 weeks. Please check this site frequently for updates or suscribe to The Bounds of Java Newsletter to receive new posts in your inbox as they are published here.
+      </p>
     </div>
   </div>
 </div>
+
+<ul>
+  <li data-ng-repeat="newsletter in newsletters">
+    <a data-ng-href="#/newsletter/{{newsletter.post}}">
+      <div>
+        <h4>{{newsletter.title}}</h4>
+        <p>
+          {{newsletter.description}}
+        </p>
+      </div>
+    </a>
+  </li>
+</ul>

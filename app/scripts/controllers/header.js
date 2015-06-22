@@ -2,10 +2,17 @@
 
 angular.module('bojApp')
   .controller('HeaderCtrl', function($scope, $location) { 
+
     $scope.isActive = function(viewLocation) { 
-        return viewLocation === $location.path();
+      if (viewLocation !== '/') {
+        return $location.path().startsWith(viewLocation);
+      } else {
+        return $location.path() === '/';
+      }
     };
+
+    var disabledViews = ['/courses'];
     $scope.isEnabled = function(viewLocation) { 
-        return viewLocation !== '/courses';
+        return disabledViews.indexOf(viewLocation) < 0;
     };
   });

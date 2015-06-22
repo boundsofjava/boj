@@ -36,7 +36,6 @@ img {
   color: #a0a0a0;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
@@ -44,12 +43,10 @@ img {
   padding-right: 15px;
 }
 
-/* Custom page header */
 .header {
   margin-bottom: 10px;
 }
 
-/* Make the masthead heading the same height as the navigation */
 .header h3 {
   margin-top: 0;
   margin-bottom: 0;
@@ -57,7 +54,6 @@ img {
   padding-bottom: 19px;
 }
 
-/* Custom page footer */
 .footer {
   padding-top: 10px;
   padding-bottom: 15px;
@@ -74,12 +70,12 @@ img {
 }
 
 .footer li > a:hover {
-  color: #ccc;
+  color: #dedede;
   background-color: transparent;
 }
 
 .footer li > a:focus {
-  color: #ccc;
+  color: #dedede;
   background-color: transparent;
 }
 
@@ -87,7 +83,6 @@ img {
   margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
@@ -98,7 +93,6 @@ img {
   padding: 14px 24px;
 }
 
-/* Supporting marketing content */
 .marketing {
   margin: 40px 0;
 }
@@ -144,12 +138,62 @@ img {
   min-height: 100px;
 }
 
+.content-heading h2 {
+  color: #dedede;
+}
+
+.content-heading h3 {
+  color: #dedede;
+}
+
 .content-heading h3 span {
-  color: #d0d0d0;
+  color: #fcb50f;
   font-weight: bold;
 }
 
-/* Responsive: Portrait tablets and up */
+a.list-group-item {
+  background-color: #262626;
+  border-color: #555;
+}
+
+a.list-group-item:hover {
+  background-color: #1b1b1b;
+  border-color: #555;
+}
+
+a.list-group-item:focus {
+  background-color: #1b1b1b;
+  border-color: #555;
+}
+
+a.list-group-item .list-group-item-heading {
+  color: #0aa2c7;
+}
+
+a.list-group-item:hover .list-group-item-heading {
+  color: #fcb50f;
+}
+
+a.list-group-item:focus .list-group-item-heading {
+  color: #fcb50f;
+}
+
+a.list-group-item .list-group-item-text {
+  color: #a0a0a0;
+}
+
+a.list-group-item:hover .list-group-item-text {
+  color: #dedede;
+}
+
+a.list-group-item:focus .list-group-item-text {
+  color: #dedede;
+}
+
+.vertical-spacing {
+  min-height: 30px;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 730px;

@@ -1,6 +1,8 @@
 <div>
 
-  <h2 data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">{{slide.title}}</h2>
+  <div class="content-heading" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
+    <h2>{{slide.title}}</h2>
+  </div>
 
   <div class="container slider">
 

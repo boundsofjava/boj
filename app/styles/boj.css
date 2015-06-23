@@ -101,7 +101,7 @@ img {
   margin-top: 28px;
 }
 
-.paragraphs .img-left {
+.img-left {
   float: left; 
   margin-right: 20px; 
   margin-bottom: 10px; 
@@ -146,27 +146,38 @@ img {
   color: #dedede;
 }
 
-.content-heading h3 span {
-  color: #fcb50f;
-  font-weight: bold;
+.list-group {
+  border: 8px solid #555;
+  border-radius: 4px;
 }
 
 a.list-group-item {
+  border: 1px dotted #555;
+}
+
+a.list-group-item.newsletter-item-even {
   background-color: #262626;
-  border-color: #555;
+}
+
+a.list-group-item.newsletter-item-odd {
+  background-color: #1b1b1b;
 }
 
 a.list-group-item:hover {
-  background-color: #1b1b1b;
+  background-color: #0f0f0f;
   border-color: #555;
 }
 
 a.list-group-item:focus {
-  background-color: #1b1b1b;
+  background-color: #0f0f0f;
   border-color: #555;
 }
 
-a.list-group-item .list-group-item-heading {
+a.list-group-item.newsletter-item-even .list-group-item-heading {
+  color: #0aa2ff;
+}
+
+a.list-group-item.newsletter-item-odd .list-group-item-heading {
   color: #0aa2c7;
 }
 
@@ -235,7 +246,6 @@ a.list-group-item:focus .list-group-item-text {
     border-radius: 6px;
   }
 
-  /* Remove the padding we set earlier */
   .header,
   .marketing,
   .footer {
@@ -243,12 +253,10 @@ a.list-group-item:focus .list-group-item-text {
     padding-right: 0;
   }
 
-  /* Space out the masthead */
   .header {
     margin-bottom: 30px;
   }
 
-  /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
   }

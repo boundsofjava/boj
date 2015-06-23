@@ -6,9 +6,8 @@ angular.module('bojApp')
     $scope.isActive = function(viewLocation) { 
       if (viewLocation !== '/') {
         return $location.path().startsWith(viewLocation);
-      } else {
-        return $location.path() === '/';
       }
+      return $location.path() === '/';
     };
 
     var disabledViews = ['/courses'];

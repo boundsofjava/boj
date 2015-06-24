@@ -4,7 +4,9 @@ This is the website of The Bounds of Java, home of The Bounds of Java Newsletter
 
 The Bounds of Java website also introduces The Bounds of Java Blog, where I plan to write articles about software, technology and science from a more personal and subjective point of view.
 
-Feel free to report issues, suggest improvements and leave any comment.
+Please visit [http://boundsofjava.com](http://boundsofjava.com) to view this website.
+
+Feel free to report issues, suggest improvements or leave any comment.
 
 License is [MIT](LICENSE).
 

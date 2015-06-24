@@ -1,12 +1,7 @@
-# boj
+# The Bounds of Java website
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.11.1.
+This is the website of The Bounds of Java, home of The Bounds of Java Newsletter, in which (like it's told in the main page itself) Java's edge concepts and advanced tricks are introduced and explored in depth. Software architecture and patterns, object-oriented design principles and functional programming techniques are covered and analyzed in a way that (I hope) is both innovative and enjoyable.
 
-## Build & development
+The Bounds of Java website also introduces The Bounds of Java Blog, where I plan to write articles about software, technology and science from a more personal and subjective point of view.
 
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+Feel free to report issues, suggest improvements, etc. License is MIT.

@@ -8,7 +8,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch', 
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'infinite-scroll'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');

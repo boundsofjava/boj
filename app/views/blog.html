@@ -1,8 +1,7 @@
-<div class="paragraphs">
-  <div class="row">
-    <div class="span4">
-      <div class="content-heading"><h3>Blog</h3></div>
-      <p>No blog posts yet.</p>
-    </div>
+<div data-infinite-scroll="loadPost()" data-infinite-scroll-distance="1">
+  <div data-ng-repeat="post in posts | orderBy:'-date'">
+    {{post.date.toDateString()}}
+    <div data-ng-include="'views/blog/' + post.post + '.html'"></div>
+    <div class="separator"></div>
   </div>
 </div>

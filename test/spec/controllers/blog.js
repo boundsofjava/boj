@@ -9,7 +9,7 @@ describe('BlogCtrl', function() {
     $controller = _$controller_;
   }));
 
-  describe('$scope.dummy', function() {
+  describe('$scope.posts', function() {
     var $scope, controller;
 
     beforeEach(function() {
@@ -17,10 +17,20 @@ describe('BlogCtrl', function() {
       controller = $controller('BlogCtrl', { $scope: $scope });
     });
 
-    it('always sets dummyStr to "dummy"', function() {
-      expect($scope.dummyStr).toBeUndefined();
-      $scope.dummy();
-      expect($scope.dummyStr).toEqual('dummy');
+    it('has only one post at the beginning', function() {
+      expect($scope.posts.length).toEqual(1);
+    });
+
+    it('adds one post when scrolling down', function() {
+      $scope.loadPost();
+      expect($scope.posts.length).toEqual(2);
+    });
+
+    it('adds posts in descending order by date', function() {
+      $scope.loadPost();
+      var newer = $scope.posts[0];
+      var older = $scope.posts[1];
+      expect(older.date).toBeLessThan(newer.date);
     });
 
   });

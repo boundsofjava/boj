@@ -17,11 +17,5 @@ describe('MainCtrl', function() {
       controller = $controller('MainCtrl', { $scope: $scope });
     });
 
-    it('always sets dummyStr to "dummy"', function() {
-      expect($scope.dummyStr).toBeUndefined();
-      $scope.dummy();
-      expect($scope.dummyStr).toEqual('dummy');
-    });
-
   });
 });

@@ -5,7 +5,7 @@ angular.module('bojApp')
 
     $scope.isActive = function(viewLocation) { 
       if (viewLocation !== '/') {
-        return $location.path().startsWith(viewLocation);
+        return $location.path().lastIndexOf(viewLocation, 0) === 0;
       }
       return $location.path() === '/';
     };

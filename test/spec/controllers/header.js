@@ -19,15 +19,12 @@ describe('HeaderCtrl', function() {
       controller = $controller('HeaderCtrl', { $scope: $scope }, $location);
     });
 
-    it('returns true when viewLocation equals $location.path()', function() {
+    it('returns true when viewLocation starts with $location.path()', function() {
       var result = $scope.isActive('/some/path');
-      console.log('$location ' + $location.absUrl());
-      console.log('$location.path() ' + $location.path());
-      console.log('result ' + result);
       expect(result).toBe(true);
     });
 
-    it('returns false when viewLocation differs from $location.path()', function() {
+    it('returns false when viewLocation does not start with $location.path()', function() {
       var result = $scope.isActive('/some/other/path');
       expect(result).toBe(false);
     });

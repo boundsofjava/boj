@@ -17,11 +17,5 @@ describe('NewsletterCtrl', function() {
       controller = $controller('NewsletterCtrl', { $scope: $scope });
     });
 
-    it('always sets dummyStr to "dummy"', function() {
-      expect($scope.dummyStr).toBeUndefined();
-      $scope.dummy();
-      expect($scope.dummyStr).toEqual('dummy');
-    });
-
   });
 });

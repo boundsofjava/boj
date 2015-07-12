@@ -29,7 +29,6 @@ angular.module('bojApp')
     }, true);
   })
   .animation('.slide-animation', function () {
-    var TweenMax; // jsHint
     return {
   		beforeAddClass: function (element, className, done) {
   			var scope = element.scope();
@@ -38,7 +37,7 @@ angular.module('bojApp')
   				if (scope.slider.direction !== 'right') {
   					finishPoint = -finishPoint;
   				}
-  				TweenMax.to(element, 0.5, { left: finishPoint, onComplete: done });
+  				TweenLite.to(element, 0.5, { left: finishPoint, onComplete: done });
   			} else {
   				done();
   			}
@@ -51,7 +50,7 @@ angular.module('bojApp')
   				if (scope.slider.direction === 'right') {
   					startPoint = -startPoint;
   				}
-  				TweenMax.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
+  				TweenLite.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
   			} else {
   				done();
   			}

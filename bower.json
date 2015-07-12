@@ -14,6 +14,11 @@
     "angular-local-storage": "~0.2.2",
     "ngInfiniteScroll": "~1.2.1"
   },
+  "overrides": {
+    "gsap": {
+      "main": ["./src/uncompressed/TweenLite.js", "./src/uncompressed/plugins/CSSPlugin.js"]
+    }
+  },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
   },

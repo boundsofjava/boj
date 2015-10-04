@@ -1,12 +1,27 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('BlogCtrl', function ($scope, Utils) {
+  .controller('BlogCtrl', function ($scope, $location, Utils) {
+    
     $scope.utils = Utils;
 
     var allPosts = [
       { 
-        name: '0001.welcome',
+        id: '0003.third',
+        title: 'Third post, very opinionated',
+        author: 'Federico Peralta Schaffner',
+        authorUrl: '/about',
+        date: new Date('2015 October 4')
+      },
+      { 
+        id: '0002.second',
+        title: 'Second post',
+        author: 'Federico Peralta Schaffner',
+        authorUrl: '/about',
+        date: new Date('2015 October 3')
+      },
+      { 
+        id: '0001.welcome',
         title: 'The journey starts here',
         author: 'Federico Peralta Schaffner',
         authorUrl: '/about',
@@ -23,4 +38,19 @@ angular.module('bojApp')
         $scope.posts.push(postToLoad);
       }
     };
+
+    $scope.visibleCommentsPostId = '';
+
+    $scope.showCommentsWidget = function (postId) {
+      $scope.visibleCommentsPostId = postId;
+    };
+
+    $scope.hideCommentsWidget = function () {
+      $scope.visibleCommentsPostId = '';
+    };
+
+    $scope.postUrl = function (postId) {
+      return $location.absUrl() + '/' + postId;
+    };  
+
   });

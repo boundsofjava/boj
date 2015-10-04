@@ -9,7 +9,8 @@ angular
     'ngSanitize',
     'ngTouch', 
     'LocalStorageModule',
-    'infinite-scroll'
+    'infinite-scroll',
+    'angularUtils.directives.dirDisqus'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');

@@ -10,17 +10,21 @@
       			</div>
 			    <br />
 
-			    <div data-ng-include="'views/blog/' + post.name + '.html'"></div>
+			    <div data-ng-include="'views/blog/' + post.id + '.html'"></div>
 			    <br />
 
-			    <div><small>Posted by: <strong><a data-ng-href="{{post.authorUrl}}">{{post.author}}</a></strong></small></div>
+			    <div><small>Posted by: <strong><a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></strong></small></div>
 			    <br />
 
-			    <div>
-			    	Show comments
-			    </div>
+			    <a href="" data-ng-show="visibleCommentsPostId !== post.id" data-ng-click="showCommentsWidget('{{post.id}}')">Show comments</a>
+			    <div data-ng-show="visibleCommentsPostId === post.id">
+				    <a href="" data-ng-click="hideCommentsWidget()">Hide comments</a>
+				    <dir-disqus data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="postUrl('{{post.id}}')" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en"></dir-disqus>
+				</div>
+			    <br />
 			    <br />
 		    </div>
+		    <div class="separator-thin"></div>
 		</div>
 	</div>
 

@@ -1,15 +1,15 @@
 <div class="paragraphs">
-  <img class="img-left" data-ng-src="images/newsletter.jpg" alt="The Bounds of Java Newsletter"></img>
-  <div class="content-heading"><h3>The Bounds of Java Newsletter</h3></div>
-  <p>
-    Welcome to The Bounds of Java Newsletter! I'm Federico Peralta Schaffner and I'm very glad you've reached this page. For information about this site or me, please visit the <a data-ng-href="/about">About section</a>.
-  </p>
-  <p>
-    I plan to write a new post every 2-4 weeks. Please check this site frequently for updates or subscribe to The Bounds of Java Newsletter to receive new posts directly in your inbox.
-  </p>
+  <div class="clearfix content-heading space-after">
+    <img class="pull-left img-left" data-ng-src="images/newsletter.jpg" alt="The Bounds of Java Newsletter"></img>
+    <h3>The Bounds of Java Newsletter</h3>
+    <p>
+      Welcome to The Bounds of Java Newsletter! I'm Federico Peralta Schaffner and I'm very glad you've reached this page. For information about this site or me, please visit the <a data-ng-href="/about">About section</a>.
+    </p>
+    <p>
+      I plan to write a new post every 2-4 weeks. Please check this site frequently for updates or subscribe to The Bounds of Java Newsletter to receive new posts directly in your inbox.
+    </p>
+  </div>
 </div>
-
-<div class="vertical-spacing"></div>
 
 <div class="list-group">
   <a data-ng-repeat="newsletter in newsletters | orderBy:'-date'" data-ng-href="/newsletter/{{newsletter.post}}" class="list-group-item" data-ng-class-even="'newsletter-item-even'" data-ng-class-odd="'newsletter-item-odd'">

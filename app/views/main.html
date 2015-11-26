@@ -1,4 +1,4 @@
-<div>
+<div class="slider-wrapper">
 
   <div class="content-heading" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
     <h2>{{slide.title}}</h2>
@@ -24,7 +24,7 @@
   </div>
 
   <div data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
-    <span><em>{{slide.description}}</em></span>
+    <span><small><small><em>{{slide.description}}</em></small></small></span>
   </div>
 
 </div>

@@ -20,11 +20,11 @@
         </ul>
       </div>
     </div>
-
   </div>
 
-  <div data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
-    <span><small><small><em>{{slide.description}}</em></small></small></span>
-  </div>
+  <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
+    <p><em>{{slide.quote}}</em></p>
+    <small>by <cite>{{slide.author}}</cite></small>
+  </blockquote>
 
 </div>

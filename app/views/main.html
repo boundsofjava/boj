@@ -4,27 +4,32 @@
     <h2>{{slide.title}}</h2>
   </div>
 
-  <div class="container slider">
+  <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
 
-    <img data-ng-repeat="slide in slider.slides" class="slide slide-animation nonDraggableImage" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-hide="!isCurrentSlideIndex($index)" data-ng-src="{{slide.image}}"></img>
+    <div class="container slider pull-left">
+      <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
 
-    <div class="arrow prev" data-ng-click="prevSlide()"></div>
-    <div class="arrow next" data-ng-click="nextSlide()"></div>
+      <div class="arrow prev" data-ng-click="prevSlide()"></div>
+      <div class="arrow next" data-ng-click="nextSlide()"></div>
 
-    <div class="nav">
-      <div class="wrapper">
-        <ul class="dots">
-          <li data-ng-repeat="slide in slider.slides" class="dot">
-            <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
-          </li>
-        </ul>
+      <div class="nav">
+        <div class="wrapper">
+          <ul class="dots">
+            <li data-ng-repeat="slide in slider.slides" class="dot">
+              <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 
-  <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
+    <hr class="spacing" />
+
     <p><em>{{slide.quote}}</em></p>
-    <small>by <cite>{{slide.author}}</cite></small>
+    <small><cite>{{slide.author}}</cite></small>
+
+    <hr class="spacing" />
+
   </blockquote>
 
 </div>

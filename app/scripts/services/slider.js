@@ -13,7 +13,7 @@ angular.module('bojApp')
         title: 'Object-oriented Design', 
         image: 'images/slider/design.jpg', 
         quote: 'Analysis and design have been summarized in the phrase "do the right thing (analysis), and do the thing right (design)". (...) During object-oriented design, there is an emphasis on defining software objects and how they collaborate to fulfill the requirements.',
-        author: 'Craig Larman, Applying UML and Patterns'
+        author: 'Craig Larman'
       },
       { 
         title: 'Functional Programming', 
@@ -43,7 +43,7 @@ angular.module('bojApp')
         title: 'The Bounds of Java Newsletter', 
         image: 'images/slider/newsletter.jpg', 
         quote: 'A newsletter in which Java\'s edge concepts and advanced tricks are introduced and explored in depth. Software architecture and patterns, object-oriented design principles and functional programming techniques are covered and analyzed in a way that (I hope) is both innovative and enjoyable.',
-        author: 'fps'
+        author: 'Federico Peralta Schaffner'
       }
     ];
     return {

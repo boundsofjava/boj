@@ -38,6 +38,22 @@ hr {
   background-image: linear-gradient(to right, rgba(160, 160, 160, 0), rgba(160, 160, 160, 0.75), rgba(160, 160, 160, 0));
 }
 
+hr.from-left {
+  border: 0;
+  height: 1px;
+  min-height: 1px;
+  margin: 0;
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0.75), rgba(160, 160, 160, 0.50), rgba(160, 160, 160, 0));
+}
+
+hr.from-right {
+  border: 0;
+  height: 1px;
+  min-height: 1px;
+  margin: 0;
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0), rgba(160, 160, 160, 0.50), rgba(160, 160, 160, 0.75));
+}
+
 .spacing {
   margin-top: 20px;
   margin-bottom: 20px;

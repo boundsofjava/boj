@@ -1,5 +1,6 @@
 html {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .browsehappy {
@@ -174,6 +175,10 @@ a.list-group-item:hover .list-group-item-text {
 
 a.list-group-item:focus .list-group-item-text {
   color: #dedede;
+}
+
+.most-recent-wrapper {
+  clear: both;
 }
 
 @media screen and (min-width: 768px) {

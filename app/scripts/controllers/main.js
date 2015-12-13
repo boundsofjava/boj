@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('MainCtrl', function ($scope, Slider) {
+  .controller('MainCtrl', function ($scope, Slider, Newsletters) {
 
     $scope.slider = Slider;
+    $scope.mostRecentNewsletter = Newsletters.mostRecent();
 
     $scope.setCurrentSlideIndex = function (index) {
       $scope.slider.direction = (index > $scope.slider.currentIndex) ? 'left' : 'right';

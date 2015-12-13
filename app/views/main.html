@@ -1,35 +1,72 @@
-<div class="slider-wrapper">
+<div class="row hidden-xs slider-wrapper">
+  <div class="col-sm-12">
 
-  <div class="content-heading" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
-    <h2>{{slide.title}}</h2>
-  </div>
-
-  <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
-
-    <div class="container slider pull-left">
-      <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
-
-      <div class="arrow prev" data-ng-click="prevSlide()"></div>
-      <div class="arrow next" data-ng-click="nextSlide()"></div>
-
-      <div class="nav">
-        <div class="wrapper">
-          <ul class="dots">
-            <li data-ng-repeat="slide in slider.slides" class="dot">
-              <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="content-heading" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
+      <h2>{{slide.title}}</h2>
     </div>
 
-    <hr class="spacing" />
+    <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
 
-    <p><em>{{slide.quote}}</em></p>
-    <small><cite>{{slide.author}}</cite></small>
+      <div class="container slider pull-left">
+        <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
 
-    <hr class="spacing" />
+        <div class="arrow prev" data-ng-click="prevSlide()"></div>
+        <div class="arrow next" data-ng-click="nextSlide()"></div>
 
-  </blockquote>
+        <div class="nav">
+          <div class="wrapper">
+            <ul class="dots">
+              <li data-ng-repeat="slide in slider.slides" class="dot">
+                <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <hr class="spacing" />
+      <p><em>{{slide.quote}}</em></p>
+      <small><cite>{{slide.author}}</cite></small>
+      <hr class="spacing" />
+
+    </blockquote>
+  </div>
+</div>
+
+<div class="row most-recent-wrapper">
+
+  <div class="col-xs-12 col-sm-6">
+    <h3>Newest newsletter issue</h3>
+    <a data-ng-href="/newsletter/{{mostRecentNewsletter.post}}" class="list-group-item">
+      <h4 class="list-group-item-heading">
+        <span class="badge pull-right" style="margin-left: 12px; ">POST #{{mostRecentNewsletter.post}}</span>
+        {{mostRecentNewsletter.title}}
+      </h4>
+      <p class="list-group-item-text">
+        {{mostRecentNewsletter.summary}}
+      </p>
+      <p>
+        <span class="small pull-right">{{mostRecentNewsletter.prettyDate}}</span>
+      </p>
+    </a>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+    <h3>Newest blog post</h3>
+    <a data-ng-href="/newsletter/{{mostRecentNewsletter.post}}" class="list-group-item">
+      <h4 class="list-group-item-heading">
+        <span class="badge pull-right" style="margin-left: 12px; ">POST #{{mostRecentNewsletter.post}}</span>
+        {{mostRecentNewsletter.title}}
+      </h4>
+      <p class="list-group-item-text">
+        {{mostRecentNewsletter.summary}}
+      </p>
+      <p>
+        <span class="small pull-right">{{mostRecentNewsletter.prettyDate}}</span>
+      </p>
+    </a>
+  </div>
+
+  <div class="row spacing"></div>
 
 </div>

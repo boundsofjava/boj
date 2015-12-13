@@ -9,10 +9,19 @@ angular.module('bojApp')
           isArray: true,
           transformResponse: function (data) {
             var newsletters = JSON.parse(data);
-            newsletters.forEach(function (newsletter) {
-              newsletter.prettyDate = Utils.formatDate(new Date(newsletter.date));
-            });
+            newsletters.forEach(Utils.prettifyDate);
             return newsletters;
+          }
+        },
+        mostRecent: {
+          method: 'GET',
+          transformResponse: function (data) {
+            var newsletters = JSON.parse(data);
+            var newest = newsletters.reduce(function (a, b) {
+              return a.date > b.date ? a : b;
+            });
+            Utils.prettifyDate(newest);
+            return newest;
           }
         }
       });

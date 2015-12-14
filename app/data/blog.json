@@ -1,0 +1,23 @@
+[
+  { 
+    "id": "0003.third",
+    "title": "Third post, very opinionated",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "date": "2015-10-04"
+  },
+  { 
+    "id": "0002.second",
+    "title": "Second post",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "date": "2015-10-03"
+  },
+  { 
+    "id": "0001.welcome",
+    "title": "The journey starts here",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "date": "2015-10-02"
+  }
+]

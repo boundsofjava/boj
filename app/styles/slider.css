@@ -1,3 +1,11 @@
+.slider-wrapper .slide-title {
+    margin-bottom: -5px;
+}
+
+.slider-wrapper blockquote {
+    margin-bottom: 0;
+}
+
 .slider-wrapper .spacing {
   margin-top: 8px;
   margin-bottom: 8px;

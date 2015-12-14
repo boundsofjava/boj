@@ -14,7 +14,7 @@
 <hr class="spacing" />
 
 <div class="list-group">
-  <a data-ng-repeat="newsletter in newsletters | orderBy:'-date'" data-ng-href="/newsletter/{{newsletter.post}}" class="list-group-item" data-ng-class-even="'newsletter-item-even'" data-ng-class-odd="'newsletter-item-odd'">
+  <a data-ng-repeat="newsletter in newsletters | orderBy:'-date'" data-ng-href="/newsletter/{{newsletter.post}}" class="list-group-item" data-ng-class-even="'list-group-item-even'" data-ng-class-odd="'list-group-item-odd'">
     <h4 class="list-group-item-heading">
       <span class="badge pull-right" style="margin-left: 12px; ">POST #{{newsletter.post}}</span>
       {{newsletter.title}}

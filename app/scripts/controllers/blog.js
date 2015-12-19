@@ -4,7 +4,8 @@ angular.module('bojApp')
   .controller('BlogCtrl', function ($scope, $location, Blog) {
     
     var allPosts = Blog.query(null, function (value) {
-      $scope.posts = [value[0]];
+      var firstPost = value[0];
+      $scope.posts = [firstPost];
     });
 
     $scope.loadPost = function () {
@@ -29,4 +30,8 @@ angular.module('bojApp')
       return $location.absUrl() + '/' + postId;
     };  
 
+    $scope.canDisplayComments = function (postId) {
+      console.log(postId);
+      return true;
+    };
   });

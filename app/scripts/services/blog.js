@@ -20,8 +20,7 @@ angular.module('bojApp')
             var newest = posts.reduce(function (a, b) {
               return a.date > b.date ? a : b;
             });
-            Utils.prettifyDate(newest);
-            return newest;
+            return Utils.prettifyDate(newest);
           }
         }
       });

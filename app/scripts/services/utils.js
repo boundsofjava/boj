@@ -28,6 +28,7 @@ angular.module('bojApp')
       formatDate: formatDate,
       prettifyDate: function (obj) {
         obj.prettyDate = formatDate(new Date(obj.date));
+        return obj;
       }
     };
   });

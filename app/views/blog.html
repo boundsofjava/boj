@@ -3,11 +3,11 @@
 
 	<div class="paragraphs">
   		<div class="row">
-		    <hr class="spacing" data-ng-if="!$first" />
-    		<div class="span4">
+		    <hr class="from-left spacing" data-ng-if="!$first" />
+    		<div>
       			<div class="content-heading">
-      				<h3>{{post.title}}</h3>
-      				<h4>{{post.prettyDate}}</h4>
+      				<h1>{{post.title}}</h1>
+      				<h3>{{post.prettyDate}}</h3>
       			</div>
 			    <br />
 
@@ -17,13 +17,17 @@
 			    <div><small>Posted by: <strong><a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></strong></small></div>
 			    <br />
 
-			    <a href="" data-ng-show="visibleCommentsPostId !== post.id" data-ng-click="showCommentsWidget('{{post.id}}')">Show comments</a>
+			    <a href="" data-ng-show="visibleCommentsPostId === ''" data-ng-click="showCommentsWidget('{{post.id}}')">Show comments</a>
+			    
+			    <span data-ng-show="visibleCommentsPostId !== post.id && visibleCommentsPostId !== ''" class="disabled-link disabled">Show comments</span>
+
 			    <div data-ng-show="visibleCommentsPostId === post.id">
 				    <a href="" data-ng-click="hideCommentsWidget()">Hide comments</a>
-				    <dir-disqus data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="postUrl('{{post.id}}')" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en"></dir-disqus>
+
+				    <dir-disqus id="{{post.id}}" data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="{{postUrl(post.id)}}" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en" data-ready-to-bind="{{canDisplayComments(post.id)}}"></dir-disqus>
+
+				    <a href="" data-ng-click="hideCommentsWidget()">Hide comments</a>
 				</div>
-			    <br />
-			    <br />
 		    </div>
 		</div>
 	</div>

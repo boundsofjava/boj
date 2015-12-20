@@ -1,11 +1,11 @@
-<div class="row hidden-xs slider-wrapper">
-  <div class="col-sm-12">
+<div class="row hidden-xs slider-wrapper spacing">
+  <div class="col-sm-12" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
 
-    <div class="content-heading" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
+    <div class="content-heading">
       <h1 class="slide-title">{{slide.title}}</h1>
     </div>
-
-    <blockquote class="pull-right" data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
+    
+    <blockquote class="pull-right" class="slide-description">
 
       <div class="container slider pull-left">
         <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
@@ -33,11 +33,11 @@
   </div>
 </div>
 
-<div class="row most-recent-wrapper same-height spacing">
+<div vertilize-container class="row most-recent-wrapper spacing">
 
   <div class="col-xs-12 col-sm-6">
     <div class="list-group">
-      <a data-ng-href="/newsletter/{{mostRecentNewsletter.post}}" class="list-group-item list-group-item-odd">
+      <a vertilize data-ng-href="/newsletter/{{mostRecentNewsletter.post}}" class="list-group-item list-group-item-odd">
         <h2 class="title">Newsletter</h2>
         <hr class="from-left little-spacing" />
         <h3 class="list-group-item-heading">
@@ -48,7 +48,7 @@
           {{mostRecentNewsletter.summary}}
         </p>
         <p>
-          <span class="small pull-right">{{mostRecentNewsletter.prettyDate}}</span>
+          <small class="pull-right">{{mostRecentNewsletter.prettyDate}}</small>
         </p>
       </a>
     </div>
@@ -56,7 +56,7 @@
 
   <div class="col-xs-12 col-sm-6">
     <div class="list-group">
-      <a data-ng-href="/blog" class="list-group-item list-group-item-odd">
+      <a vertilize data-ng-href="/blog" class="list-group-item list-group-item-odd">
         <h2 class="title">Blog</h2>
         <hr class="from-left little-spacing" />
         <h3 class="list-group-item-heading">

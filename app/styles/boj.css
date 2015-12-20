@@ -216,13 +216,6 @@ a.list-group-item:focus .list-group-item-text {
   margin-bottom: 5px;
 }
 
-.same-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 @media screen and (min-width: 768px) {
 
   body {

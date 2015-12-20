@@ -10,7 +10,8 @@ angular
     'ngTouch', 
     'LocalStorageModule',
     'infinite-scroll',
-    'angularUtils.directives.dirDisqus'
+    'angularUtils.directives.dirDisqus',
+    'angular.vertilize'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');

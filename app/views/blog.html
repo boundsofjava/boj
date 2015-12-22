@@ -22,11 +22,11 @@
 			    <span data-ng-show="visibleCommentsPostId !== post.id && visibleCommentsPostId !== ''" class="disabled-link disabled">Show comments</span>
 
 			    <div data-ng-show="visibleCommentsPostId === post.id">
-				    <a href="" data-ng-click="hideCommentsWidget()">Hide comments</a>
+				    <div><a href="" data-ng-click="hideCommentsWidget()">Hide comments</a></div>
 
-				    <dir-disqus id="{{post.id}}" data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="{{postUrl(post.id)}}" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en" data-ready-to-bind="{{canDisplayComments(post.id)}}"></dir-disqus>
+				    <dir-disqus id="{{post.id}}" data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="{{postUrl(post.id)}}" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en"></dir-disqus>
 
-				    <a href="" data-ng-click="hideCommentsWidget()">Hide comments</a>
+				    <div><a href="" data-ng-click="hideCommentsWidget()">Hide comments</a></div>
 				</div>
 		    </div>
 		</div>

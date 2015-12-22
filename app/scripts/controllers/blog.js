@@ -29,9 +29,4 @@ angular.module('bojApp')
     $scope.postUrl = function (postId) {
       return $location.absUrl() + '/' + postId;
     };  
-
-    $scope.canDisplayComments = function (postId) {
-      console.log(postId);
-      return true;
-    };
   });

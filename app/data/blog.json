@@ -4,6 +4,7 @@
     "title": "Third post, very opinionated",
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
+    "summary": "This is blog post #3. It is my third blog post ever. It treats about this and about that. It discusses a lot of stuff and presents a very nice topic, while introducing a few examples that illustrate the topic being discussed. It also says a lot of nonsenses.",
     "date": "2015-10-04"
   },
   { 
@@ -11,6 +12,7 @@
     "title": "Second post",
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
+    "summary": "This is blog post #2. It is my second blog post in history.",
     "date": "2015-10-03"
   },
   { 
@@ -18,6 +20,7 @@
     "title": "The journey starts here",
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
+    "summary": "This is blog post #1. It is my first blog post.",
     "date": "2015-10-02"
   }
 ]

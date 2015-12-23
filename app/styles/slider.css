@@ -22,11 +22,6 @@
     left: 0;
 }
 
-.slide-description {
-    padding: 0px 12px 10px;
-    font-size: larger;
-}
-
 .slider .arrow {
     position: absolute;
     z-index: 1002;

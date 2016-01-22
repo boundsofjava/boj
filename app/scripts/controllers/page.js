@@ -3,7 +3,7 @@
 angular.module('bojApp')
   .controller('PageCtrl', function($scope, $location) { 
 
-    var homeViews = ['/', '/privacy', '/contact'];
+    var homeViews = ['/'];
 
     $scope.isActive = function(viewLocation) { 
       if (homeViews.indexOf(viewLocation) < 0) {
@@ -12,7 +12,8 @@ angular.module('bojApp')
       return homeViews.indexOf($location.path()) >= 0;
     };
 
-    var disabledViews = ['/courses', '/jobs'];
+    var disabledViews = [];
+//    var disabledViews = ['/courses', '/jobs', '/training'];
 
     $scope.isEnabled = function(viewLocation) { 
         return disabledViews.indexOf(viewLocation) < 0;
@@ -22,4 +23,3 @@ angular.module('bojApp')
       angular.element('#js-navbar-collapse').collapse('hide');
     };
   });
-

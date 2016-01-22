@@ -32,9 +32,21 @@ angular
         templateUrl: 'views/newsletter/post.html',
         controller: 'NewsletterCtrl'
       })
+      .when('/services', {
+        templateUrl: 'views/services.html',
+        controller: 'ServicesCtrl'
+      })
       .when('/courses', {
         templateUrl: 'views/courses.html',
         controller: 'CoursesCtrl'
+      })
+      .when('/training', {
+        templateUrl: 'views/training.html',
+        controller: 'TrainingCtrl'
+      })
+      .when('/jobs', {
+        templateUrl: 'views/jobs.html',
+        controller: 'JobsCtrl'
       })
       .when('/consultancy', {
         templateUrl: 'views/consultancy.html',
@@ -47,14 +59,6 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
-      })
-      .when('/privacy', {
-        templateUrl: 'views/privacy.html',
-        controller: 'PrivacyCtrl'
-      })
-      .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'ContactCtrl'
       })
       .otherwise({
         redirectTo: '/'

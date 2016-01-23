@@ -36,20 +36,20 @@ angular
         templateUrl: 'views/services.html',
         controller: 'ServicesCtrl'
       })
-      .when('/courses', {
-        templateUrl: 'views/courses.html',
+      .when('/services/courses', {
+        templateUrl: 'views/services/courses.html',
         controller: 'CoursesCtrl'
       })
-      .when('/training', {
-        templateUrl: 'views/training.html',
+      .when('/services/training', {
+        templateUrl: 'views/services/training.html',
         controller: 'TrainingCtrl'
       })
-      .when('/jobs', {
-        templateUrl: 'views/jobs.html',
+      .when('/services/jobs', {
+        templateUrl: 'views/services/jobs.html',
         controller: 'JobsCtrl'
       })
-      .when('/consultancy', {
-        templateUrl: 'views/consultancy.html',
+      .when('/services/consultancy', {
+        templateUrl: 'views/services/consultancy.html',
         controller: 'ConsultancyCtrl'
       })
       .when('/blog', {

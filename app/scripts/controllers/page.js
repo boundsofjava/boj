@@ -12,13 +12,6 @@ angular.module('bojApp')
       return homeViews.indexOf($location.path()) >= 0;
     };
 
-    var disabledViews = [];
-//    var disabledViews = ['/courses', '/jobs', '/training'];
-
-    $scope.isEnabled = function(viewLocation) { 
-        return disabledViews.indexOf(viewLocation) < 0;
-    };
-
     $scope.collapseNavbar = function() {
       angular.element('#js-navbar-collapse').collapse('hide');
     };

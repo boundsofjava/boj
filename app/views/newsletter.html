@@ -16,7 +16,7 @@
 <div class="list-group">
   <a data-ng-repeat="newsletter in newsletters | orderBy:'-date'" data-ng-href="/newsletter/{{newsletter.post}}" class="list-group-item" data-ng-class-even="'list-group-item-even'" data-ng-class-odd="'list-group-item-odd'">
     <h3 class="list-group-item-heading">
-      <span class="badge pull-right">POST #{{newsletter.post}}</span>
+      <span class="badge pull-right">ISSUE #{{newsletter.post}}</span>
       {{newsletter.title}}
     </h3>
     <p class="list-group-item-text">

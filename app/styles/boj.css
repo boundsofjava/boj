@@ -149,11 +149,7 @@ a.list-group-item.list-group-item-odd {
   background-color: #1b1b1b;
 }
 
-a.list-group-item:hover {
-  background-color: #0f0f0f;
-  border-color: #555;
-}
-
+a.list-group-item:hover,
 a.list-group-item:focus {
   background-color: #0f0f0f;
   border-color: #555;
@@ -161,30 +157,25 @@ a.list-group-item:focus {
 
 a.list-group-item.list-group-item-even .list-group-item-heading {
   color: #0aa2ff;
+  margin-bottom: 7px;
 }
 
 a.list-group-item.list-group-item-odd .list-group-item-heading {
   color: #0aa2c7;
+  margin-bottom: 7px;
 }
 
-a.list-group-item:hover .list-group-item-heading {
-  color: #fcb50f;
-}
-
+a.list-group-item:hover .list-group-item-heading, 
 a.list-group-item:focus .list-group-item-heading {
   color: #fcb50f;
+  margin-bottom: 7px;
 }
 
-a.list-group-item .list-group-item-text {
+a.list-group-item .list-group-item-text,
+a.list-group-item:hover .list-group-item-text,
+a.list-group-item:focus .list-group-item-text
+{
   color: #a0a0a0;
-}
-
-a.list-group-item:hover .list-group-item-text {
-  color: #dedede;
-}
-
-a.list-group-item:focus .list-group-item-text {
-  color: #dedede;
 }
 
 .badge {
@@ -193,10 +184,6 @@ a.list-group-item:focus .list-group-item-text {
 
 .most-recent-wrapper {
   clear: both;
-}
-
-.most-recent-wrapper .title {
-  margin-bottom: 5px;
 }
 
 @media screen and (min-width: 768px) {

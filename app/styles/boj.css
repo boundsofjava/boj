@@ -182,7 +182,7 @@ a.list-group-item:focus .list-group-item-text
   margin-left: 12px; 
 }
 
-.most-recent-wrapper {
+.cleared {
   clear: both;
 }
 

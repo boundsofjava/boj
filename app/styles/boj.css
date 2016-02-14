@@ -186,6 +186,31 @@ a.list-group-item:focus .list-group-item-text
   clear: both;
 }
 
+.subscription-button-container {
+  margin: 0 20% 0 20%;
+}
+
+.subscription-button {
+  padding: 10px 10px 10px 10px;
+  width: 100%;
+  border-radius: 44px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fcb50f;
+  background-color: transparent;
+  border-color: #fcb50f;
+  border: solid 4px;
+  outline: none;
+}
+
+.subscription-button:hover, 
+.subscription-button:focus {
+  color: #262626;
+  background-color: #fcb50f;
+  border-color: #fcb50f;
+  outline: none;
+}
+
 @media screen and (min-width: 768px) {
 
   body {
@@ -206,8 +231,8 @@ a.list-group-item:focus .list-group-item-text
   }
 
   .navbar-inverse .navbar-nav > li > a {
-    padding: 3px 12px 1px 12px;
-    margin: 37px 1px 37px 1px;
+    padding: 3px 12px 2px 12px;
+    margin: 37px 1px 36px 1px;
     font-weight: bold;
   }
 
@@ -224,5 +249,9 @@ a.list-group-item:focus .list-group-item-text
   .footer {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .subscription-button-container {
+    margin: 0 25% 0 25%;
   }
 }

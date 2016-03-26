@@ -11,7 +11,8 @@ angular
     'LocalStorageModule',
     'infinite-scroll',
     'angularUtils.directives.dirDisqus',
-    'angular.vertilize'
+    'angular.vertilize',
+    'mailchimp'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');
@@ -26,6 +27,10 @@ angular
       })
       .when('/newsletter', {
         templateUrl: 'views/newsletter.html',
+        controller: 'NewsletterCtrl'
+      })
+      .when('/newsletter/subscription', {
+        templateUrl: 'views/newsletter/subscription.html',
         controller: 'NewsletterCtrl'
       })
       .when('/newsletter/:post', {

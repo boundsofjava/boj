@@ -1,14 +1,44 @@
 <div>
-	<form name="MailchimpSubscriptionForm" ng-controller="MailchimpSubscriptionCtrl">
+	<p>Please fill the form below to start receiving every issue of The Bounds of Java Newsletter directly in your inbox.</p>
+
+	<form class="spacing" name="MailchimpSubscriptionForm" ng-controller="MailchimpSubscriptionCtrl">
 	  <div ng-hide="mailchimp.result === 'success'">
-	    <input class="hidden" type="hidden" ng-model="mailchimp.username" ng-init="mailchimp.username='boundsofjava'">
+	  	<input class="hidden" type="hidden" ng-model="mailchimp.username" ng-init="mailchimp.username='boundsofjava'">
 	    <input class="hidden" type="hidden" ng-model="mailchimp.dc" ng-init="mailchimp.dc='us11'">
 	    <input class="hidden" type="hidden" ng-model="mailchimp.u" ng-init="mailchimp.u='9c6a6de3d1dc13af233ae2023'">
 	    <input class="hidden" type="hidden" ng-model="mailchimp.id" ng-init="mailchimp.id='a063c5b867'">
-	    <input type="text" name="fname" ng-model="mailchimp.FNAME" placeholder="First name">
-	    <input type="text" name="lname" ng-model="mailchimp.LNAME" placeholder="Last name">
-	    <input type="email" name="email" ng-model="mailchimp.EMAIL" placeholder="Email address" required>
-	    <button ng-disabled="MailchimpSubscriptionForm.$invalid" ng-click="addSubscription(mailchimp)">Join</button>
+	    
+		<fieldset class="form-group">
+			<label for="name">Full name</label>
+			<input type="text" class="form-control" name="name" id="name" ng-model="mailchimp.NAME" placeholder="Full name" required />
+		</fieldset>
+	    
+		<fieldset class="form-group">
+			<label for="email">Email address</label>
+	    	<input type="email" class="form-control" name="email" id="email" ng-model="mailchimp.EMAIL" placeholder="your@email.com" required />
+    		<small class="text-muted">We'll never share your email with anyone else</small>
+		</fieldset>
+	    
+		<fieldset class="form-group">
+			<label for="country">Country</label>
+		    <input type="text" class="form-control" name="country" id="country" ng-model="mailchimp.COUNTRY" placeholder="Country" />
+		</fieldset>
+	    
+		<fieldset class="form-group">
+			<label for="seniority">Seniority level</label>
+		    <select class="form-control" name="seniority" id="seniority" ng-model="mailchimp.SENIORITY">
+		    	<option value="" selected disabled>Please select</option>
+		    	<option value="">Beginner</option>
+		    	<option value="">Intermediate</option>
+		    	<option value="">Advanced</option>
+		    	<option value="">Expert</option>
+		    </select>
+   		</fieldset>
+
+   	    <div class="text-center">
+	    	<button type="submit" class="spacing btn btn-primary btn-lg" ng-disabled="MailchimpSubscriptionForm.$invalid" ng-click="addSubscription(mailchimp)">Join</button>
+    		<a class="btn btn-link" ng-href="/newsletter">Back</a>
+    	</div>
 	  </div>
 
 	  <!-- Show error message if MailChimp unsuccessfully added the email to the list. -->

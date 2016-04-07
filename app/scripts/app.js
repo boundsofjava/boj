@@ -12,7 +12,8 @@ angular
     'infinite-scroll',
     'angularUtils.directives.dirDisqus',
     'angular.vertilize',
-    'mailchimp'
+    'mailchimp',
+    'angucomplete-alt'
   ])
   .config(function (localStorageServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');
@@ -80,4 +81,23 @@ angular
       });
     };
     return linkFunction;
+  })
+  .directive('focus', function ($timeout) {
+    return {
+      scope: {
+        trigger: '@focus'
+      },
+      link: function (scope, element) {
+        scope.$watch('trigger', function (value) {
+          if (value === 'true') {
+            $timeout(function () {
+              element[0].focus();
+            });
+          }
+        });
+      }
+    };
+  })
+  .run(function ($anchorScroll) {
+    $anchorScroll.yOffset = 106;
   });

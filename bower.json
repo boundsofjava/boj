@@ -15,7 +15,8 @@
     "ngInfiniteScroll": "~1.2.1",
     "angular-utils-disqus": "~0.4.0",
     "angular-vertilize": "~1.0.1",
-    "angular-mailchimp": "~0.0.4"
+    "angular-mailchimp": "~0.0.4",
+    "angucomplete-alt": "^2.2.0"
   },
   "overrides": {
     "bootstrap": {
@@ -27,7 +28,7 @@
     },
     "gsap": {
       "main": [
-        "./src/uncompressed/TweenLite.js", 
+        "./src/uncompressed/TweenLite.js",
         "./src/uncompressed/plugins/CSSPlugin.js"
       ]
     }

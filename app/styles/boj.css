@@ -186,29 +186,33 @@ a.list-group-item:focus .list-group-item-text
   clear: both;
 }
 
+.subscription-form {
+  width: 70%;
+  min-width: 316px;
+}
+
 .subscription-button-container {
-  margin: 0 20% 0 20%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.subscription-button {
-  padding: 10px 10px 10px 10px;
-  width: 100%;
-  border-radius: 44px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #fcb50f;
-  background-color: transparent;
-  border-color: #fcb50f;
-  border: solid 4px;
-  outline: none;
+.btn-primary {
+    color: #ccc;
+    background-color: #2e6d92;
 }
 
-.subscription-button:hover, 
-.subscription-button:focus {
-  color: #262626;
-  background-color: #fcb50f;
-  border-color: #fcb50f;
-  outline: none;
+.angucomplete-dropdown {
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.alert-fixed {
+    position: fixed; 
+    top: 116px; 
+    right: 10px; 
+    width: 300px;
+    z-index: 9999; 
+    border-radius: 4px;
 }
 
 @media screen and (min-width: 768px) {
@@ -249,9 +253,5 @@ a.list-group-item:focus .list-group-item-text
   .footer {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .subscription-button-container {
-    margin: 0 25% 0 25%;
   }
 }

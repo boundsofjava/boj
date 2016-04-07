@@ -14,4 +14,17 @@ angular.module('bojApp')
             }
         }
     });
+  })
+  .controller('NewsletterSubscriptionCtrl', function($scope, $anchorScroll, Countries) {
+    $scope.countries = Countries.query();
+    $scope.selectCountry = function(country) {
+      if (typeof country !== 'undefined') {
+        $scope.mailchimp.COUNTRY = country.originalObject.name;
+      }
+    };
+    $scope.subscribe = function(mailchimp) {
+      $scope.addSubscription(mailchimp);
+      $anchorScroll('top');
+      $scope.autoCloseAlerts(5000);
+    };
   });

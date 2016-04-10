@@ -1,5 +1,5 @@
 <div class="paragraphs" data-ng-controller="MailchimpSubscriptionCtrl">
-	<div class="clearfix content-heading" ng-controller="NewsletterSubscriptionCtrl">
+	<div class="clearfix content-heading" data-ng-controller="NewsletterSubscriptionCtrl">
 
 		<img class="pull-left img-left" data-ng-src="images/mail-delivery.jpg" alt="Mail delivery"></img>
 
@@ -7,9 +7,9 @@
 
 		<p data-ng-hide="mailchimp.result === 'success'">Please fill in the form below and start receiving every issue of The Bounds of Java Newsletter directly in your inbox. I plan to write a new post every 2-4 weeks.</p>
 
-		<div data-ng-show="mailchimp.result === 'success'">
+		<div data-ng-show="mailchimp.result === 'success'" data-ng-cloak>
 			<p data-ng-bind-html="mailchimp.successMessage"></p>
-			<p>Once you confirm your subscription, you'll start receiving every issue of the Bounds of Java Newsletter in your inbox. If you're also interested in more opinionated articles, please visit <a data-ng-href="/blog">The Bounds of Java Blog</a>.</p>
+			<p>Once you confirm your subscription, you'll start receiving the Bounds of Java Newsletter in your inbox. If you're also interested in more opinionated articles, please visit <a data-ng-href="/blog">The Bounds of Java Blog</a>.</p>
 			<br />
 			<br />
 
@@ -55,8 +55,8 @@
 	    		<a class="btn btn-link btn-lg" data-ng-href="/newsletter">Back</a>
 		    </div>
 
-			<div data-ng-show="mailchimp.result === 'error'" class="alert alert-fixed alert-danger fade in" data-ng-cloak>
-				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<div data-ng-if="showSubscriptionErrorAlert" class="alert alert-fixed alert-danger fade in" data-ng-cloak>
+				<a href="#" class="close" aria-label="close" data-ng-click="onCloseErrorAlert(mailchimp)">&times;</a>
 				<small><span data-ng-bind-html="mailchimp.errorMessage"></span></small>
 			</div>
 		</form>

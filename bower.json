@@ -14,9 +14,9 @@
     "angular-local-storage": "~0.2.2",
     "ngInfiniteScroll": "~1.2.1",
     "angular-utils-disqus": "~0.4.0",
-    "angular-vertilize": "~1.0.1",
     "angular-mailchimp": "~0.0.4",
-    "angucomplete-alt": "^2.2.0"
+    "angucomplete-alt": "^2.2.0",
+    "angular-vertilize": "https://github.com/federico-peralta-schaffner/angular-vertilize.git#1.0.2"
   },
   "overrides": {
     "bootstrap": {

@@ -65,6 +65,11 @@ hr.from-right {
   margin-bottom: 8px;
 }
 
+.double-spacing {
+  margin-top: 28px;
+  margin-bottom: 28px;
+}
+
 .content-wrapper {
   padding: 80px 10px 10px 10px;
   width: 100%;
@@ -197,22 +202,27 @@ a.list-group-item:focus .list-group-item-text
 }
 
 .btn-primary {
-    color: #ccc;
-    background-color: #2e6d92;
+  color: #ccc;
+  background-color: #2e6d92;
 }
 
 .angucomplete-dropdown {
-    overflow-y: auto;
-    max-height: 200px;
+  overflow-y: auto;
+  max-height: 200px;
 }
 
 .alert-fixed {
-    position: fixed; 
-    top: 116px; 
-    right: 10px; 
-    width: 300px;
-    z-index: 9999; 
-    border-radius: 4px;
+  position: fixed; 
+  top: 116px; 
+  right: 10px; 
+  width: 300px;
+  z-index: 9999; 
+  border-radius: 4px;
+}
+
+.far-from-margins {
+  margin-left: 22px;
+  margin-right: 22px;
 }
 
 @media screen and (min-width: 768px) {

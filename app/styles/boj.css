@@ -196,7 +196,7 @@ a.list-group-item:focus .list-group-item-text
   min-width: 316px;
 }
 
-.subscription-button-container {
+.highlighted-button-container {
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -204,6 +204,7 @@ a.list-group-item:focus .list-group-item-text
 .btn-primary {
   color: #ccc;
   background-color: #2e6d92;
+  white-space: normal;
 }
 
 .angucomplete-dropdown {
@@ -218,11 +219,6 @@ a.list-group-item:focus .list-group-item-text
   width: 300px;
   z-index: 9999; 
   border-radius: 4px;
-}
-
-.far-from-margins {
-  margin-left: 22px;
-  margin-right: 22px;
 }
 
 @media screen and (min-width: 768px) {

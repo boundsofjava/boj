@@ -46,8 +46,8 @@ angular
         templateUrl: 'views/services/courses.html',
         controller: 'CoursesCtrl'
       })
-      .when('/services/trainings', {
-        templateUrl: 'views/services/trainings.html',
+      .when('/services/training', {
+        templateUrl: 'views/services/training.html',
         controller: 'TrainingsCtrl'
       })
       .when('/services/jobs', {

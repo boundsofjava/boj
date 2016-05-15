@@ -142,15 +142,22 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 4px;
 }
 
-a.list-group-item {
+.transparent-list-group {
+  border: 8px solid transparent;
+}
+
+a.list-group-item,
+div.list-group-item {
   border: 1px dotted #555;
 }
 
-a.list-group-item.list-group-item-even {
+a.list-group-item.list-group-item-even,
+div.list-group-item.list-group-item-even {
   background-color: #262626;
 }
 
-a.list-group-item.list-group-item-odd {
+a.list-group-item.list-group-item-odd,
+div.list-group-item.list-group-item-odd {
   background-color: #1b1b1b;
 }
 
@@ -160,12 +167,14 @@ a.list-group-item:focus {
   border-color: #555;
 }
 
-a.list-group-item.list-group-item-even .list-group-item-heading {
+a.list-group-item.list-group-item-even .list-group-item-heading,
+div.list-group-item.list-group-item-even .list-group-item-heading {
   color: #0aa2ff;
   margin-bottom: 7px;
 }
 
-a.list-group-item.list-group-item-odd .list-group-item-heading {
+a.list-group-item.list-group-item-odd .list-group-item-heading,
+div.list-group-item.list-group-item-odd .list-group-item-heading {
   color: #0aa2c7;
   margin-bottom: 7px;
 }
@@ -177,6 +186,7 @@ a.list-group-item:focus .list-group-item-heading {
 }
 
 a.list-group-item .list-group-item-text,
+div.list-group-item .list-group-item-text,
 a.list-group-item:hover .list-group-item-text,
 a.list-group-item:focus .list-group-item-text
 {

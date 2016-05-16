@@ -231,6 +231,13 @@ a.list-group-item:focus .list-group-item-text
   border-radius: 4px;
 }
 
+.services-navbar {
+  width: 100%; 
+  text-align: center; 
+  font-size: small;
+  color: #555;
+}
+
 @media screen and (min-width: 768px) {
 
   body {
@@ -251,7 +258,7 @@ a.list-group-item:focus .list-group-item-text
   }
 
   .navbar-inverse .navbar-nav > li > a {
-    padding: 3px 12px 2px 12px;
+    padding: 3px 12px 4px 12px;
     margin: 37px 1px 36px 1px;
     font-weight: bold;
   }
@@ -261,7 +268,7 @@ a.list-group-item:focus .list-group-item-text
   .navbar-inverse .navbar-nav > .active > a:focus {
     color: #1b1b1b;
     background-color: #fcb50f;
-    border-bottom: 1x solid #fcb50f;
+    border: 0;
     border-radius: 12px;
   }
 

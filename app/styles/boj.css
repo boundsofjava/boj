@@ -88,6 +88,11 @@ hr.from-right {
   margin-bottom: 8px;
 }
 
+.tiny-spacing {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .double-spacing {
   margin-top: 28px;
   margin-bottom: 28px;

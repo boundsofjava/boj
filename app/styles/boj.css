@@ -286,7 +286,7 @@ a.list-group-item:focus .list-group-item-text
   }
 
   .navbar-inverse .navbar-nav > li > a {
-    padding: 3px 12px 4px 12px;
+    padding: 3px 12px 3px 12px;
     margin: 37px 1px 36px 1px;
     font-weight: bold;
   }

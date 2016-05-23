@@ -1,8 +1,12 @@
 <div class="paragraphs" data-ng-controller="SelectedNewsletterCtrl">
 
 	<div class="content-heading">
+
 		<h1>Issue {{newsletter.issue}}: {{newsletter.title}}</h1>
-		<h4>{{newsletter.prettyDate}}</h4>
+
+		<h5 class="spacing">Composed by <strong><a data-ng-href="{{newsletter.authorUrl}}" target="_blank">{{newsletter.author}}</a></strong> on {{newsletter.prettyDate}}</h5>
+
+ 		<h4><em>Outline</em></h4>
 		<small data-ng-bind-html="newsletter.summary"></small>
 	</div>
 	<br />

@@ -4,10 +4,10 @@
 	<hr class="from-left spacing" data-ng-if="!$first" />
 	<div class="content-heading">
 		<h1>{{post.title}}</h1>
-		<h3>{{post.prettyDate}}</h3>
+		<h4>{{post.prettyDate}}</h4>
 	    <br />
 
-	    <div data-ng-include="'views/blog/' + post.id + '.html'"></div>
+	    <div data-ng-include="'views/blog/' + post.id + '.html'" data-ng-cloak></div>
 	    <br />
 
 	    <div><small>Posted by: <strong><a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></strong></small></div>

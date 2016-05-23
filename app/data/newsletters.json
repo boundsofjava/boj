@@ -2,8 +2,10 @@
   { 
     "title": "Combining Runnables", 
     "post": "001-combining-runnables",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
     "issue": "1",
     "date": "2016-05-22",
-    "summary": "A <em>combinator</em> is a function that takes one or more functions as arguments and uses only function application and other combinators to define a result from its arguments. In this very first newsletter, we take an informal approach to combinators by showing how to apply this functional programming technique to <span class='code'>Runnable</span> instances."
+    "summary": "A <em>combinator</em> is a function that takes one or more functions as arguments and uses only function application and other combinators to define a result from its arguments. Here we take an informal approach to combinators by showing how to apply this functional programming technique to <span class='code'>Runnable</span> instances."
   }
 ]

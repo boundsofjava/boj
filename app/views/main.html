@@ -48,7 +48,7 @@
         </h3>
         <p class="list-group-item-text" data-ng-bind-html="mostRecentNewsletter.summary">
         </p>
-        <p>
+        <p class="list-group-item-date">
           <small class="pull-right">{{mostRecentNewsletter.prettyDate}}</small>
         </p>
       </a>
@@ -63,10 +63,9 @@
         <h3 class="list-group-item-heading">
           {{mostRecentBlog.title}}
         </h3>
-        <p class="list-group-item-text">
-          {{mostRecentBlog.summary}}
+        <p class="list-group-item-text" data-ng-bind-html="mostRecentBlog.summary">
         </p>
-        <p>
+        <p class="list-group-item-date">
           <span class="small pull-right">{{mostRecentBlog.prettyDate}}</span>
         </p>
       </a>

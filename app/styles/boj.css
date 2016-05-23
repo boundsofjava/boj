@@ -221,6 +221,10 @@ a.list-group-item:focus .list-group-item-text
   color: #a0a0a0;
 }
 
+a.list-group-item .list-group-item-date {
+  padding-bottom: 8px;
+}
+
 .badge {
   margin-left: 12px; 
 }
@@ -264,6 +268,10 @@ a.list-group-item:focus .list-group-item-text
   text-align: center; 
   font-size: small;
   color: #555;
+}
+
+.code {
+  font-family: monospace;
 }
 
 @media screen and (min-width: 768px) {

@@ -1,12 +1,12 @@
 <div class="paragraphs" data-ng-controller="SelectedNewsletterCtrl">
 
 	<div class="content-heading">
-		<h1>Issue {{post}}: {{newsletter.title}}</h1>
-		<h3>{{newslettern.prettyDate}}</h3>
-		<small><em>{{newsletter.summary}}</em></small>
+		<h1>Issue {{newsletter.issue}}: {{newsletter.title}}</h1>
+		<h4>{{newsletter.prettyDate}}</h4>
+		<small data-ng-bind-html="newsletter.summary"></small>
 	</div>
 	<br />
 
-	<div data-ng-include="'views/newsletter/' + post + '.html'"></div>
+	<div data-ng-include="'views/newsletter/' + post + '.html'" data-ng-cloak></div>
 
 </div>

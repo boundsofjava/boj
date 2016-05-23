@@ -1,14 +1,9 @@
 [
   { 
-    "title": "Second Newsletter", 
-    "post": "2",
-    "date": "2015-02-13",
-    "summary": "This is newsletter #2. It treats about this and about that. It discusses a lot of stuff and presents a very nice topic, while introducing a few examples that illustrate the topic being discussed." 
-  },
-  { 
-    "title": "First Newsletter", 
-    "post": "1",
-    "date": "2015-01-02",
-    "summary": "This is newsletter #1. It treats about this and about that. It discusses a lot of stuff and presents a very nice topic, while introducing a few examples that illustrate the topic being discussed." 
+    "title": "Combining Runnables", 
+    "post": "001-combining-runnables",
+    "issue": "1",
+    "date": "2016-05-22",
+    "summary": "A <em>combinator</em> is a function that takes one or more functions as arguments and uses only function application and other combinators to define a result from its arguments. In this very first newsletter, we take an informal approach to combinators by showing how to apply this functional programming technique to <span class='code'>Runnable</span> instances."
   }
 ]

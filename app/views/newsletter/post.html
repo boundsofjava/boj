@@ -4,12 +4,13 @@
 
 		<h1>Issue {{newsletter.issue}}: {{newsletter.title}}</h1>
 
-		<h5 class="spacing">Composed by <strong><a data-ng-href="{{newsletter.authorUrl}}" target="_blank">{{newsletter.author}}</a></strong> on {{newsletter.prettyDate}}</h5>
+		<h4 class="spacing">{{newsletter.prettyDate}}</h4>
 
  		<h4><em>Outline</em></h4>
 		<small data-ng-bind-html="newsletter.summary"></small>
 	</div>
-	<br />
+
+	<hr class="spacing" />
 
 	<div data-ng-include="'views/newsletter/' + post + '.html'" data-ng-cloak></div>
 

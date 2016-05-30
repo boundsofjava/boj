@@ -78,9 +78,9 @@ hr.from-right {
   color: #3070c0;
 }
 
-.spacing {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.tiny-spacing {
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .little-spacing {
@@ -88,14 +88,24 @@ hr.from-right {
   margin-bottom: 8px;
 }
 
-.tiny-spacing {
-  margin-top: 4px;
-  margin-bottom: 4px;
+.medium-spacing {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.spacing {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .double-spacing {
   margin-top: 28px;
   margin-bottom: 28px;
+}
+
+.x-double-spacing {
+  margin-top: 36px;
+  margin-bottom: 36px;
 }
 
 .content-wrapper {
@@ -136,6 +146,19 @@ hr.from-right {
 
 .img-left {
   margin: 10px 10px 5px 0; 
+  border: 8px solid #e8e8e8;
+}
+
+.img-center-container {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.img-center-container img {
+  max-width: 100%;
+  height: auto;
+  margin: 5px 0 15px 0; 
   border: 8px solid #e8e8e8;
 }
 
@@ -198,31 +221,41 @@ a.list-group-item:focus {
 a.list-group-item.list-group-item-even .list-group-item-heading,
 div.list-group-item.list-group-item-even .list-group-item-heading {
   color: #0aa2ff;
-  margin-bottom: 7px;
+  margin: 7px 7px 12px 0;
 }
 
 a.list-group-item.list-group-item-odd .list-group-item-heading,
 div.list-group-item.list-group-item-odd .list-group-item-heading {
   color: #0aa2c7;
-  margin-bottom: 7px;
+  margin: 7px 7px 12px 0;
 }
 
 a.list-group-item:hover .list-group-item-heading, 
 a.list-group-item:focus .list-group-item-heading {
   color: #fcb50f;
-  margin-bottom: 7px;
+  margin: 7px 7px 12px 0;
 }
 
 a.list-group-item .list-group-item-text,
-div.list-group-item .list-group-item-text,
-a.list-group-item:hover .list-group-item-text,
-a.list-group-item:focus .list-group-item-text
+div.list-group-item .list-group-item-text
 {
   color: #a0a0a0;
 }
 
+a.list-group-item:hover .list-group-item-text,
+a.list-group-item:focus .list-group-item-text
+{
+  color: #b3b3b3;
+}
+
 a.list-group-item .list-group-item-date {
   padding-bottom: 8px;
+}
+
+a.list-group-item:hover .list-group-item-date,
+a.list-group-item:focus .list-group-item-date
+{
+  color: #808080;
 }
 
 .badge {
@@ -270,8 +303,44 @@ a.list-group-item .list-group-item-date {
   color: #555;
 }
 
+.newsletter-date-author {
+  color: #666; 
+  margin: -4px 0 23px 0; 
+}
+
+.separator {
+  width: 100%; 
+  text-align: center; 
+  font-size: small;
+  color: #666;
+  word-spacing: 14px;
+  margin: 20px 0 17px 0;
+}
+
 .code {
   font-family: monospace;
+  color: #c0c0c0;
+  font-weight: bold;
+}
+
+[hljs] {
+  padding: 0;
+  margin: 0 7px 17px 7px;
+  border: 2px solid #444;
+  border-radius: 9px;
+}
+
+[hljs] pre {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+[hljs] code {
+  padding: 7px 14px 7px 14px;
+  border: 0;
+  margin: 0;
+  background-color: #222;
 }
 
 @media screen and (min-width: 768px) {

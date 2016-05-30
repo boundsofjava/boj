@@ -9,6 +9,8 @@ angular.module('bojApp')
   .controller('SelectedNewsletterCtrl', function ($scope, $routeParams, Newsletters) {
     
     $scope.post = $routeParams.post;
+
+    $scope.path = '/views/newsletter/' + $scope.post;
     
     Newsletters.query(null, function (values) {
         for (var i = 0, len = values.length; i < len; i++) {

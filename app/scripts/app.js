@@ -13,11 +13,15 @@ angular
     'angularUtils.directives.dirDisqus',
     'angular.vertilize',
     'mailchimp',
-    'angucomplete-alt'
+    'angucomplete-alt',
+    'hljs'
   ])
-  .config(function (localStorageServiceProvider) {
+  .config(function (localStorageServiceProvider, hljsServiceProvider) {
     localStorageServiceProvider.setPrefix('boj');
     localStorageServiceProvider.setStorageCookieDomain(document.domain);
+    hljsServiceProvider.setOptions({
+      tabReplace: '    '
+    });
   })
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
@@ -101,3 +105,4 @@ angular
   .run(function ($anchorScroll) {
     $anchorScroll.yOffset = 106;
   });
+  

@@ -4,14 +4,20 @@
 
 		<h1>#{{newsletter.issue}} &ndash; {{newsletter.title}}</h1>
 
-		<h4 class="spacing">{{newsletter.prettyDate}}</h4>
+		<p class="small newsletter-date-author"><small>Published on {{newsletter.prettyDate}} by <a data-ng-href="{{newsletter.authorUrl}}">{{newsletter.author}}</a></small></p>
 
- 		<h4><em>Outline</em></h4>
-		<small data-ng-bind-html="newsletter.summary"></small>
+ 		<h3><em>Outline</em></h3>
+		<p><small data-ng-bind-html="newsletter.summary"></small></p>
 	</div>
 
-	<hr class="spacing" />
+	<div class="separator">&#10022; &#10022; &#10022;</div>
 
-	<div data-ng-include="'views/newsletter/' + post + '.html'" data-ng-cloak></div>
+	<div data-ng-include="'views/newsletter/' + post + '/intro.html'" data-ng-cloak></div>
+
+	<div data-ng-include="'views/news/news.html'" data-ng-cloak></div>
+
+	<h2 class="spacing">{{newsletter.title}}</h2>
+
+	<div data-ng-include="'views/newsletter/' + post + '/contents.html'" data-ng-cloak></div>
 
 </div>

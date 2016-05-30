@@ -16,7 +16,9 @@
     "angular-utils-disqus": "~0.4.0",
     "angular-mailchimp": "~0.0.4",
     "angucomplete-alt": "^2.2.0",
-    "angular-vertilize": "https://github.com/federico-peralta-schaffner/angular-vertilize.git#1.0.2"
+    "angular-vertilize": "https://github.com/federico-peralta-schaffner/angular-vertilize.git#1.0.2",
+    "highlightjs": "^9.4.0",
+    "angular-highlightjs": "^0.6.1"
   },
   "overrides": {
     "bootstrap": {
@@ -30,6 +32,12 @@
       "main": [
         "./src/uncompressed/TweenLite.js",
         "./src/uncompressed/plugins/CSSPlugin.js"
+      ]
+    },
+    "highlightjs": {
+      "main": [
+        "styles/darkula.css",
+        "highlight.pack.js"
       ]
     }
   },

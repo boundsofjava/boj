@@ -1,0 +1,90 @@
+<h3><em>Background</em></h3>
+
+<p>In Java 8, a block of code that takes no arguments and has no returning value can be assigned to a <span class="code">Runnable</span> instance straightforwardly:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+Runnable blockOfCode = () -> {
+	System.out.println("Q: What was the weather like in winter of 2015?");
+	System.out.println("A: It was very cold");
+};
+</div>
+
+<p>Then, later in our program, we could execute this block of code by invoking the <span class="code">run()</span> method of our <span class="code">Runnable</span> instance:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+blockOfCode.run();
+</div>
+
+<p>Now, let's suppose the code resides in the <span class="code">whatWasTheWeatherLike()</span> method of the <span class="code">Winter</span> class:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+public class Winter {
+
+	private final int year;
+
+	public Winter(int year) {
+		this.year = year;
+	}
+
+	public void whatWasTheWeatherLike() {
+		System.out.printf("Q: What was the weather like in winter of %d?%n", year);
+		System.out.println("A: It was very cold");
+	}
+}
+</div>
+
+<p>In this case, instead of using a lambda expression with an inline block of code, we could use a <em>reference to an instance method</em> of the <span class="code">Winter</span> class:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+Winter winterOf2015 = new Winter(2015);
+Runnable runnable = winterOf2015::whatWasTheWeatherLike;
+</div>
+
+<p>So far so good. But, what if we had many blocks of code? We might have more than one instance of the <span class="code">Winter</span> class, i.e. <span class="code">winterOf2013</span> and <span class="code">winterOf2014</span>. And we might also have classes like <span class="code">Summer</span>, <span class="code">Autumn</span> and <span class="code">Spring</span>, with instances for different years, such as <span class="code">summerOf2008</span>, <span class="code">summerOf2009</span>, <span class="code">springOf2011</span>, <span class="code">autumnOf2012</span>, etc.</p>
+
+<p>We'd like to keep references not only to the <span class="code">whatWasTheWeatherLike()</span> instance methods of those classes, but also to any no-arguments, <span class="code">void</span> method of any class, as well as to any block of code . This would allow us to execute all the <span class="code">Runnable</span> instances later:
+
+<div hljs hljs-no-escape hljs-language="java">
+List<Runnable> runnables = new ArrayList<>();
+
+Winter winterOf2015 = new Winter(2015);
+runnables.add(winterOf2015::whatWasTheWeatherLike);
+
+Summer summerOf2012 = new Summer(2012);
+runnables.add(summerOf2012::whatWasTheWeatherLike);
+
+runnables.add(() -> {
+	System.out.println("inline block of code");
+});
+
+// will print a blank line when executed
+runnables.add(System.out::println);
+
+// will invoke someNoArgsVoidMethod method on
+// someClassInstance instance when executed
+SomeClass someClassInstance = new SomeClass();
+runnables.add(someClassInstance::someNoArgsVoidMethod);
+
+// will exit the program when executed
+runnables.add(() -> System.exit(0));
+</div>
+
+<p>We have stored all the above <span class="code">Runnable</span> instances in the <span class="code">runnables</span> list. To execute them, we could iterate the list and invoke the <span class="code">run()</span> method on each element:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+for (Runnable r : runnables) {
+	r.run();
+}
+</div>
+
+<p>Or in a one-liner:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+runnables.forEach(Runnable::run);
+</div>
+
+<p>However, this only works if we want to execute the <span class="code">Runnable</span> instances <em>sequentially</em> and in the same order they were added to the list. What if we want to execute them in parallel? What if we want to execute some <span class="code">Runnable</span> instances sequentially and some in parallel? And what if we have more than one list and want to execute their <span class="code">Runnable</span> instances interleaved? This is when combinators come in handy.</p>
+
+
+<h3><em>Combinators</em></h3>
+

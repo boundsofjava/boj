@@ -17,17 +17,13 @@ angular.module('bojApp')
         'November',
         'December'
       ];
-      var s = months[date.getMonth()];
-      s += ' ';
-      s += date.getDate();
-      s += ', ';
-      s += date.getFullYear();
-      return s;
+      return months[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
     };
     return {
       formatDate: formatDate,
       prettifyDate: function (obj) {
-        obj.prettyDate = formatDate(new Date(obj.date));
+        var d = new Date(obj.date);
+        obj.prettyDate = formatDate(d);
         return obj;
       }
     };

@@ -320,8 +320,6 @@ a.list-group-item:focus .list-group-item-date
   font-family: monospace;
   color: #c0c0c0;
   font-weight: bold;
-  margin-left: 4px;
-  margin-right: 4px;
 }
 
 [hljs] {

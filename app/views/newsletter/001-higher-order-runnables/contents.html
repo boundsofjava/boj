@@ -91,7 +91,104 @@ runnables.forEach(Runnable::run);
 
 <p>While the above definition is quite easy to understand for a programmer that has worked with functional constructs, I think it could be a little bit too much functional for mainstream Java developers. On the other hand, the <span class="code">Runnable</span> interface is widely known in the Java world. So, why not use it to show how useful higher-order functions can be?</p>
 
-<p>But before tackling higher-order functions, let's introduce the <span class="code">Sleeper</span> enum, which I'll use in the rest of this newsletter to simulate long-running tasks:</p>
+<p>We define a <em>higher-order runnable</em> as per the definition given above, except for the term <em>function</em>, which we'll change by <em>runnable</em>. Thus, according to our new, slightly modified definition, a higher-order runnable is <em>&laquo;a function that takes one or more <span class="code">Runnable</span> instances as arguments and that returns a <span class="code">Runnable</span> instance as its result&raquo;.</em></p>
+
+<p>In code, we represent a <span class="code">HigherOrderRunnable</span> with the following interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+@FunctionalInterface
+public interface HigherOrderRunnable {
+
+    /**
+     * Combines the given Runnables into a single Runnable.
+     *
+     * @param runnables Runnables to be combined
+     * @return A Runnable that is the result of combining the given Runnables
+     */
+    Runnable combine(Runnable... runnables);
+}
+</div>
+
+<p>The <span class="code">HigherOrderRunnable</span> interface has a <em>single abstract method (SAM)</em> that receives an array of <span class="code">Runnable</span> arguments and returns a <span class="code">Runnable</span> instance as its result. The fact that it has only one abstract method makes it a <em>functional interaface</em>, which means we can implement it by assigning the following lambda expression to it:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
+    Runnable result = new Runnable() {
+        @Override
+        public void run() {
+            for (Runnable r : runnables) {
+                r.run();
+            }
+        }
+    };
+    return result;
+};
+</div>
+
+<p>This lambda expression consists of a <span class="code">Runnable</span> varargs parameter (named <span class="code">runnables</span>) and a body in which a new <span class="code">Runnable</span> instance (named <span class="code">result</span>) is created and returned. Inside <span class="code">result</span>'s <span class="code">run()</span> method (which is implemented by means of an anonymous inner class), <span class="code">runnables</span> is iterated and the <span class="code">run()</span> method is invoked on each one of its <span class="code">Runnable</span> elements. Simply put, we are returning a <span class="code">Runnable</span> instance that, when executed, will execute the given <span class="code">Runnable</span> instances <em>sequentially</em>.</p>
+
+<p>We have created our first higher-order runnable!</p>
+
+<p>But we can do it better. As <span class="code">Runnable</span> is also a functional interface (its <span class="code">run()</span> method is a <em>single abstract method</em>), we can replace the anonymous inner class with a lambda expression:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
+    Runnable result = () -> {
+        for (Runnable r : runnables) {
+            r.run();
+        }
+    };
+    return result;
+};
+</div>
+
+<p>While that's better, there's still room for improvement. Instead of the <span class="code">for</span> loop, we could create a <span class="code">Stream</span> from the <span class="code">runnables</span> vargars parameter and execute each one of its <span class="code">Runnable</span> elements with the <span class="code">forEach()</span> terminal operation:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
+    Runnable result = () -> {
+        Arrays.stream(runnables).forEach(Runnable::run);
+    };
+    return result;
+};
+</div>
+
+<p>If we also inline the <span class="code">result</span> variable, remove the useless braces and let the compiler do its type inference work, we get to the following equivalent, minimal construct:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+HigherOrderRunnable higherOrderRunnable = 
+    runnables -> () -> Arrays.stream(runnables).forEach(Runnable::run);
+</div>
+
+<p>Starting from Java 8, interfaces are allowed to have <span class="code">static</span> methods. I'll take advantage of this new feature to declare the <span class="code">sequential()</span> factory method on our <span class="code">HigherOrderRunnable</span> functional interface, which will contain the above lambda expression:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+@FunctionalInterface
+public interface HigherOrderRunnable {
+
+    Runnable combine(Runnable... runnables);
+
+    static HigherOrderRunnable sequential() {
+        return runnables -> () -> Arrays.stream(runnables).forEach(Runnable::run);
+    }
+}
+</div>
+
+<p>If we had three <span class="code">Runnable</span> instances, i.e. <span class="code">r1</span>, <span class="code">r2</span> and <span class="code">r3</span>, we could use our <span class="code">HigherOrderRunnable</span> interface as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+HigherOrderRunnable sequential = HigherOrderRunnable.sequential();
+
+Runnable runnable = sequential.combine(r1, r2, r3);
+
+runnable.run();
+</div>
+
+<p>When <span class="code">runnable.run()</span> is invoked, <span class="code">r1</span>, <span class="code">r2</span> and <span class="code">r3</span> will be executed sequentially.</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+<p>Before taking our higher-order runnables to the next level, let's introduce the <span class="code">Sleeper</span> enum, which I'll use in the rest of this newsletter to simulate long-running tasks:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 package com.boundsofjava.newsletter.higherorderrunnable;
@@ -134,37 +231,4 @@ public enum Sleeper {
 </div>
 
 <p>The <span class="code">Sleeper.sleep()</span> method uses the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html#iterate-int-java.util.function.IntUnaryOperator-" target="_blank">IntStream.iterate()</a></span> method to generate a stream of descending <span class="code">int</span> elements that are printed in a countdown fashion, i.e. <span class="code">Sleeper.TWO.sleep()</span> produces the <span class="code">2, 1, 0</span> countdown sequence, <span class="code">Sleeper.THREE.sleep()</span> produces <span class="code">3, 2, 1, 0</span>, etc. The <span class="code">Sleeper.sleep()</span> method actually takes <span class="code">n</span> seconds to execute (with <span class="code">n</span> being the starting number) and gently prints the countdown sequence.</p>
-
-<div class="spacing"></div>
-
-<h4><em>Introducing Higher-order Runnables</em></h4>
-
-<p>Now, back to our higher-order stuff... We define a <em>higher-order runnable</em> as per the definition given above, except for the term <em>function</em>, which we'll change by <em>runnable</em>. Thus, according to our new, slightly modified definition, a <em>higher-order runnable</em> is <em>&laquo;a function that takes one or more <span class="code">Runnable</span> instances as arguments and that returns a <span class="code">Runnable</span> instance as its result&raquo;.</em></p>
-
-<p>In code, we represent a <span class="code">HigherOrderRunnable</span> with the following functional interface:</p>
-
-<div hljs hljs-no-escape hljs-language="java">
-@FunctionalInterface
-public interface HigherOrderRunnable {
-
-    /**
-     * Combines the given Runnables into a single Runnable.
-     *
-     * @param runnables Runnables to be combined
-     * @return A Runnable that is the result of combining the given Runnables
-     */
-    Runnable combine(Runnable... runnables);
-}
-</div>
-
-<p>As with every functional interface, we can implement it by means of a lambda expression:</p>
-
-<div hljs hljs-no-escape hljs-language="java">
-static HigherOrderRunnable sequential() {
-    return runnables -> () -> Arrays.stream(runnables).forEach(Runnable::run);
-}
-</div>
-
-
-
 

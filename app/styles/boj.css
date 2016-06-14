@@ -333,6 +333,9 @@ a.list-group-item:focus .list-group-item-date
   padding: 0;
   margin: 0;
   border: 0;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
 }
 
 [hljs] code {
@@ -340,6 +343,16 @@ a.list-group-item:focus .list-group-item-date
   border: 0;
   margin: 0;
   background-color: #222;
+  overflow: auto;
+  white-space: pre;
+}
+
+[hljs] code span {
+  white-space: pre;
+}
+
+[fruta] {
+  background-color: yellow;
 }
 
 @media screen and (min-width: 768px) {

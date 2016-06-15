@@ -1,6 +1,6 @@
 <h3><em>Background</em></h3>
 
-<p>In Java 8, a block of code that takes no arguments and has no returning value can be assigned to a <span class="code">Runnable</span> instance straightforwardly:</p>
+<p>In Java 8, a block of code that takes no arguments and has no returning value can be assigned to a <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank">Runnable</a></span> instance straightforwardly:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 Runnable blockOfCode = () -> {
@@ -87,7 +87,7 @@ runnables.forEach(Runnable::run);
 
 <h3><em>Higher-order functions</em></h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Higher-order_function" target="_blank">definition of higher-order function</a> I most like states that <em>&laquo;a higher-order function is a function that takes one or more functions as arguments and that might return a function as its result&raquo;.</em></p>
+<p>The <a href="https://en.wikipedia.org/wiki/Higher-order_function" target="_blank">definition of higher-order function I most like</a> states that <em>&laquo;a higher-order function is a function that takes one or more functions as arguments and that might return a function as its result&raquo;.</em></p>
 
 <p>While the above definition is quite easy to understand for a programmer that has worked with functional constructs, I think it could be a little bit too much functional for mainstream Java developers. On the other hand, the <span class="code">Runnable</span> interface is widely known in the Java world. So, why not use it to show how useful higher-order functions can be?</p>
 
@@ -125,11 +125,11 @@ HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
 };
 </div>
 
-<p>This lambda expression consists of a <span class="code">Runnable</span> varargs parameter (named <span class="code">runnables</span>) and a body in which a new <span class="code">Runnable</span> instance (named <span class="code">result</span>) is created and returned. Inside <span class="code">result</span>'s <span class="code">run()</span> method (which is implemented by means of an anonymous inner class), <span class="code">runnables</span> is iterated and the <span class="code">run()</span> method is invoked on each one of its <span class="code">Runnable</span> elements. Simply put, we are returning a <span class="code">Runnable</span> instance that, when executed, will execute the given <span class="code">Runnable</span> instances <em>sequentially</em>.</p>
+<p>This lambda expression consists of a <span class="code">Runnable</span> varargs parameter (named <span class="code">runnables</span>) and a body in which a new <span class="code">Runnable</span> instance (named <span class="code">result</span>) is created and returned. Within <span class="code">result</span>'s <span class="code">run()</span> method (which is implemented by means of an anonymous inner class), <span class="code">runnables</span> is iterated and the <span class="code">run()</span> method is invoked on each one of its <span class="code">Runnable</span> elements. Simply put, we are returning a <span class="code">Runnable</span> instance that, when executed, will execute the given <span class="code">Runnable</span> instances <em>sequentially</em>.</p>
 
 <p>We have created our first higher-order runnable!</p>
 
-<p>But we can do it better. As <span class="code">Runnable</span> is also a functional interface (its <span class="code">run()</span> method is a <em>single abstract method</em>), we can replace the anonymous inner class with a lambda expression:</p>
+<p>But we can do it better. As <span class="code">Runnable</span> is also a functional interface (its <span class="code">run()</span> method is a <em>single abstract method</em>), we can replace the anonymous inner class with a nested lambda expression:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
@@ -142,7 +142,7 @@ HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
 };
 </div>
 
-<p>While that's better, there's still room for improvement. Instead of the <span class="code">for</span> loop, we could create a <span class="code">Stream</span> from the <span class="code">runnables</span> vargars parameter and execute each one of its <span class="code">Runnable</span> elements with the <span class="code">forEach()</span> terminal operation:</p>
+<p>While that's better, there's still room for improvement. Instead of the <span class="code">for</span> loop, we could create a <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html" target="_blank">Stream</a></span> from the <span class="code">runnables</span> vargars parameter and execute each one of its <span class="code">Runnable</span> elements with the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#forEach-java.util.function.Consumer-" target="_blank">forEach()</a></span> terminal operation:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 HigherOrderRunnable higherOrderRunnable = (Runnable... runnables) -> {
@@ -231,4 +231,116 @@ public enum Sleeper {
 </div>
 
 <p>The <span class="code">Sleeper.sleep()</span> method uses the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html#iterate-int-java.util.function.IntUnaryOperator-" target="_blank">IntStream.iterate()</a></span> method to generate a stream of descending <span class="code">int</span> elements that are printed in a countdown fashion, i.e. <span class="code">Sleeper.TWO.sleep()</span> produces the <span class="code">2, 1, 0</span> countdown sequence, <span class="code">Sleeper.THREE.sleep()</span> produces <span class="code">3, 2, 1, 0</span>, etc. The <span class="code">Sleeper.sleep()</span> method actually takes <span class="code">n</span> seconds to execute (with <span class="code">n</span> being the starting number) and gently prints the countdown sequence.</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+<p>Let's use the <span class="code">Sleeper</span> enum to see our sequential <span class="code">HigherOrderRunnable</span> in action:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+package com.boundsofjava.newsletter.higherorderrunnable;
+
+public class SequentialHigherOrderRunnableExample {
+
+    public static void demo() {
+        // Create a sequential higher-order runnable, that will combine
+        // runnables by making them run in sequence
+        HigherOrderRunnable sequential = HigherOrderRunnable.sequential();
+
+        // Use the sequential higher-order runnable to combine all our runnables
+        // (Note that the result of combining all our runnables is also a
+        // runnable)
+        Runnable sequence2_7 = sequential.combine(
+                Sleeper.TWO::sleep,
+                Sleeper.THREE::sleep,
+                Sleeper.FOUR::sleep,
+                Sleeper.FIVE::sleep,
+                Sleeper.SIX::sleep,
+                Sleeper.SEVEN::sleep);
+
+        Output.highlighted("SEQUENTIAL");
+
+        // Run our fresh new runnable and see how long it takes
+        long init = System.currentTimeMillis();
+        sequence2_7.run();
+        long end = System.currentTimeMillis();
+
+        Output.highlighted("Total elapsed time: " + (end - init) / 1_000 + " seconds");
+    }
+}
+</div>
+
+<p>We're using our <span class="code">HigherOrderRunnable</span> to combine six <span class="code">Runnable</span> instances, which are defined by the <span class="code">Sleeper.TWO::sleep</span>, <span class="code">Sleeper.THREE::sleep</span>, etc method references. With the help of the <span class="code">Output</span> utility class, the above code produces the following output:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+-----------------------------------------
+SEQUENTIAL
+-----------------------------------------
+TWO => Sleeping for 2 seconds...
+TWO => 2
+TWO => 1
+TWO => 0. Waking up...
+THREE => Sleeping for 3 seconds...
+THREE => 3
+THREE => 2
+THREE => 1
+THREE => 0. Waking up...
+FOUR => Sleeping for 4 seconds...
+FOUR => 4
+FOUR => 3
+FOUR => 2
+FOUR => 1
+FOUR => 0. Waking up...
+FIVE => Sleeping for 5 seconds...
+FIVE => 5
+FIVE => 4
+FIVE => 3
+FIVE => 2
+FIVE => 1
+FIVE => 0. Waking up...
+SIX => Sleeping for 6 seconds...
+SIX => 6
+SIX => 5
+SIX => 4
+SIX => 3
+SIX => 2
+SIX => 1
+SIX => 0. Waking up...
+SEVEN => Sleeping for 7 seconds...
+SEVEN => 7
+SEVEN => 6
+SEVEN => 5
+SEVEN => 4
+SEVEN => 3
+SEVEN => 2
+SEVEN => 1
+SEVEN => 0. Waking up...
+-----------------------------------------
+Total elapsed time: 27 seconds
+-----------------------------------------
+</div>
+
+<p>Executing the <span class="code">sequence2_7</span> instance takes 27 seconds, which is expected, since the <span class="code">Runnable</span> instances are executed sequentially and <span class="code">2 + 3 + 4 + 5 + 6 + 7 = 27</span>.</p>
+
+<p>Here's the code of the <span class="code">Output</span> utility class, which simply formats the given message before printing it:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+package com.boundsofjava.newsletter.higherorderrunnable;
+
+public final class Output {
+
+    private Output() {
+    }
+
+    public static void highlighted(String message) {
+        System.out.println("-----------------------------------------");
+        System.out.println(message);
+        System.out.println("-----------------------------------------");
+    }
+
+    public static void message(String message, Object... args) {
+        System.out.printf(message + "%n", args);
+    }
+}
+</div>
+
 

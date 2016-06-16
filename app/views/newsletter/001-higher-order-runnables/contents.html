@@ -213,7 +213,7 @@ public enum Sleeper {
      * seconds attribute, generating a countdown output.
      */
     public void sleep() {
-        System.out.printf("%s => Sleeping for %d seconds...%n", this, seconds);
+        System.out.printf("%s => Sleeping %d seconds...%n", this, seconds);
         // Countdown iteration: n, n - 1, ..., 0
         IntStream.iterate(seconds, i -> i - 1).limit(seconds).forEach(i -> {
             try {
@@ -257,47 +257,53 @@ public class SequentialHigherOrderRunnableExample {
                 Sleeper.SIX::sleep,
                 Sleeper.SEVEN::sleep);
 
-        Output.highlighted("SEQUENTIAL");
+        System.out.println("-----------------------------------------");
+        System.out.println("SEQUENTIAL");
+        System.out.println("-----------------------------------------");
 
-        // Run our fresh new runnable and see how long it takes
         long init = System.currentTimeMillis();
+
+        // Run our fresh new runnable
         sequence2_7.run();
+
         long end = System.currentTimeMillis();
 
-        Output.highlighted("Total elapsed time: " + (end - init) / 1_000 + " seconds");
+        System.out.println("-----------------------------------------");
+        System.out.println("Total elapsed time: " + (end - init) / 1_000 + " seconds");
+        System.out.println("-----------------------------------------");
     }
 }
 </div>
 
-<p>We're using our <span class="code">HigherOrderRunnable</span> to combine six <span class="code">Runnable</span> instances, which are defined by the <span class="code">Sleeper.TWO::sleep</span>, <span class="code">Sleeper.THREE::sleep</span>, etc method references. With the help of the <span class="code">Output</span> utility class, the above code produces the following output:</p>
+<p>We're using our <span class="code">HigherOrderRunnable</span> to combine six <span class="code">Runnable</span> instances, which are defined by <span class="code">Sleeper.TWO::sleep</span> to <span class="code">Sleeper.SEVEN::sleep</span> method references. Executing the <span class="code">demo()</span> method above produces the following output:</p>
 
-<div hljs hljs-no-escape hljs-language="java">
+<div hljs hljs-no-escape hljs-language="accesslog">
 -----------------------------------------
 SEQUENTIAL
 -----------------------------------------
-TWO => Sleeping for 2 seconds...
+TWO => Sleeping 2 seconds...
 TWO => 2
 TWO => 1
 TWO => 0. Waking up...
-THREE => Sleeping for 3 seconds...
+THREE => Sleeping 3 seconds...
 THREE => 3
 THREE => 2
 THREE => 1
 THREE => 0. Waking up...
-FOUR => Sleeping for 4 seconds...
+FOUR => Sleeping 4 seconds...
 FOUR => 4
 FOUR => 3
 FOUR => 2
 FOUR => 1
 FOUR => 0. Waking up...
-FIVE => Sleeping for 5 seconds...
+FIVE => Sleeping 5 seconds...
 FIVE => 5
 FIVE => 4
 FIVE => 3
 FIVE => 2
 FIVE => 1
 FIVE => 0. Waking up...
-SIX => Sleeping for 6 seconds...
+SIX => Sleeping 6 seconds...
 SIX => 6
 SIX => 5
 SIX => 4
@@ -305,7 +311,7 @@ SIX => 3
 SIX => 2
 SIX => 1
 SIX => 0. Waking up...
-SEVEN => Sleeping for 7 seconds...
+SEVEN => Sleeping 7 seconds...
 SEVEN => 7
 SEVEN => 6
 SEVEN => 5
@@ -319,28 +325,132 @@ Total elapsed time: 27 seconds
 -----------------------------------------
 </div>
 
-<p>Executing the <span class="code">sequence2_7</span> instance takes 27 seconds, which is expected, since the <span class="code">Runnable</span> instances are executed sequentially and <span class="code">2 + 3 + 4 + 5 + 6 + 7 = 27</span>.</p>
+<p>Invoking <span class="code">run()</span> on <span class="code">sequence2_7</span> instance takes 27 seconds, which is expected, since the supplied <span class="code">Runnable</span> instances are executed sequentially and <span class="code">2 + 3 + 4 + 5 + 6 + 7 = 27</span>.</p>
 
-<p>Here's the code of the <span class="code">Output</span> utility class, which simply formats the given message before printing it:</p>
+<p>So far so good. But what if we wanted to execute our <span class="code">Runnable</span> instances in parallel? Let's implement a higher-order runnable that accomplishes this:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+static HigherOrderRunnable parallel(ExecutorService executor) {
+    return runnables -> () -> {
+        try {
+            CountDownLatch latch = new CountDownLatch(runnables.length);
+            Arrays.stream(runnables).forEach(task -> executor.submit(() -> {
+                try {
+                    task.run();
+                } finally {
+                    latch.countDown();
+                }
+            }));
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    };
+}
+</div>
+
+<p>Here we are returning a lambda expression that takes a varargs parameter of <span class="code">Runnable</span> instances (named <span class="code">runnables</span>) and returns a <span class="code">Runnable</span> instance that, when executed, will submit each element of <span class="code">runnables</span> to the provided executor service. A <span class="code">CountDownLatch</span> is used to wait for all the <span class="code">Runnable</span> instances to complete before letting the <span class="code">run()</span> method finish. The <span class="code">Runnable</span> instance we are submitting to the executor service is actually a <span class="code">Runnable</span> wrapper around each <span class="code">Runnable</span> element of <span class="code">runnables</span>. This wrapper is implemented by means of a lambda expression that executes the wrapped <span class="code">Runnable</span> instance (named <span class="code">task</span>) and decrements the count of the latch when <span class="code">task</span> is completed. We do this in a <span class="code">try / finally</span> block, so that the latch is decremented even if <span class="code">task</span> throws an exception.</p>
+
+<p>Let's test the above higher-order runnable with our <span class="code">Sleeper</span> enum:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 package com.boundsofjava.newsletter.higherorderrunnable;
 
-public final class Output {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-    private Output() {
-    }
+public class ParallelHigherOrderRunnableExample {
 
-    public static void highlighted(String message) {
+    public static void demo() {
+        // Create an executor capable of running 6 tasks in parallel
+        ExecutorService executor = Executors.newFixedThreadPool(6);
+
+        // Create a parallel higher-order runnable, that will combine runnables 
+        // by making them run in parallel
+        HigherOrderRunnable parallel = HigherOrderRunnable.parallel(executor);
+
+        // Use the parallel higher-order runnable to combine all our runnables
+        // (Note that the result of combining all our runnables is also a
+        // runnable)
+        Runnable parallel2_7 = parallel.combine(
+                Sleeper.TWO::sleep,
+                Sleeper.THREE::sleep,
+                Sleeper.FOUR::sleep,
+                Sleeper.FIVE::sleep,
+                Sleeper.SIX::sleep,
+                Sleeper.SEVEN::sleep);
+
         System.out.println("-----------------------------------------");
-        System.out.println(message);
+        System.out.println("PARALLEL");
         System.out.println("-----------------------------------------");
-    }
 
-    public static void message(String message, Object... args) {
-        System.out.printf(message + "%n", args);
+        long init = System.currentTimeMillis();
+
+        // Run our fresh new runnable
+        parallel2_7.run();
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("-----------------------------------------");
+        System.out.println("Total elapsed time: " + (end - init) / 1_000 + " seconds");
+        System.out.println("-----------------------------------------");
+
+        // Release executor resources
+        executor.shutdown();
     }
 }
 </div>
+
+<p>Executing the <span class="code">demo()</span> method above produces the following output in my laptop:</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog">
+-----------------------------------------
+PARALLEL
+-----------------------------------------
+TWO => Sleeping for 2 seconds...
+SEVEN => Sleeping for 7 seconds...
+SIX => Sleeping for 6 seconds...
+FIVE => Sleeping for 5 seconds...
+FOUR => Sleeping for 4 seconds...
+THREE => Sleeping for 3 seconds...
+SEVEN => 7
+FIVE => 5
+TWO => 2
+SIX => 6
+FOUR => 4
+THREE => 3
+FIVE => 4
+SEVEN => 6
+THREE => 2
+TWO => 1
+SIX => 5
+FOUR => 3
+THREE => 1
+SEVEN => 5
+FIVE => 3
+TWO => 0. Waking up...
+SIX => 4
+FOUR => 2
+THREE => 0. Waking up...
+SEVEN => 4
+FIVE => 2
+FOUR => 1
+SIX => 3
+FIVE => 1
+SEVEN => 3
+FOUR => 0. Waking up...
+SIX => 2
+FIVE => 0. Waking up...
+SEVEN => 2
+SIX => 1
+SEVEN => 1
+SIX => 0. Waking up...
+SEVEN => 0. Waking up...
+-----------------------------------------
+Total elapsed time: 7 seconds
+-----------------------------------------
+</div>
+
+<p>Invoking <span class="code">run()</span> on <span class="code">parallel2_7</span> instance takes now only 7 seconds, which is expected, since the <span class="code">Runnable</span> instance that takes longest to execute is <span class="code">Sleeper.SEVEN::sleep</span>, that sleeps 7 seconds. The output also shows that all <span class="code">Runnable</span> instances start at once and that they wake up in order, as per their duration (<span class="code">Sleeper.TWO::sleep</span> wakes up first, then <span class="code">Sleeper.THREE::sleep</span>, and so on).</p>
 
 

@@ -40,7 +40,7 @@ Winter winterOf2015 = new Winter(2015);
 Runnable runnable = winterOf2015::whatWasTheWeatherLike;
 </div>
 
-<p>So far so good. But, what if we wanted to assign different blocks of code to different <span class="code">Runnable</span> instances? We might want to keep references not only to the <span class="code">whatWasTheWeatherLike()</span> instance method of the <span class="code">winterOf2015</span> instance, but also to any no-arguments, <span class="code">void</span> method of any class, as well as to any inline block of code:
+<p>But, what if we wanted to assign different blocks of code to different <span class="code">Runnable</span> instances? We might want to keep references not only to the <span class="code">whatWasTheWeatherLike()</span> instance method of the <span class="code">winterOf2015</span> instance, but also to any no-arguments, <span class="code">void</span> method of any class, as well as to any inline block of code:
 
 <div hljs hljs-no-escape hljs-language="java">
 List<Runnable> runnables = new ArrayList<>();
@@ -451,6 +451,121 @@ Total elapsed time: 7 seconds
 -----------------------------------------
 </div>
 
-<p>Invoking <span class="code">run()</span> on <span class="code">parallel2_7</span> instance takes now only 7 seconds, which is expected, since the <span class="code">Runnable</span> instance that takes longest to execute is <span class="code">Sleeper.SEVEN::sleep</span>, that sleeps 7 seconds. The output also shows that all <span class="code">Runnable</span> instances start at once and that they wake up in order, as per their duration (<span class="code">Sleeper.TWO::sleep</span> wakes up first, then <span class="code">Sleeper.THREE::sleep</span>, and so on).</p>
+<p>Invoking <span class="code">run()</span> on the <span class="code">parallel2_7</span> instance takes now only 7 seconds, which is expected, since the <span class="code">Runnable</span> instance that takes longest to execute is <span class="code">Sleeper.SEVEN::sleep</span>. The output also shows that all <span class="code">Runnable</span> instances start at once and that they wake up in order, as per their duration (<span class="code">Sleeper.TWO::sleep</span> wakes up first, then <span class="code">Sleeper.THREE::sleep</span>, and so on).</p>
+
+<p>Up until now, we've used higher-order runnables to execute a list of <span class="code">Runnable</span> instances either sequentially or in parallel. Let's take them to the next level and show how they can be straightforwardly used to execute some <span class="code">Runnable</span> instances sequentially and some in parallel. Consider the following code:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+package com.boundsofjava.newsletter.higherorderrunnable;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class MixedHigherOrderRunnableExample {
+
+    public static void demo() {
+        // Create a sequential higher-order runnable, that will combine
+        // runnables by making them run in sequence
+        HigherOrderRunnable sequential = HigherOrderRunnable.sequential();
+
+        // Use the sequential higher-order runnable to combine our even
+        // runnables first, and then to combine our odd runnables
+        // (Note that the result of combining our even runnables is also a
+        // runnable, and the same occurs with our odd runnables)
+        Runnable sequenceEven = sequential.combine(
+                Sleeper.TWO::sleep,
+                Sleeper.FOUR::sleep,
+                Sleeper.SIX::sleep);
+        Runnable sequenceOdd = sequential.combine(
+                Sleeper.THREE::sleep,
+                Sleeper.FIVE::sleep,
+                Sleeper.SEVEN::sleep);
+
+        // Create an executor capable of running 2 tasks in parallel
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        // Create a parallel higher-order runnable, that will combine
+        // runnables by making them run in parallel
+        HigherOrderRunnable parallel = HigherOrderRunnable.parallel(executor);
+
+        // Use the parallel higher-order runnable to combine our previously
+        // combined even runnables with our previously combined odd runnables
+        // (Note that the result of combining these two runnables is also a
+        // runnable)
+        Runnable mixed2_7 = parallel.combine(sequenceEven, sequenceOdd);
+
+        System.out.println("-----------------------------------------");
+        System.out.println("MIXED");
+        System.out.println("-----------------------------------------");
+
+        long init = System.currentTimeMillis();
+
+        // Run our fresh new runnable
+        mixed2_7.run();
+
+        long end = System.currentTimeMillis();
+
+        System.out.println("-----------------------------------------");
+        System.out.println("Total elapsed time: " + (end - init) / 1_000 + " seconds");
+        System.out.println("-----------------------------------------");
+
+        // Release executor resources
+        executor.shutdown();
+    }
+}
+</div>
+
+<p>On the one hand, we're combining our even <span class="code">Runnable</span> instances with a sequential higher-order runnable, and on the other hand, we're using the same sequential higher-order runnable to combine our odd <span class="code">Runnable</span> instances. Then, we're using a parallel higher-order runnable to combine the <span class="code">Runnable</span> instances previously returned by the sequential higher-order runnable. This produces the following output in my laptop:</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog">
+-----------------------------------------
+MIXED
+-----------------------------------------
+TWO => Sleeping for 2 seconds...
+THREE => Sleeping for 3 seconds...
+THREE => 3
+TWO => 2
+THREE => 2
+TWO => 1
+THREE => 1
+TWO => 0. Waking up...
+FOUR => Sleeping for 4 seconds...
+FOUR => 4
+THREE => 0. Waking up...
+FIVE => Sleeping for 5 seconds...
+FIVE => 5
+FOUR => 3
+FIVE => 4
+FOUR => 2
+FIVE => 3
+FOUR => 1
+FOUR => 0. Waking up...
+FIVE => 2
+SIX => Sleeping for 6 seconds...
+SIX => 6
+FIVE => 1
+SIX => 5
+FIVE => 0. Waking up...
+SEVEN => Sleeping for 7 seconds...
+SIX => 4
+SEVEN => 7
+SIX => 3
+SEVEN => 6
+SIX => 2
+SEVEN => 5
+SIX => 1
+SEVEN => 4
+SIX => 0. Waking up...
+SEVEN => 3
+SEVEN => 2
+SEVEN => 1
+SEVEN => 0. Waking up...
+-----------------------------------------
+Total elapsed time: 15 seconds
+-----------------------------------------
+</div>
+
+<p>Invoking <span class="code">run()</span> on the <span class="code">mixed2_7</span> instance takes 15 seconds. This is to be expected, since, among the <span class="code">Runnable</span> instances that are executed in parallel, the one that takes longest is <span class="code">sequenceOdd</span>, which in turn is the result of combining <span class="code">Sleeper.THREE::sleep</span>, <span class="code">Sleeper.FIVE::sleep</span> and <span class="code">Sleeper.SEVEN::sleep</span> sequentially. And <span class="code">3 + 5 + 7 = 15</span>, matching our total duration.</p>
+
 
 

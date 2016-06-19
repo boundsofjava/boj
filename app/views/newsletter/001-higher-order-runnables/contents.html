@@ -160,7 +160,7 @@ HigherOrderRunnable higherOrderRunnable =
     runnables -> () -> Arrays.stream(runnables).forEach(Runnable::run);
 </div>
 
-<p>Starting from Java 8, interfaces are allowed to have <span class="code">static</span> methods. I'll take advantage of this new feature to declare the <span class="code">sequential()</span> factory method on our <span class="code">HigherOrderRunnable</span> functional interface, which will contain the above lambda expression:</p>
+<p>Starting from Java 8, interfaces are allowed to have <span class="code">static</span> methods. I'll take advantage of this feature to declare the <span class="code">sequential()</span> factory method on our <span class="code">HigherOrderRunnable</span> functional interface, which will contain the above lambda expression:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 @FunctionalInterface
@@ -327,6 +327,8 @@ Total elapsed time: 27 seconds
 
 <p>Invoking <span class="code">run()</span> on <span class="code">sequence2_7</span> instance takes 27 seconds, which is expected, since the supplied <span class="code">Runnable</span> instances are executed sequentially and <span class="code">2 + 3 + 4 + 5 + 6 + 7 = 27</span>.</p>
 
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
 <p>So far so good. But what if we wanted to execute our <span class="code">Runnable</span> instances in parallel? Let's implement a higher-order runnable that accomplishes this:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
@@ -349,7 +351,9 @@ static HigherOrderRunnable parallel(ExecutorService executor) {
 }
 </div>
 
-<p>Here we are returning a lambda expression that takes a varargs parameter of <span class="code">Runnable</span> instances (named <span class="code">runnables</span>) and returns a <span class="code">Runnable</span> instance that, when executed, will submit each element of <span class="code">runnables</span> to the provided executor service. A <span class="code">CountDownLatch</span> is used to wait for all the <span class="code">Runnable</span> instances to complete before letting the <span class="code">run()</span> method finish. The <span class="code">Runnable</span> instance we are submitting to the executor service is actually a <span class="code">Runnable</span> wrapper around each <span class="code">Runnable</span> element of <span class="code">runnables</span>. This wrapper is implemented by means of a lambda expression that executes the wrapped <span class="code">Runnable</span> instance (named <span class="code">task</span>) and decrements the count of the latch when <span class="code">task</span> is completed. We do this in a <span class="code">try / finally</span> block, so that the latch is decremented even if <span class="code">task</span> throws an exception.</p>
+<p>Here we are creating a lambda expression that takes a varargs parameter of <span class="code">Runnable</span> instances (named <span class="code">runnables</span>). This lambda expression returns a <span class="code">Runnable</span> instance that, when executed, will submit each element of <span class="code">runnables</span> to the provided executor service. A <span class="code">CountDownLatch</span> is used to wait until all of them complete their execution.</p>
+
+<p>Note that the <span class="code">Runnable</span> instance we are submitting to the executor service is a wrapper around each <span class="code">Runnable</span> element of <span class="code">runnables</span>. This wrapper is implemented by means of a lambda expression in which we only do two things: first, we execute the actual <span class="code">Runnable</span> instance (named <span class="code">task</span>) and then, we immediately decrement the count of the latch. In order to decrement the latch even if the <span class="code">task.run()</span> method throws an exception, we're using a <span class="code">try/finally</span> block.</p>
 
 <p>Let's test the above higher-order runnable with our <span class="code">Sleeper</span> enum:</p>
 
@@ -453,7 +457,9 @@ Total elapsed time: 7 seconds
 
 <p>Invoking <span class="code">run()</span> on the <span class="code">parallel2_7</span> instance takes now only 7 seconds, which is expected, since the <span class="code">Runnable</span> instance that takes longest to execute is <span class="code">Sleeper.SEVEN::sleep</span>. The output also shows that all <span class="code">Runnable</span> instances start at once and that they wake up in order, as per their duration (<span class="code">Sleeper.TWO::sleep</span> wakes up first, then <span class="code">Sleeper.THREE::sleep</span>, and so on).</p>
 
-<p>Up until now, we've used higher-order runnables to execute a list of <span class="code">Runnable</span> instances either sequentially or in parallel. Let's take them to the next level and show how they can be straightforwardly used to execute some <span class="code">Runnable</span> instances sequentially and some in parallel. Consider the following code:</p>
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+<p>Up until now, we've used our higher-order runnables to execute a list of <span class="code">Runnable</span> instances either sequentially or in parallel. However, their real power resides in the essential fact that they're not only higher-order, but also <span class="code">Runnable</span> instances. As such, they can be subsequently combined with other <span class="code">Runnable</span> instances, producing a new <span class="code">Runnable</span> result, which in turn can be combined with more <span class="code">Runnable</span> instances to produce another <span class="code">Runnable</span> result, etc. In the following code, I'll show how this technique can be used to execute some <span class="code">Runnable</span> instances sequentially and some in parallel:</p>
 
 <div hljs hljs-no-escape hljs-language="java">
 package com.boundsofjava.newsletter.higherorderrunnable;
@@ -492,7 +498,7 @@ public class MixedHigherOrderRunnableExample {
         // combined even runnables with our previously combined odd runnables
         // (Note that the result of combining these two runnables is also a
         // runnable)
-        Runnable mixed2_7 = parallel.combine(sequenceEven, sequenceOdd);
+        Runnable mixed = parallel.combine(sequenceEven, sequenceOdd);
 
         System.out.println("-----------------------------------------");
         System.out.println("MIXED");
@@ -501,7 +507,7 @@ public class MixedHigherOrderRunnableExample {
         long init = System.currentTimeMillis();
 
         // Run our fresh new runnable
-        mixed2_7.run();
+        mixed.run();
 
         long end = System.currentTimeMillis();
 
@@ -565,7 +571,35 @@ Total elapsed time: 15 seconds
 -----------------------------------------
 </div>
 
-<p>Invoking <span class="code">run()</span> on the <span class="code">mixed2_7</span> instance takes 15 seconds. This is to be expected, since, among the <span class="code">Runnable</span> instances that are executed in parallel, the one that takes longest is <span class="code">sequenceOdd</span>, which in turn is the result of combining <span class="code">Sleeper.THREE::sleep</span>, <span class="code">Sleeper.FIVE::sleep</span> and <span class="code">Sleeper.SEVEN::sleep</span> sequentially. And <span class="code">3 + 5 + 7 = 15</span>, matching our total duration.</p>
+<p>Invoking <span class="code">run()</span> on the <span class="code">mixed</span> instance takes 15 seconds. This is to be expected, since, amongst the <span class="code">Runnable</span> instances that are executed in parallel, the one that takes longest is <span class="code">sequenceOdd</span>, which in turn is the result of combining <span class="code">Sleeper.THREE::sleep</span>, <span class="code">Sleeper.FIVE::sleep</span> and <span class="code">Sleeper.SEVEN::sleep</span> sequentially. And <span class="code">3 + 5 + 7 = 15</span>, matching our total duration.</p>
+
+<p>Finally, here is a class that launches the three demos shown above:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+package com.boundsofjava.newsletter.higherorderrunnable;
+
+public class BojNewsletter001 {
+
+    public static void main(String[] args) {
+
+        // Run sequential runnables combinator demo
+        SequentialHigherOrderRunnableExample.demo();
+
+        // Run parallel runnables combinator demo
+        ParallelHigherOrderRunnableExample.demo();
+
+        // Run sequential + parallel runnables combinator demo
+        MixedHigherOrderRunnableExample.demo();
+    }
+}
+</div>
+
+<p>And this is how my very first (and quite long) newsletter comes to an end. I hope you've enjoyed reading it as much as I've enjoyed writing it.</p>
+
+<p>Regards,<br />
+fps.-</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
 
 
 

@@ -3,14 +3,17 @@
 
 	<hr class="from-left spacing" data-ng-if="!$first" />
 	<div class="content-heading">
-		<h1>{{post.title}}</h1>
-		<h4>{{post.prettyDate}}</h4>
-	    <br />
+
+		<h1 data-ng-bind-html="post.title"></h1>
+
+		<p><br /><small data-ng-bind-html="post.summary"></small></p>
+
+		<div class="separator spacing">&#10022; &#10022; &#10022;</div>
 
 	    <div data-ng-include="'views/blog/' + post.id + '.html'" data-ng-cloak></div>
 	    <br />
 
-	    <div><small>Posted by: <strong><a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></strong></small></div>
+		<p class="small newsletter-date-author"><small>Posted on {{post.prettyDate}} by <a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></small></p>
 	    <br />
 
 	    <a href="" data-ng-show="visibleCommentsPostId === ''" data-ng-click="showCommentsWidget('{{post.id}}')">Show comments</a>

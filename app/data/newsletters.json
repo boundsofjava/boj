@@ -5,7 +5,7 @@
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
     "issue": "1",
-    "date": "2016-06-10",
+    "date": "2016-06-26",
     "summary": "A <em>higher-order function</em> is a function that takes one or more functions as arguments and that might return a function as its result. Here we take an informal approach to higher-order functions by showing how to apply this functional programming concept to <span class='code'>Runnable</span> instances."
   }
 ]

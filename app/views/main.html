@@ -58,12 +58,18 @@
       <a vertilize data-ng-href="/blog" class="list-group-item list-group-item-odd">
         <h2 class="title">Blog</h2>
         <hr class="from-left little-spacing" />
-        <h3 class="list-group-item-heading" data-ng-bind-html="mostRecentBlog.title"></h3>
-        <p class="list-group-item-text" data-ng-bind-html="mostRecentBlog.summary">
-        </p>
-        <p class="list-group-item-date">
-          <span class="small pull-right">{{mostRecentBlog.prettyDate}}</span>
-        </p>
+        <div data-ng-if="!mostRecentBlog.noEntries">
+          <h3 class="list-group-item-heading" data-ng-bind-html="mostRecentBlog.title"></h3>
+          <p class="list-group-item-text" data-ng-bind-html="mostRecentBlog.summary">
+          </p>
+          <p class="list-group-item-date">
+            <span class="small pull-right">{{mostRecentBlog.prettyDate}}</span>
+          </p>
+        </div>
+        <div data-ng-if="mostRecentBlog.noEntries">
+          <h3 class="list-group-item-heading">No entries yet</h3>
+          <p class="list-group-item-text">The Bounds of Java Blog is still under construction.</p>
+        </div>
       </a>
     </div>
   </div>

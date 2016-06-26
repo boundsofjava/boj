@@ -17,6 +17,11 @@ angular.module('bojApp')
           method: 'GET',
           transformResponse: function (data) {
             var posts = JSON.parse(data);
+            if (posts.length === 0) {
+              return {
+                noEntries: true
+              };
+            }
             var newest = posts.reduce(function (a, b) {
               return a.date > b.date ? a : b;
             });

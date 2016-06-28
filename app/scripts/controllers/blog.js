@@ -4,11 +4,19 @@ angular.module('bojApp')
   .controller('BlogCtrl', function ($scope, $location, Blog) {
     
     var allPosts = Blog.query(null, function (value) {
-      var firstPost = value[0];
-      $scope.posts = [firstPost];
+      if (typeof value === 'undefined' || value.length === 0) {
+        $scope.noEntries = true;
+      } else {
+        $scope.noEntries = false;
+        var firstPost = value[0];
+        $scope.posts = [firstPost];
+      }
     });
 
     $scope.loadPost = function () {
+      if (typeof $scope.posts === 'undefined' || $scope.posts.length === 0) {
+        return;
+      }
       var loadedCount = $scope.posts.length;
       if (loadedCount < allPosts.length) {
         var postToLoad = allPosts[loadedCount];

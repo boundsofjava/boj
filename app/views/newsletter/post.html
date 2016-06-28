@@ -2,7 +2,7 @@
 
 	<div class="content-heading">
 
-		<h1>#{{newsletter.issue}} &ndash; {{newsletter.title}}</h1>
+		<h1>#{{newsletter.issue}} &ndash; <span data-ng-bind-html="newsletter.title"></span></h1>
 
 		<p class="small newsletter-date-author"><small>Published on {{newsletter.prettyDate}} by <a data-ng-href="{{newsletter.authorUrl}}" target="_blank">{{newsletter.author}}</a></small></p>
 

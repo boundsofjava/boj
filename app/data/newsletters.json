@@ -1,0 +1,38 @@
+[
+  { 
+    "title": "Higher-order Runnables", 
+    "post": "001-higher-order-runnables",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "issue": "1",
+    "date": "2016-06-26",
+    "summary": "A <em>higher-order function</em> is a function that takes one or more functions as arguments and that might return a function as its result. Here we take an informal approach to higher-order functions by showing how to apply this functional programming concept to <span class='code'>Runnable</span> instances."
+  },
+  { 
+    "title": "Functional Default Arguments", 
+    "post": "002-functional-default-arguments",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "issue": "2",
+    "date": "2016-08-19",
+    "summary": "Java lacks a built-in way to define default arguments for methods and constructors. Over the years, several approaches have been proposed, each with its pros and cons. The most widely-known one uses <em>method overloading</em>, though varargs, null values, the builder pattern and even maps have been used as well. Here we propose a new approach based on functional constructs."
+  },
+  { 
+    "title": "Introducing Combinators &ndash; Part 1", 
+    "post": "003-introducing-combinators-part1",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "issue": "3",
+    "date": "2017-11-22",
+    "summary": "In this issue of The Bounds of Java Newsletter, we present a few basic functional constructs that every developer should be aware of. We also introduce the concept of <em>combinator</em>, which is of key importance to write useful functional code, though we carefully avoid digging into the intricacies of combinatory logic."
+  },
+  { 
+    "title": "Introducing Combinators &ndash; Part 2", 
+    "post": "003b-introducing-combinators-part2",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "issue": "3b",
+    "date": "2017-12-30",
+    "summary": "This issue of The Bounds of Java Newsletter is the second part of a series about combinators. Here we introduce additional combinators and show how they can be implemented by building on some combinators presented in the previous newsletter."
+  }
+]

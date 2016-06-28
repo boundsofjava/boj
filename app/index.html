@@ -1,87 +1,171 @@
 <!doctype html>
 <html class="no-js">
+
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter." />
+    <meta name="keywords" content="java, bounds, bounds of java, newsletter, bounds of java newsletter, advanced tricks, software, architecture, software architecture, patterns, software patterns, design patterns, engineering, object-oriented, object-oriented design, object-oriented principles, SOLID, KISS, DRY, YAGNI, functional programming, courses, online courses, training, online training, consultancy, expert, blog, bounds of java blog" />
+    <meta name="author" content="Federico Peralta Schaffner" />
+
     <title>The Bounds of Java</title>
-    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter, presented along with compelling examples.">
-    <meta name="viewport" content="width=device-width">
+
+    <base href="/" />
+
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script>
+      if (window.location.host.indexOf('localhost') === -1) {
+        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'async-hide','dataLayer',4000,
+        {'GTM-W73MMCX':true});
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-79990924-1', 'auto');
+        ga('require', 'GTM-W73MMCX');
+        ga('send', 'pageview');
+
+        var boj_d = document,
+          boj_h = boj_d.getElementsByTagName('head')[0],
+          boj_s = boj_d.createElement('script');
+        boj_s.type = 'text/javascript';
+        boj_s.async = true;
+        boj_s.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        boj_h.appendChild(boj_s);
+
+        (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9093120881145477",
+          enable_page_level_ads: true
+        });
+      }
+    </script>
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css" />
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/darkula.css" />
+    <link rel="stylesheet" href="bower_components/raleway/raleway.css" />
     <!-- endbower -->
     <!-- endbuild -->
+
     <!-- build:css(.tmp) styles/boj.css -->
-    <link rel="stylesheet" href="styles/boj.css">
-    <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/boj.css" />
+    <link rel="stylesheet" href="styles/slider.css" />
+    <link rel="stylesheet" href="styles/background.css" />
     <!-- endbuild -->
+
   </head>
-  <body data-ng-app="bojApp">
+
+  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar('#main-navbar')" data-ng-class="backgroundClass()" data-ng-cloak>
+
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="separator-thin"></div>
-        <div class="container">
+    <div id="top" name="top" class="header">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" change-class-on-scroll offset="3" scroll-class="navbar-opaque">
+
+        <hr />
+
+        <div class="navbar-container">
+
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+
+            <button type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-target="#main-navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="" href="#/"><img src="images/boj.jpg" alt="The Bounds of Java"></img></a>
+
+            <a data-ng-href="/" class="navbar-brand">
+              <img src="images/boj-logo.png" alt="The Bounds of Java logo"></img>
+            </a>
+
           </div>
-          <div class="collapse navbar-collapse" id="js-navbar-collapse" data-ng-controller="HeaderCtrl">
+
+          <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="nav navbar-nav">
-              <li data-ng-class="{active: isActive('/')}"><a href="#/">HOME</a></li>
-              <li data-ng-if="isEnabled('/newsletter')" data-ng-class="{active: isActive('/newsletter')}"><a data-ng-href="#/newsletter">NEWSLETTER</a></li>
-              <li data-ng-if="isEnabled('/courses')" data-ng-class="{active: isActive('/courses')}"><a data-ng-href="#/courses">COURSES</a></li>
-              <li data-ng-if="isEnabled('/consultancy')" data-ng-class="{active: isActive('/consultancy')}"><a data-ng-href="#/consultancy">CONSULTANCY</a></li>
-              <li data-ng-if="isEnabled('/blog')" data-ng-class="{active: isActive('/blog')}"><a data-ng-href="#/blog">BLOG</a></li>
-              <li data-ng-class="{active: isActive('/about')}"><a data-ng-href="#/about">ABOUT</a></li>
+
+              <li data-ng-class="{active: isActive('/')}">
+                <a data-hover="HOME" href="/">HOME</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/newsletter')}">
+                <a data-hover="NEWSLETTER" data-ng-href="/newsletter">NEWSLETTER</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/services')}">
+                <a data-hover="SERVICES" data-ng-href="/services">SERVICES</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/blog')}">
+                <a data-hover="BLOG" data-ng-href="/blog">BLOG</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/about')}">
+                <a data-hover="ABOUT" data-ng-href="/about">ABOUT</a>
+              </li>
+
             </ul>
           </div>
+
         </div>
-        <div class="separator-thin"></div>
+
+        <hr />
+
       </div>
     </div>
 
     <div class="content-wrapper">
-      <div class="container">
-        <div data-ng-view></div>
+      <div class="container spacing">
+        <div data-ng-view data-ng-cloak autoscroll="true"></div>
       </div>
     </div>
 
-    <div class="separator-thin"></div>
-    <div class="footer" data-ng-controller="FooterCtrl">
-      <div class="container">
-        <ul class="nav">
-          <li class="navbar-text">
-            <span>The Bounds of Java</span> © {{currentYear}}
-          </li>
-          <li class="navbar-text">
-            <a data-ng-href="#/privacy">Privacy</a>
-          </li>
-          <li class="navbar-text">
-            <a data-ng-href="#/contact">Contact</a>
-          </li>
-        </ul>
+    <div class="footer" data-ng-cloak>
+      <hr />
+      <div class="container spacing">
+        <p class="spacing">
+            &copy; Copyright {{currentYear}}, <a data-ng-href="/about" target="_blank">Federico Peralta Schaffner</a>.
+        </p>
+        <p class="small">
+          Postal address: Perez y Fuentes M.284 S.1, El Pinar 15800, Uruguay
+        </p>
+        <p class="small">
+          This site uses cookies and local storage (if available) to improve user experience.
+        </p>
+        <p class="small">
+          The Bounds of Java Newsletter is distributed via <a href="http://mailchimp.com" target="_blank">Mailchimp</a>. All comments in this website are hosted at <a href="http://disqus.com" target="_blank">Disqus</a>. Please refer to their terms and privacy policies for details.
+        </p>
+        <p class="small">
+          Personal data is kept private and won't be shared with any third-party, except for the aforementioned providers, which are subject to their respective terms and privacy policies.
+        </p>
+        <p class="small">
+          Java is a registered trademark of Oracle and/or its affiliates. Other names might be trademarks of their respective owners.
+        </p>
       </div>
     </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <!--<script>
-      !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-      (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-      r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-      }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-XXXXX-X');
-      ga('send', 'pageview');
-    </script>-->
+    <div class="back-to-top" change-class-on-scroll offset="200" scroll-class="back-to-top-visible" data-ng-click="backToTop()">
+      <span class="top-icon glyphicon glyphicon-circle-arrow-up"></span>
+      <strong class="top-text">TOP</strong>
+    </div>
+
+    <script id="dsq-count-scr" src="//boundsofjava.disqus.com/count.js" async></script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -94,8 +178,14 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/angular-utils-disqus/dirDisqus.js"></script>
+    <script src="bower_components/angular-mailchimp/angular-mailchimp.js"></script>
+    <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
+    <script src="bower_components/angular-vertilize/angular-vertilize.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -103,17 +193,21 @@
     <script src="scripts/app.js"></script>
 
     <script src="scripts/services/slider.js"></script>
+    <script src="scripts/services/utils.js"></script>
+    <script src="scripts/services/newsletter.js"></script>
+    <script src="scripts/services/blog.js"></script>
+    <script src="scripts/services/countries.js"></script>
 
-    <script src="scripts/controllers/header.js"></script>
+    <script src="scripts/controllers/page.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/newsletter.js"></script>
+    <script src="scripts/controllers/services.js"></script>
     <script src="scripts/controllers/courses.js"></script>
     <script src="scripts/controllers/consultancy.js"></script>
+    <script src="scripts/controllers/jobs.js"></script>
+    <script src="scripts/controllers/training.js"></script>
     <script src="scripts/controllers/blog.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/privacy.js"></script>
-    <script src="scripts/controllers/contact.js"></script>
-    <script src="scripts/controllers/footer.js"></script>
     <!-- endbuild -->
   </body>
 </html>

@@ -1,0 +1,604 @@
+<h2><em>Background</em></h2>
+
+<p>Many languages support default arguments for methods and constructors out of the box, i.e. Scala:</p>
+
+<div hljs hljs-no-escape hljs-language="scala"><!-- htmlmin:ignore -->
+def sum(x: Int = 6, y: Int = 7): Int = x + y
+<!-- htmlmin:ignore --></div>
+
+<p>The <span class="code">sum</span> method can be invoked as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="scala"><!-- htmlmin:ignore -->
+sum(1, 2)         //  3 -> x = 1, y = 2 (no defaults)
+sum(3)            // 10 -> x = 3, default y = 7
+sum(y = 5)        // 11 -> default x = 6, y = 5
+sum()             // 13 -> default x = 6, default y = 7
+sum(y = 3, x = 4) //  7 -> x = 4, y = 3 (no defaults)
+<!-- htmlmin:ignore --></div>
+
+<p>This is very handy, but Java doesn't support it. There are a few different ways to accomplish something similar, however all of them have some drawback.</p>
+
+
+<h3 class="top-spacing"><em>Method overloading</em></h3>
+
+<p>The most widely-known one uses <em>method overloading</em> to simulate default arguments:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+public int sum(int x, int y) {
+    return x + y; // actual implementation
+}
+
+public int sum(int x) { // default y = 7
+    return this.sum(x, 7);
+}
+
+public int sum() {      // default x = 6 
+    return this.sum(6); // and y = 7 (implicitly)
+}
+<!-- htmlmin:ignore --></div>
+
+<p>Despite this is a very common pattern (or anti-pattern) in Java, it has some drawbacks:
+    <ul>
+        <li class="little-spacing">The number of overloads for the method increases exponentially with the number of arguments, since all possible, meaningful argument combinations must be considered.</li>
+
+        <li class="little-spacing">Some argument combinations are not possible because overloaded methods are differentiated by the number and the type of the arguments passed into the method. In the example above, there's no way to define an overload <span class="code">sum(int y)</span> that defaults the value of <span class="code">x</span>, because we have chosen to specify <span class="code">x</span> as an explicit argument (defaulting <span class="code">y</span> to <span class="code">7</span>).</li>
+        
+        <li class="little-spacing">Definition of default argument values is implemented inside the overloaded methods, thus making defaults global to every caller. In other words, this does not take the method invocation's context into account.</li>
+    </ul>
+</p>
+
+
+<h3 class="top-spacing"><em>Varargs</em></h3>
+
+<p>Another approach to default arguments in Java is using <em>varargs</em>:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+public int sum(int... arguments) {
+    // Define default values
+    int x = 6;
+    int y = 7;
+
+    // Extract explicit argument values, checking bounds
+    if (arguments != null &amp;&amp; arguments.length >= 1) {
+        x = arguments[0];
+        if (arguments.length >= 2) {
+            y = arguments[1];
+        }
+    }
+    
+    return x + y;
+}
+<!-- htmlmin:ignore --></div>
+
+<p>Here we define the default values and then extract the explicit arguments from the varargs parameter. Each default value is preserved only if its corresponding explicit value is not present in the varargs parameter.</p>
+
+<p>Drawbacks of this approach are:
+    <ul>
+        <li class="little-spacing">As per the Java Language Specification, varargs parameters must be specified at the end of the argument list.</li>
+
+        <li class="little-spacing">If default arguments were of different types, the varargs parameter definition should be changed to <span class="code">Object... arguments</span>. But if we do this, we lose static type checking, so we would have to check each argument's type at runtime, cast it and handle all possible errors...</li>
+        
+        <li class="little-spacing">Both definition of default argument values and handling of the varargs parameter are to be implemented inside the method. As with the method overloading approach, defaults remain global to every caller, so the method invocation's context is not taken into account.</li>
+    </ul>
+</p>
+
+
+<h3 class="top-spacing"><em>Null values</em></h3>
+
+<p>This approach is quite simple: if you invoke the method with a <span class="code">null</span> argument, then its corresponding default value is used instead:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+public int sum(Integer x, Integer y) {
+    // Define default values
+    x = x == null ? 6 : x;
+    y = y == null ? 7 : y;
+    
+    return x + y;
+}
+<!-- htmlmin:ignore --></div>
+
+<p>Using null values is much simpler than previous approaches. However it still has some drawbacks:
+    <ul>
+        <li class="little-spacing">As <span class="code">null</span> is to be used to specify a default value, it cannot be used as an argument's valid explicit value.</li>
+
+        <li class="little-spacing">Primitives are not allowed, since only references can be <span class="code">null</span>. This is why we've used wrapper types in the example above.</li>
+        
+        <li class="little-spacing">Checking for <span class="code">null</span> arguments and assigning default values has to be implemented inside the method. Again, defaults remain global to every caller, so the method invocation's context is not taken into account.</li>
+    </ul>
+</p>
+
+
+<h3 class="top-spacing"><em>Other approaches: maps, <span class="code">Optional</span> and the builder pattern</em></h3>
+
+<p>In this <a href="//stackoverflow.com/a/12994104/1876620" target="_blank">StackOverflow answer</a> given by user Vitalii Fedorenko, all common approaches to default arguments are visited. I won't analyze them here, since there are already a lot of articles that explore their pros and cons. Instead, I would like to introduce a new way to work with default arguments in Java that takes functional programming into consideration.</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+
+<h2><em>Default arguments and functional programming</em></h2>
+
+<p>Let me introduce you to the <span class="code">MaleProgrammer</span> class, which I'll use as an example for the rest of this newsletter:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+import java.util.stream.DoubleStream;
+
+/**
+ * Represents a typical male programmer.
+ */
+public class MaleProgrammer {
+
+    /**
+     * Puts this male programmer to perform the given task for the specified duration
+     * and prints how profitable it was to hire him.
+     * Total profit is lowered if there are women nearby.
+     *
+     * @param task          Task to be performed by this male programmer
+     * @param durationHours Duration of the task
+     * @param womenNearby   Number of women nearby
+     */
+    public void performTask(Task task, int durationHours, int womenNearby) {
+        String output = "- I've been %s for %d hours.%n";
+        output += "  %d women nearby.%n";
+        output += "  I'm as valuable as $ %.2f.%n";
+
+        // Calculate initial profit that matches the whole task duration
+        double profit = task.getProfitPerHour() * durationHours;
+
+        // Now introduce negative factors (each women nearby
+        // implies a cumulative 10% profit reduction)
+        double totalProfit = DoubleStream.iterate(profit, p -> p * 0.90)
+                .limit(womenNearby + 1)
+                .min()
+                .orElse(profit);
+
+        System.out.printf(output, task.getAction(), durationHours, womenNearby, totalProfit);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>The <span class="code">performTask</span> method performs the given task for the given duration, taking the number of women nearby into account. These three arguments are used to calculate how profitable it was to hire this <span class="code">MaleProgrammer</span> instance.</p>
+
+<p><span class="code">Task</span> is an enum that represents all the possible tasks a male programmer can do:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+/**
+ * Represents all possible tasks a typical male programmer can accomplish.
+ */
+public enum Task {
+    DEVELOP_SOFTWARE("developing software", 100.0),
+    GO_TO_TOILET("in the toilet", 10.0),
+    TALK_ABOUT_SUPERHEROS("talking about superheros", 1.0),
+    FALL_IN_LOVE("in love", -50.0);
+
+    private final String action;
+
+    private final double profitPerHour;
+
+    Task(String action, double profitPerHour) {
+        this.action = action;
+        this.profitPerHour = profitPerHour;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public double getProfitPerHour() {
+        return profitPerHour;
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>We'll use the <span class="code">Task</span> enum to make our male programmer do different things. If he develops software, he'll be as productive as <span class="code">$100.00</span> per hour. If he goes to the toilet, he might still be thinking about software, so he'll be as productive as <span class="code">$10.00</span> per hour. If he talks about superheros, at least he'll be using his brain, that's why we assume he'll be as productive as <span class="code">$1.00</span> per hour. On the other hand, whenever he falls in love, his mind will be completely useless. He'll introduce bugs, will forget to test new functionalities or will carry out needless refactors, so his employer will surely lose <span class="code">$50.00</span> per hour.</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+
+<p>Now, we'd like to define default values for the arguments of the <span class="code">performTask</span> method of the <span class="code">MaleProgrammer</span> class. Let's see first how we could do it with method overloading:</p>
+
+<h3 class="top-spacing"><em>The traditional, common way</em></h3>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+/**
+ * Overloads for MaleProgrammer.
+ */
+public class MethodOverloadingMaleProgrammer extends MaleProgrammer {
+
+    /**
+     * Puts this male programmer to perform the given task for the specified duration
+     * and prints how profitable it was to hire him.
+     * It is assumed that there are no women nearby.
+     *
+     * @param task          Task to be performed by this male programmer
+     * @param durationHours Duration of the task
+     */
+    public void performTask(Task task, int durationHours) {
+        // Method overloading approach weakness: we choose to default womenNearby to 0.
+        // As durationsHours is also an int, we cannot overload this method with a default 
+        // value for it, while also allowing womenNearby as an argument. We have to choose
+        // which argument to give a default value and which argument to expose to the user.
+        super.performTask(task, durationHours, 0);
+    }
+
+    /**
+     * Puts this male programmer to develop software for the specified duration
+     * and prints how profitable it was to hire him.
+     * It is assumed that there are no women nearby.
+     *
+     * @param durationHours Duration of software development task
+     */
+    public void performTask(int durationHours) {
+        // Same weakness here: we default task to Task.DEVELOP_SOFTWARE and choose to expose 
+        // durationHours to the user, while womenNearby defaults to 0 by means of delegation.
+        this.performTask(Task.DEVELOP_SOFTWARE, durationHours);
+        // or this.performTask(durationHours, 0)
+    }
+
+    /**
+     * Puts this male programmer to develop software for the specified duration
+     * and prints how profitable it was to hire him.
+     * Total profit is lowered if there are women nearby.
+     *
+     * @param durationHours Duration of the task
+     * @param womenNearby   Number of women nearby
+     */
+    public void performTask(int durationHours, int womenNearby) {
+        super.performTask(Task.DEVELOP_SOFTWARE, durationHours, womenNearby);
+    }
+
+    /**
+     * Puts this male programmer to perform the given task for a default duration of 8 hours
+     * and prints how profitable it was to hire him.
+     * It is assumed that there are no women nearby.
+     *
+     * @param task Task to be performed by this male programmer
+     */
+    public void performTask(Task task) {
+        this.performTask(task, 8);
+    }
+
+    /**
+     * Puts this male programmer to develop software for a default duration of 8 hours
+     * and prints how profitable it was to hire him.
+     * It is assumed that there are no women nearby.
+     */
+    public void performTask() {
+        this.performTask(Task.DEVELOP_SOFTWARE);
+        // or this.performTask(8)
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>Overloads and defaults are explained in the comments. The only thing I would like to note is that instead of placing the overloaded methods in the <span class="code">MaleProgrammer</span> class, I've decided to place them in a subclass. This is to keep our <span class="code">MaleProgrammer</span> class clean.</p>
+
+<p>As commented above, this approach has some drawbacks:
+    <ul>
+        <li class="little-spacing">The <span class="code">performTask</span> method has 5 overloads.</li>
+
+        <li class="little-spacing">We cannot have default values for every possible combination of arguments. For example, we have defined that the <span class="code">performTask(Task, int)</span> overloaded method receives <span class="code">durationHours</span> in its second argument. As a result, we cannot define a default value for <span class="code">womenNearby</span> while also receiving a <span class="code">Task</span>. <em>(In this special case, we could swap the arguments, i.e. <span class="code">performTask(int, Task)</span>, but this isn't a final solution and we might not be able to always do it).</em></li>
+        
+        <li class="little-spacing">Again, default values for arguments are defined inside the overloaded methods, so they are global to every caller. It would be nice to take the method invocation's context into account.</li>
+    </ul>
+</p>
+
+<p>I have always disliked this way to handle default arguments, it feels so hacky... We could do it much better with a little help from functional programming...</p>
+
+
+<h3 class="top-spacing"><em>The functional way</em></h3>
+
+<p>Since Java 8, any method can be referenced by means of a functional interface, no matter its return type or the number and type of its arguments.</p>
+
+<p>For example, given the following method:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class SomeClass {
+
+    B someMethod(A a) {
+        // Create an instance of B that
+        // depends on a and return it
+        return b;
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>We can get a reference to it using the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" target="_blank">Function</a></span> interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+SomeClass someClass = new SomeClass();
+
+Function&lt;A, B&gt; reference = a -&gt; someClass.someMethod(a);
+<!-- htmlmin:ignore --></div>
+
+<p>Then, we can invoke the <span class="code">someMethod</span> method through our <span class="code">reference</span> function, as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+B b = reference.apply(a);
+<!-- htmlmin:ignore --></div>
+
+<p>If the return type of our method is <span class="code">void</span>:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class SomeClass {
+
+    void otherMethod(A a) {
+        // Do something with a
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>We still can get a reference to it, via the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" target="_blank">Consumer</a></span> interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+SomeClass someClass = new SomeClass();
+
+Consumer&lt;A&gt; reference = a -&gt; someClass.otherMethod(a);
+<!-- htmlmin:ignore --></div>
+
+<p>And then, we can invoke it through our consumer:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+reference.accept(a);
+<!-- htmlmin:ignore --></div>
+
+<p>If our method takes no arguments and returns an instance of <span class="code">B</span>:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class SomeClass {
+
+    B noArgsMethod() {
+        // Create and return an instance of B
+        return b;
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>We should use the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html" target="_blank">Supplier</a></span> interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+SomeClass someClass = new SomeClass();
+
+Supplier&lt;B&gt; reference = () -&gt; someClass.noArgsMethod();
+<!-- htmlmin:ignore --></div>
+
+<p>Invocation would be as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+B b = reference.get();
+<!-- htmlmin:ignore --></div>
+
+<p>If our method is just an action, i.e. it receives no arguments and its return type is <span class="code">void</span>:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class SomeClass {
+
+    void actionMethod() {
+        // Just do something
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>One possibility is to use the <span class="code"><a href="//docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank">Runnable</a></span> interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+SomeClass someClass = new SomeClass();
+
+Runnable reference = () -&gt; someClass.actionMethod();
+<!-- htmlmin:ignore --></div>
+
+<p>We then can invoke the action method this way:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+reference.run();
+<!-- htmlmin:ignore --></div>
+
+<p>Of course, our method might receive multiple arguments and either be <span class="code">void</span> or return a value of some type.</p>
+
+<p>Back to our <span class="code">MaleProgrammer</span> class:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+public class MaleProgrammer {
+
+    public void performTask(Task task, int durationHours, int womenNearby) {
+        // Perform given task, calculate and print profit
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>We'd like to get a reference to the <span class="code">void performTask(Task, int, int)</span> method. But in Java, there's no built-in functional interface with a single abstract method (SAM) that takes three arguments and returns <span class="code">void</span>.</p>
+
+<p>Nonetheless, we could combine the <span class="code">Functional</span> and <span class="code">Consumer</span> interfaces seen above, by applying a functional technique known as <em><a href="https://en.wikipedia.org/wiki/Currying" target="_blank">currying</a></em>:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+MaleProgrammer maleProgrammer = new MaleProgrammer();
+
+Function&lt;Task, Function&lt;Integer, Consumer&lt;Integer&gt;&gt;&gt; reference = 
+    task -&gt; duration -&gt; women -&gt; maleProgrammer.performTask(task, duration, women);
+<!-- htmlmin:ignore --></div>
+
+<p>From the link above, <em>&laquo;currying is the technique of translating the evaluation of a function that takes multiple arguments (...) into evaluating a sequence of functions, each with a single argument.&raquo;</em></p>
+
+<p>Then, we could invoke the <span class="code">void performTask(Task, int, int)</span> method through the <span class="code">reference</span> function as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+reference.apply(Task.DEVELOP_SOFTWARE).apply(8).apply(1);
+<!-- htmlmin:ignore --></div>
+
+<p>Here <span class="code">reference</span> is a <em>currified function</em> that allows us to apply arguments one by one. If you're wondering what all this has to do with default arguments, the answer is that it will give us the opportunity to intercept the method invocation and play with the arguments.</p>
+
+<p>But first, let's declare a functional interface that will help us with the extremely long generic type of the currified function:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+@FunctionalInterface
+public interface DefaultArguments&lt;A, B, C&gt; extends Function&lt;A, Function&lt;B, Consumer&lt;C&gt;&gt;&gt; {
+
+    default void invoke(A a, B b, C c) {
+        this.apply(a).apply(b).accept(c);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>If we replace the <span class="code">Function&lt;Task, Function&lt;Integer, Consumer&lt;Integer&gt;&gt;&gt;</span> type with <span class="code">DefaultArguments&lt;Task, Integer, Integer&gt;</span>, the declaration of <span class="code">reference</span> given above would now become:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+DefaultArguments&lt;Task, Integer, Integer&gt; reference = 
+    task -&gt; duration -&gt; women -&gt; maleProgrammer.performTask(task, duration, women);
+<!-- htmlmin:ignore --></div>
+
+<p>And the invocation would be as simple as:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+reference.invoke(Task.DEVELOP_SOFTWARE, 8, 1);
+<!-- htmlmin:ignore --></div>
+
+<p>Now, we have all the pieces in place to tackle our problem. Let's add three default methods to our <span class="code">DefaultArguments</span> functional interface:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+@FunctionalInterface
+public interface DefaultArguments&lt;A, B, C&gt; extends Function&lt;A, Function&lt;B, Consumer&lt;C&gt;&gt;&gt; {
+
+    default void invoke(A a, B b, C c) {
+        this.apply(a).apply(b).accept(c);
+    }
+
+    default DefaultArguments&lt;A, B, C&gt; defaultingFirst(A defaultFirst) {
+        return a -&gt; b -&gt; c -&gt; this.invoke(Optional.ofNullable(a).orElse(defaultFirst), b, c);
+    }
+
+    default DefaultArguments&lt;A, B, C&gt; defaultingSecond(B defaultSecond) {
+        return a -&gt; b -&gt; c -&gt; this.invoke(a, Optional.ofNullable(b).orElse(defaultSecond), c);
+    }
+
+    default DefaultArguments&lt;A, B, C&gt; defaultingThird(C defaultThird) {
+        return a -&gt; b -&gt; c -&gt; this.invoke(a, b, Optional.ofNullable(c).orElse(defaultThird));
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>The <span class="code">defaultingFirst</span>, <span class="code">defaultingSecond</span> and <span class="code">defaultingThird</span> methods return a new currified function that <em>decorates</em> the enclosing <span class="code">DefaultArguments</span> instance by replacing the corresponding argument with the given default value if the actual, explicit argument is <span class="code">null</span>.</p>
+
+<p>This approach has the following drawbacks:
+    <ul>
+        <li class="little-spacing">As <span class="code">null</span> is to be used to specify a default value, it cannot be used as an argument's valid explicit value.</li>
+
+        <li class="little-spacing">Primitives are not allowed, since only references can be <span class="code">null</span>.</li>
+    </ul>
+</p>
+
+<p>However, now we can have different sets of default arguments for the same method, and use them in different contexts. This is even better than Scala's built-in functionality to define default arguments.</p>
+
+<p>Let's see the <span class="code">DefaultArguments</span> functional interface in action:</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+package com.boundsofjava.newsletter.defaultargument;
+
+public class DefaultArgumentsExample {
+
+    public void demo() {
+        System.out.println();
+        System.out.println("-----------------------------------------");
+        System.out.println("DEFAULT ARGUMENTS");
+        System.out.println("-----------------------------------------");
+
+        // Create a common male programmer
+        MaleProgrammer maleProgrammer = new MaleProgrammer();
+
+        // Create reference pointing to performTask method of maleProgrammer instance
+        DefaultArguments&lt;Task, Integer, Integer&gt; reference = task -&gt; duration -&gt; women -&gt; 
+            maleProgrammer.performTask(task, duration, women);
+
+        // Create new reference with default arguments
+        // As our male programmer has just seen a superhero movie, his defaults will be:
+        // - 1st argument:          task = talk about superheros
+        // - 2nd argument: durationHours = 4
+        // - 3rd argument:   womenNearby = 0
+        DefaultArguments&lt;Task, Integer, Integer&gt; referenceAfterMovie = reference
+            .defaultingFirst(Task.TALK_ABOUT_SUPERHEROS)
+            .defaultingSecond(4)
+            .defaultingThird(0);
+
+        // Invoke referenceAfterMovie, overriding 1st argument only
+        referenceAfterMovie.invoke(Task.DEVELOP_SOFTWARE, null, null);
+
+        // Invoke referenceAfterMovie, overriding 2nd and 3rd arguments
+        referenceAfterMovie.invoke(null, 2, 3);
+
+        // Invoke referenceAfterMovie, defaulting all arguments
+        referenceAfterMovie.invoke(null, null, null);
+
+        System.out.println();
+
+        // Create another reference with default arguments
+        // Our male programmer is working hard now, but he sits next to a woman,
+        // so his defaults will be:
+        // - 1st argument:          task = develop software
+        // - 2nd argument: durationHours = 8
+        // - 3rd argument:   womenNearby = 1
+        DefaultArguments&lt;Task, Integer, Integer&gt; hardWorkReference = reference
+                .defaultingFirst(Task.DEVELOP_SOFTWARE)
+                .defaultingSecond(8)
+                .defaultingThird(1);
+
+        // Invoke hardWorkReference, overriding 1st and 3rd arguments
+        hardWorkReference.invoke(Task.FALL_IN_LOVE, null, 0);
+
+        // Invoke hardWorkReference, overriding 2nd argument only
+        hardWorkReference.invoke(null, 12, null);
+
+        // Invoke hardWorkReference, defaulting all arguments
+        hardWorkReference.invoke(null, null, null);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>Executing the <span class="code">demo()</span> method above produces the following output in my laptop:</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog"><!-- htmlmin:ignore -->
+-----------------------------------------
+DEFAULT ARGUMENTS
+-----------------------------------------
+- I've been developing software for 4 hours.
+  0 women nearby.
+  I'm as valuable as $ 400.00.
+- I've been talking about superheros for 2 hours.
+  3 women nearby.
+  I'm as valuable as $ 1.46.
+- I've been talking about superheros for 4 hours.
+  0 women nearby.
+  I'm as valuable as $ 4.00.
+
+- I've been in love for 8 hours.
+  0 women nearby.
+  I'm as valuable as $ -400.00.
+- I've been developing software for 12 hours.
+  1 women nearby.
+  I'm as valuable as $ 1080.00.
+- I've been developing software for 8 hours.
+  1 women nearby.
+  I'm as valuable as $ 720.00.
+<!-- htmlmin:ignore --></div>
+
+<p>All the code shown here is available in a <a href="https://github.com/boundsofjava/boj-newsletter-002" target="_blank">GitHub repo</a>. Please <a href="/about" target="_blank">contact me</a> if you've found an issue.</p>
+
+<p>I hope you've enjoyed this (again) long newsletter. I'll do my best to keep the next one shorter.</p>
+
+<p>Regards,<br />
+fps.-</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>

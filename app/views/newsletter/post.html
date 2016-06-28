@@ -1,0 +1,40 @@
+<div class="paragraphs" data-ng-controller="SelectedNewsletterCtrl" data-ng-cloak>
+
+	<div class="content-heading">
+
+		<h1>#{{newsletter.issue}} &ndash; <span data-ng-bind-html="newsletter.title"></span></h1>
+
+		<p class="small newsletter-date-author"><small>Published on {{newsletter.prettyDate}} by <a data-ng-href="{{newsletter.authorUrl}}" target="_blank">{{newsletter.author}}</a></small></p>
+
+ 		<h2><em>Outline</em></h2>
+		<p><small data-ng-bind-html="newsletter.summary"></small></p>
+	</div>
+
+	<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+	<div data-ng-include="'views/newsletter/' + post + '/intro.html'" data-ng-cloak></div>
+
+	<div data-ng-include="'views/news/news.html'" data-ng-cloak></div>
+
+	<div class="content-heading">
+		<h1 class="spacing"><span data-ng-bind-html="newsletter.title"></span></h1>
+	</div>
+
+	<div data-ng-include="'views/newsletter/' + post + '/contents.html'" data-ng-cloak></div>
+
+    <div class="nav-newsletter">
+    	<div class="nav-newsletter-button" data-ng-click="previous()">
+    		<span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-left"></span>
+    		<strong class="nav-newsletter-button-text">PREVIOUS</strong>
+    	</div>
+    	<div class="nav-newsletter-button" data-ng-click="index()">
+		    <span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-up"></span>
+		    <strong class="nav-newsletter-button-text">INDEX</strong>
+    	</div>
+    	<div class="nav-newsletter-button" data-ng-click="next()">
+		    <span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-right"></span>
+		    <strong class="nav-newsletter-button-text">NEXT</strong>
+    	</div>
+   	</div>
+
+</div>

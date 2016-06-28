@@ -1,28 +1,107 @@
-<div>
+<div data-ng-include="'views/newsletter/join.html'" data-ng-cloak></div>
 
-  <h2 data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">{{slide.title}}</h2>
+<div class="hidden-xs slider-wrapper">
+  <div data-ng-repeat="slide in slider.slides" data-ng-show="isCurrentSlideIndex($index)" class="slide-repeater">
 
-  <div class="container slider">
+    <div class="content-heading">
+      <h1 class="slide-title">{{slide.title}}</h1>
+    </div>
+    
+    <div class="slider pull-left">
+      <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
 
-    <img data-ng-repeat="slide in slider.slides" class="slide slide-animation nonDraggableImage" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-hide="!isCurrentSlideIndex($index)" data-ng-src="{{slide.image}}"></img>
+      <div class="arrow prev" data-ng-click="prevSlide()"></div>
+      <div class="arrow next" data-ng-click="nextSlide()"></div>
 
-    <div class="arrow prev" data-ng-click="prevSlide()"></div>
-    <div class="arrow next" data-ng-click="nextSlide()"></div>
-
-    <div class="nav">
-      <div class="wrapper">
-        <ul class="dots">
-          <li data-ng-repeat="slide in slider.slides" class="dot">
-            <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
-          </li>
-        </ul>
+      <div class="nav">
+        <div class="wrapper">
+          <ul class="dots">
+            <li data-ng-repeat="s in slider.slides" class="dot">
+              <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
+    <blockquote class="blockquote-reverse">
+      <p><em>{{slide.quote}}</em></p>
+      <small><cite>{{slide.author}}</cite></small>
+    </blockquote>
+
+  </div>
+</div>
+
+<div vertilize-container class="row cleared spacing">
+
+  <div class="col-xs-12 col-sm-6">
+    <div class="list-group">
+      <a vertilize data-ng-href="/newsletter/{{mostRecentNewsletter.post}}" class="list-group-item list-group-item-odd">
+        <h2 class="title">
+          <span class="badge pull-right">ISSUE #{{mostRecentNewsletter.issue}}</span>
+          Newsletter
+        </h2>
+        <hr class="from-left little-spacing" />
+        <h3 class="list-group-item-heading" data-ng-bind-html="mostRecentNewsletter.title"></h3>
+        <p class="list-group-item-text" data-ng-bind-html="mostRecentNewsletter.summary">
+        </p>
+        <p class="list-group-item-date">
+          <small class="pull-right">{{mostRecentNewsletter.prettyDate}}</small>
+        </p>
+      </a>
+    </div>
   </div>
 
-  <div data-ng-repeat="slide in slider.slides" class="slide-description" data-ng-hide="!isCurrentSlideIndex($index)">
-    <span><em>{{slide.description}}</em></span>
+  <div class="col-xs-12 col-sm-6">
+    <div class="list-group">
+      <a vertilize data-ng-href="/blog" class="list-group-item list-group-item-odd">
+        <h2 class="title">Blog</h2>
+        <hr class="from-left little-spacing" />
+        <div data-ng-if="!mostRecentBlog.noEntries">
+          <h3 class="list-group-item-heading" data-ng-bind-html="mostRecentBlog.title"></h3>
+          <p class="list-group-item-text" data-ng-bind-html="mostRecentBlog.summary">
+          </p>
+          <p class="list-group-item-date">
+            <span class="small pull-right">{{mostRecentBlog.prettyDate}}</span>
+          </p>
+        </div>
+        <div data-ng-if="mostRecentBlog.noEntries">
+          <h3 class="list-group-item-heading">No entries yet</h3>
+          <p class="list-group-item-text">The Bounds of Java Blog is still under construction.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div vertilize-container class="row cleared spacing">
+
+  <div class="col-xs-12 col-sm-6">
+    <div class="list-group">
+      <div vertilize class="list-group-item list-group-item-odd">
+        <h2 class="title">Professional services</h2>
+        <hr class="from-left little-spacing" />
+        <p class="list-group-item-text">
+          Jump to the <a data-ng-href="/services">services</a> page to navigate our list of <a data-ng-href="/services/courses">courses</a> and <a data-ng-href="/services/training">trainings</a>.</p>
+        <p class="list-group-item-text little-spacing">Learn about our expert <a data-ng-href="/services/consultancy">consultancy</a> services and find out what's new in our <a data-ng-href="/services/jobs">jobs</a> section.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-12 col-sm-6">
+    <div class="transparent-list-group">
+      <div vertilize style="display: flex; justify-content: center; ">
+        <div style="align-self: center; max-width: 90%; ">
+          <img src="images/pepper-tree.png" alt="Pepper tree" style="vertical-align: bottom; " />
+          <img src="images/moon.png" alt="Moon" style="margin: 20px 20px 0 40px; vertical-align: top; " />
+          <hr />
+          <div style="text-align: center; ">
+            <span style="vertical-align: text-bottom; font-size: smaller; "><small><em>Devised under the pepper tree</em></small></span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

@@ -1,12 +1,24 @@
+.slider-wrapper {
+  margin-top: 3rem;
+}
+
+.slider-wrapper .slide-title {
+    margin-bottom: 5px;
+}
+
+.slider-wrapper blockquote {
+    margin-bottom: 0;
+}
+
 .slider {
-    width: 416px;
+    min-width: 416px;
+    max-width: 416px;
     height: 266px;
     overflow: hidden;
     position: relative;
     border: 8px solid #e8e8e8;
-    background-color: #e6e6e6;
-    float: left;
-    margin: 0 12px 8px 0;
+    background-color: #000;
+    margin: 0 12px 5.5rem 0;
 }
 
 .slider .slide {
@@ -15,9 +27,12 @@
     left: 0;
 }
 
-.slide-description {
-    padding: 0px 12px 10px;
-    font-size: larger;
+.slide-repeater .slide-animation {
+    transition: all ease-in-out 0.8s;
+}
+
+.slide-repeater.ng-hide .slide-animation {
+    opacity: 0;
 }
 
 .slider .arrow {
@@ -35,14 +50,14 @@
     opacity: 0.4;
     left: 0;
     background-image: url(../assets/img/paddle_prev_999.png);
-    transition: 0.2s linear all;
+    transition: 0.3s linear all;
 }
 
 .slider .arrow.next {
     opacity: 0.4;
     right: 0;
     background-image: url(../assets/img/paddle_next_999.png);
-    transition: 0.2s linear all;
+    transition: 0.3s linear all;
 }
 
 .slider .arrow.prev:hover {
@@ -69,7 +84,7 @@
 .slider .nav .wrapper {
     margin: 0 auto;
     width: 100%;
-    padding: 1em 0 .8em;
+    padding: 1em 0 0.8em;
 }
 
 .slider .nav ul {
@@ -86,8 +101,8 @@
 .slider .dots .dot {
     position: relative;
     margin: 0 8px;
-    width: 12px;
-    height: 12px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
 }
 
@@ -95,8 +110,8 @@
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 6px;
-    height: 6px;
+    width: 12px;
+    height: 12px;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -109,9 +124,9 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    -webkit-transition: background-color 0.25s, border-color 0.25s;
-    -moz-transition: background-color 0.25s, border-color 0.25s;
-    transition: background-color 0.25s, border-color 0.25s;
+    -webkit-transition: background-color 1s, border-color 1s;
+    -moz-transition: background-color 1s, border-color 1s;
+    transition: background-color 1s, border-color 1s;
 }
 
 .slider .dots .dot a.active {
@@ -119,6 +134,6 @@
     background-color: transparent;
 }
 
-.nonDraggableImage {
+.non-draggable-image {
     -webkit-user-drag: none;
 }

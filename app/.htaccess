@@ -212,7 +212,11 @@ AddDefaultCharset utf-8
     Options +FollowSymlinks
   # Options +SymLinksIfOwnerMatch
     RewriteEngine On
-  # RewriteBase /
+    RewriteBase /
+    RewriteCond     %{REQUEST_URI} !^(/img|/js|/css|/robots\.txt|/favicon\.ico|/apple-touch-icon\.png)
+    RewriteCond     %{REQUEST_FILENAME} !-f
+    RewriteCond     %{REQUEST_FILENAME} !-d
+    RewriteRule     .               /index.html              [L]
 </IfModule>
 
 # ------------------------------------------------------------------------------

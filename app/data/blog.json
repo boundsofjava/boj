@@ -1,0 +1,20 @@
+[
+  { 
+    "id": "0001-why",
+    "title": "Why <em>&ldquo;The Bounds of Java&rdquo;</em>?",
+    "disqusTitle": "Why The Bounds of Java?",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "summary": "There are at least two different answers for this question. If it's about why I chose <em>&ldquo;The Bounds of Java&rdquo;</em> as a name, the answer might be quite simple. On the other hand, if it refers to why I have launched <em>&ldquo;The Bounds of Java&rdquo;</em> website, I'm afraid I can only start to outline an answer...",
+    "date": "2016-07-26"
+  },
+  { 
+    "id": "0002-about-design-patterns",
+    "title": "About design patterns",
+    "disqusTitle": "About design patterns",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "summary": "Many times I've seen messy, unmaintainable code, mainly due to the absence of design patterns. But even more times I've seen design patterns being applied at places where no one will ever value them. Knowing not only when and how to apply design patterns, but also when and where to <em>not</em> use them, is crucial to avoid frustrations at work.",
+    "date": "2016-11-02"
+  }
+]

@@ -1,0 +1,64 @@
+<div class="paragraphs" data-ng-controller="MailchimpSubscriptionCtrl">
+	<div class="clearfix content-heading" data-ng-controller="NewsletterSubscriptionCtrl">
+
+		<img class="pull-left img-left" data-ng-src="images/mail-delivery.jpg" alt="Mail delivery"></img>
+
+		<h1>Subscription</h1>
+
+		<p data-ng-hide="mailchimp.result === 'success'">Please fill in the form below and start receiving every issue of The Bounds of Java Newsletter directly in your inbox. I plan to write a new post every 2-4 weeks.</p>
+
+		<div data-ng-show="mailchimp.result === 'success'" data-ng-cloak>
+			<p data-ng-bind-html="mailchimp.successMessage"></p>
+			<p>Once you confirm your subscription, you'll start receiving the Bounds of Java Newsletter in your inbox. If you're also interested in more opinionated articles, please visit <a data-ng-href="/blog">The Bounds of Java Blog</a>.</p>
+			<br />
+			<br />
+
+	   		<a data-ng-href="/newsletter">Back to Newsletter index</a>
+		</div>
+
+		<form class="spacing subscription-form" name="MailchimpSubscriptionForm">
+			<div data-ng-hide="mailchimp.result === 'success'">
+			  	<input class="hidden" type="hidden" data-ng-model="mailchimp.username" data-ng-init="mailchimp.username='boundsofjava'">
+			    <input class="hidden" type="hidden" data-ng-model="mailchimp.dc" data-ng-init="mailchimp.dc='us11'">
+			    <input class="hidden" type="hidden" data-ng-model="mailchimp.u" data-ng-init="mailchimp.u='9c6a6de3d1dc13af233ae2023'">
+			    <input class="hidden" type="hidden" data-ng-model="mailchimp.id" data-ng-init="mailchimp.id='a063c5b867'">
+			    
+				<fieldset class="form-group">
+					<label for="name">Full name</label>
+					<input type="text" class="form-control" name="name" id="name" data-ng-model="mailchimp.NAME" placeholder="Full name" required focus="true" />
+				</fieldset>
+			    
+				<fieldset class="form-group">
+					<label for="email">Email address</label>
+			    	<input type="email" class="form-control" name="email" id="email" data-ng-model="mailchimp.EMAIL" placeholder="your@email.com" required />
+		    		<small class="text-muted">Your email will be kept private and won't be shared</small>
+				</fieldset>
+			    
+				<fieldset class="form-group">
+					<label for="seniority">Seniority level</label>
+				    <select class="form-control" name="seniority" id="seniority" data-ng-model="mailchimp.SENIORITY">
+				    	<option>Beginner</option>
+				    	<option>Intermediate</option>
+				    	<option>Advanced</option>
+				    	<option>Expert</option>
+				    </select>
+		   		</fieldset>
+
+				<fieldset class="form-group">
+					<label for="country">Country</label>
+	      			<div angucomplete-alt name="country" id="country" placeholder="Type country" pause="100" selected-object="selectCountry" local-data="countries" search-fields="name" title-field="name" minlength="2" input-class="form-control" auto-match="true" focus-first="true">
+	      			</div>
+				</fieldset>
+			    
+		    	<button type="submit" class="spacing btn btn-primary btn-lg" data-ng-disabled="MailchimpSubscriptionForm.$invalid" data-ng-click="subscribe(mailchimp)">Join now</button>
+
+	    		<a class="btn btn-link btn-lg" data-ng-href="/newsletter">Back</a>
+		    </div>
+
+			<div data-ng-if="showSubscriptionErrorAlert" class="alert alert-fixed alert-danger fade in" data-ng-cloak>
+				<a href="#" class="close" aria-label="close" data-ng-click="onCloseErrorAlert(mailchimp)">&times;</a>
+				<small><span data-ng-bind-html="mailchimp.errorMessage"></span></small>
+			</div>
+		</form>
+	</div>
+</div>

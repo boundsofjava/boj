@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('MainCtrl', function ($scope, Slider) {
+  .controller('MainCtrl', function ($scope, Slider, Newsletters, Blog) {
 
     $scope.slider = Slider;
+    $scope.mostRecentNewsletter = Newsletters.mostRecent();
+    $scope.mostRecentBlog = Blog.mostRecent();
 
     $scope.setCurrentSlideIndex = function (index) {
       $scope.slider.direction = (index > $scope.slider.currentIndex) ? 'left' : 'right';
@@ -32,25 +34,25 @@ angular.module('bojApp')
     return {
   		beforeAddClass: function (element, className, done) {
   			var scope = element.scope();
-  			if (className == 'ng-hide') {
+  			if (className === 'ng-hide') {
   				var finishPoint = element.parent().width();
   				if (scope.slider.direction !== 'right') {
   					finishPoint = -finishPoint;
   				}
-  				TweenMax.to(element, 0.5, { left: finishPoint, onComplete: done });
+  				TweenLite.to(element, 0.5, { left: finishPoint, onComplete: done });
   			} else {
   				done();
   			}
   		},
   		removeClass: function (element, className, done) {
   			var scope = element.scope();
-  			if (className == 'ng-hide') {
+  			if (className === 'ng-hide') {
   				element.removeClass('ng-hide');
   				var startPoint = element.parent().width();
   				if (scope.slider.direction === 'right') {
   					startPoint = -startPoint;
   				}
-  				TweenMax.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
+  				TweenLite.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
   			} else {
   				done();
   			}

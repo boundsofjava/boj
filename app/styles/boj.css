@@ -1,16 +1,40 @@
 html {
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .browsehappy {
-  margin: 0.2em 0;
+  margin: 106px 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+  text-align: center; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 
 body {
   background-color: #262626;
+}
+
+.splash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%; 
+  filter: alpha(opacity=60);
+  opacity: 0.6;
+  background: #000;
+}
+
+.splash h2 {
+  text-align: center;
+  font-size: 4em;
+  color: #fff;      
 }
 
 a, a:hover, a:focus, a img {
@@ -29,27 +53,78 @@ img {
   border: 0;
 }
 
+hr {
+  border: 0;
+  height: 3px;
+  min-height: 3px;
+  margin: 0;
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0), rgba(160, 160, 160, 0.75), rgba(160, 160, 160, 0));
+}
+
+hr.from-left {
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0.75), rgba(160, 160, 160, 0.50), rgba(160, 160, 160, 0));
+}
+
+hr.from-right {
+  background-image: linear-gradient(to right, rgba(160, 160, 160, 0), rgba(160, 160, 160, 0.50), rgba(160, 160, 160, 0.75));
+}
+
+.disabled { 
+  opacity: .5;
+}
+
+.disabled-link {
+  cursor: default; 
+  color: #3070c0;
+}
+
+.tiny-spacing {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.little-spacing {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.medium-spacing {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.spacing {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.double-spacing {
+  margin-top: 28px;
+  margin-bottom: 28px;
+}
+
+.x-double-spacing {
+  margin-top: 36px;
+  margin-bottom: 36px;
+}
+
 .content-wrapper {
-  padding: 110px 10px 10px 10px;
+  padding: 80px 10px 10px 10px;
   width: 100%;
   background-color: #333;
   color: #a0a0a0;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.marketing,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
 }
 
-/* Custom page header */
 .header {
-  margin-bottom: 10px;
+  margin-bottom: 36px;
 }
 
-/* Make the masthead heading the same height as the navigation */
 .header h3 {
   margin-top: 0;
   margin-bottom: 0;
@@ -57,7 +132,6 @@ img {
   padding-bottom: 19px;
 }
 
-/* Custom page footer */
 .footer {
   padding-top: 10px;
   padding-bottom: 15px;
@@ -66,51 +140,25 @@ img {
   font-size: 0.85em;
 }
 
-.footer li > a {
-  padding: 0;
-  margin: 0;
-  color: #777;
-  background-color: transparent;
-}
-
-.footer li > a:hover {
-  color: #ccc;
-  background-color: transparent;
-}
-
-.footer li > a:focus {
-  color: #ccc;
-  background-color: transparent;
-}
-
 .container-narrow > hr {
   margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+.img-left {
+  margin: 10px 10px 5px 0; 
+  border: 8px solid #e8e8e8;
 }
 
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+.img-center-container {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-
-.marketing p + h4 {
-  margin-top: 28px;
-}
-
-.paragraphs .img-left {
-  float: left; 
-  margin-right: 20px; 
-  margin-bottom: 10px; 
+.img-center-container img {
+  max-width: 100%;
+  height: auto;
+  margin: 5px 0 15px 0; 
   border: 8px solid #e8e8e8;
 }
 
@@ -127,30 +175,192 @@ img {
   background-color: #262626; 
 }
 
-.separator {
-  border-top: 1px solid #555;
-  min-height: 4px;
-  max-height: 4px;
-  border-bottom: 1px solid #555;
-}
-
-.separator-thin {
-  border-top: 1px solid #555;
-  min-height: 1px;
-  max-height: 1px;
-}
-
 .navbar-header {
   min-height: 100px;
 }
 
-.content-heading h3 span {
-  color: #d0d0d0;
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.content-heading h1, h2, h3, h4, h5, h6 {
+  color: #dedede;
+}
+
+.list-group {
+  border: 8px solid #555;
+  border-radius: 4px;
+}
+
+.transparent-list-group {
+  border: 8px solid transparent;
+}
+
+a.list-group-item,
+div.list-group-item {
+  border: 1px dotted #555;
+}
+
+a.list-group-item.list-group-item-even,
+div.list-group-item.list-group-item-even {
+  background-color: #262626;
+}
+
+a.list-group-item.list-group-item-odd,
+div.list-group-item.list-group-item-odd {
+  background-color: #1b1b1b;
+}
+
+a.list-group-item:hover,
+a.list-group-item:focus {
+  background-color: #0f0f0f;
+  border-color: #555;
+}
+
+a.list-group-item.list-group-item-even .list-group-item-heading,
+div.list-group-item.list-group-item-even .list-group-item-heading {
+  color: #0aa2ff;
+  margin: 7px 7px 12px 0;
+}
+
+a.list-group-item.list-group-item-odd .list-group-item-heading,
+div.list-group-item.list-group-item-odd .list-group-item-heading {
+  color: #0aa2c7;
+  margin: 7px 7px 12px 0;
+}
+
+a.list-group-item:hover .list-group-item-heading, 
+a.list-group-item:focus .list-group-item-heading {
+  color: #fcb50f;
+  margin: 7px 7px 12px 0;
+}
+
+a.list-group-item .list-group-item-text,
+div.list-group-item .list-group-item-text
+{
+  color: #a0a0a0;
+}
+
+a.list-group-item:hover .list-group-item-text,
+a.list-group-item:focus .list-group-item-text
+{
+  color: #b3b3b3;
+}
+
+a.list-group-item .list-group-item-date {
+  padding-bottom: 8px;
+}
+
+a.list-group-item:hover .list-group-item-date,
+a.list-group-item:focus .list-group-item-date
+{
+  color: #808080;
+}
+
+.badge {
+  margin-left: 12px; 
+}
+
+.cleared {
+  clear: both;
+}
+
+.subscription-form {
+  width: 70%;
+  min-width: 316px;
+}
+
+.highlighted-button-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.btn-primary {
+  color: #ccc;
+  background-color: #2e6d92;
+  white-space: normal;
+}
+
+.angucomplete-dropdown {
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.alert-fixed {
+  position: fixed; 
+  top: 116px; 
+  right: 10px; 
+  width: 300px;
+  z-index: 9999; 
+  border-radius: 4px;
+}
+
+.services-navbar {
+  width: 100%; 
+  text-align: center; 
+  font-size: small;
+  color: #555;
+}
+
+.newsletter-date-author {
+  color: #666; 
+  margin: -4px 0 23px 0; 
+}
+
+.separator {
+  width: 100%; 
+  text-align: center; 
+  font-size: small;
+  color: #445566;
+  word-spacing: 14px;
+}
+
+.code {
+  font-family: monospace;
+  color: #c0c0c0;
   font-weight: bold;
 }
 
-/* Responsive: Portrait tablets and up */
+[hljs] {
+  padding: 0;
+  margin: 0 7px 17px 7px;
+  border: 2px solid #444;
+  border-radius: 9px;
+}
+
+[hljs] pre {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+[hljs] code {
+  padding: 7px 14px 7px 14px;
+  border: 0;
+  margin: 0;
+  background-color: #222;
+  overflow: auto;
+  white-space: pre;
+}
+
+[hljs] code span {
+  white-space: pre;
+}
+
+[fruta] {
+  background-color: yellow;
+}
+
 @media screen and (min-width: 768px) {
+
+  body {
+    font-size: 18px;
+  }
+
   .container {
     max-width: 730px;
     padding: 0;
@@ -165,47 +375,23 @@ img {
   }
 
   .navbar-inverse .navbar-nav > li > a {
-    padding: 3px 8px 3px 8px;
-    margin: 37px 5px 37px 5px;
+    padding: 3px 12px 3px 12px;
+    margin: 37px 1px 36px 1px;
     font-weight: bold;
   }
 
-  .navbar-inverse .navbar-nav > .active > a {
-    color: #262626;
-    background-color: #fcb50f;
-    border: 1px solid #fcb50f;
-    border-radius: 6px;
-  }
-
-  .navbar-inverse .navbar-nav > .active > a:hover {
-    color: #262626;
-    background-color: #fcb50f;
-    border: 1px solid #fcb50f;
-    border-radius: 6px;
-  }
-
+  .navbar-inverse .navbar-nav > .active > a, 
+  .navbar-inverse .navbar-nav > .active > a:hover, 
   .navbar-inverse .navbar-nav > .active > a:focus {
-    color: #262626;
+    color: #1b1b1b;
     background-color: #fcb50f;
-    border: 1px solid #fcb50f;
-    border-radius: 6px;
+    border: 0;
+    border-radius: 12px;
   }
 
-  /* Remove the padding we set earlier */
   .header,
-  .marketing,
   .footer {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
   }
 }

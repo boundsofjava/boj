@@ -1,0 +1,23 @@
+<div class="paragraphs" data-ng-controller="SelectedNewsletterCtrl">
+
+	<div class="content-heading">
+
+		<h1>#{{newsletter.issue}} &ndash; <span data-ng-bind-html="newsletter.title"></span></h1>
+
+		<p class="small newsletter-date-author"><small>Published on {{newsletter.prettyDate}} by <a data-ng-href="{{newsletter.authorUrl}}" target="_blank">{{newsletter.author}}</a></small></p>
+
+ 		<h3><em>Outline</em></h3>
+		<p><small data-ng-bind-html="newsletter.summary"></small></p>
+	</div>
+
+	<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+	<div data-ng-include="'views/newsletter/' + post + '/intro.html'" data-ng-cloak></div>
+
+	<div data-ng-include="'views/news/news.html'" data-ng-cloak></div>
+
+	<h2 class="spacing">{{newsletter.title}}</h2>
+
+	<div data-ng-include="'views/newsletter/' + post + '/contents.html'" data-ng-cloak></div>
+
+</div>

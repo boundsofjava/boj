@@ -1,87 +1,130 @@
 <!doctype html>
 <html class="no-js">
+
   <head>
     <meta charset="utf-8">
     <title>The Bounds of Java</title>
-    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter, presented along with compelling examples.">
+    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter.">
     <meta name="viewport" content="width=device-width">
+    <base href="/">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css" />
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/darkula.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/boj.css -->
     <link rel="stylesheet" href="styles/boj.css">
     <link rel="stylesheet" href="styles/slider.css">
     <!-- endbuild -->
+    <style type="text/css">
+      [data-ng-cloak] {
+        display: none !important;
+      }
+    </style>
   </head>
-  <body data-ng-app="bojApp">
+
+  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar()" data-ng-cloak>
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
+    <div data-ng-if="false" class="splash">
+      <h2>Loading</h2>
+    </div>
+
+    <div id="top" name="top" class="header">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="separator-thin"></div>
+        <hr />
         <div class="container">
+
           <div class="navbar-header">
+
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" style="" href="#/"><img src="images/boj.jpg" alt="The Bounds of Java"></img></a>
+
+            <a href="/" class="navbar-brand">
+              <img src="images/boj.jpg" alt="The Bounds of Java"></img>
+            </a>
+
           </div>
-          <div class="collapse navbar-collapse" id="js-navbar-collapse" data-ng-controller="HeaderCtrl">
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
             <ul class="nav navbar-nav">
-              <li data-ng-class="{active: isActive('/')}"><a href="#/">HOME</a></li>
-              <li data-ng-if="isEnabled('/newsletter')" data-ng-class="{active: isActive('/newsletter')}"><a data-ng-href="#/newsletter">NEWSLETTER</a></li>
-              <li data-ng-if="isEnabled('/courses')" data-ng-class="{active: isActive('/courses')}"><a data-ng-href="#/courses">COURSES</a></li>
-              <li data-ng-if="isEnabled('/consultancy')" data-ng-class="{active: isActive('/consultancy')}"><a data-ng-href="#/consultancy">CONSULTANCY</a></li>
-              <li data-ng-if="isEnabled('/blog')" data-ng-class="{active: isActive('/blog')}"><a data-ng-href="#/blog">BLOG</a></li>
-              <li data-ng-class="{active: isActive('/about')}"><a data-ng-href="#/about">ABOUT</a></li>
+
+              <li data-ng-class="{active: isActive('/')}">
+                <a href="/">HOME</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/newsletter')}">
+                <a data-ng-href="/newsletter">NEWSLETTER</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/services')}">
+                <a data-ng-href="/services">SERVICES</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/blog')}">
+                <a data-ng-href="/blog">BLOG</a>
+              </li>
+
+              <li data-ng-class="{active: isActive('/about')}">
+                <a data-ng-href="/about">ABOUT</a>
+              </li>
+
             </ul>
           </div>
+
         </div>
-        <div class="separator-thin"></div>
+        <hr />
       </div>
     </div>
 
     <div class="content-wrapper">
-      <div class="container">
-        <div data-ng-view></div>
+      <div class="container spacing">
+        <div data-ng-view data-ng-cloak autoscroll="true"></div>
       </div>
     </div>
 
-    <div class="separator-thin"></div>
+    <hr />
     <div class="footer" data-ng-controller="FooterCtrl">
       <div class="container">
-        <ul class="nav">
-          <li class="navbar-text">
-            <span>The Bounds of Java</span> © {{currentYear}}
-          </li>
-          <li class="navbar-text">
-            <a data-ng-href="#/privacy">Privacy</a>
-          </li>
-          <li class="navbar-text">
-            <a data-ng-href="#/contact">Contact</a>
-          </li>
-        </ul>
+        <p class="spacing">
+            The Bounds of Java, {{currentYear}}.
+        </p>
+        <p class="small">
+          Postal address: Perez y Fuentes M.284 S.1, El Pinar 15800, Uruguay
+        </p>
+        <p class="small">
+          This site uses cookies and local storage (if available) for displaying purposes only.
+        </p>
+        <p class="small">
+          The Bounds of Java Newsletter is distributed via <a href="http://mailchimp.com" target="_blank">Mailchimp</a>. All comments in this website are hosted at <a href="http://disqus.com" target="_blank">Disqus</a>. Please refer to their terms and privacy policies for details.
+        </p>
+        <p class="small">
+          Personal data is kept private and won't be shared with any third-party, except for the aforementioned providers, which are subject to their respective terms and privacy policies.
+        </p>
+        <p class="small">
+          Java is a registered trademark of Oracle and/or its affiliates. Other names might be trademarks of their respective owners.
+        </p>
       </div>
     </div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <!--<script>
-      !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-      (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-      r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-      }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-XXXXX-X');
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-79990924-1', 'auto');
       ga('send', 'pageview');
-    </script>-->
+    </script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -94,8 +137,16 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/TweenLite.js"></script>
+    <script src="bower_components/gsap/src/uncompressed/plugins/CSSPlugin.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/angular-utils-disqus/dirDisqus.js"></script>
+    <script src="bower_components/angular-mailchimp/angular-mailchimp.js"></script>
+    <script src="bower_components/angucomplete-alt/angucomplete-alt.js"></script>
+    <script src="bower_components/angular-vertilize/angular-vertilize.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.js"></script>
+    <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -103,16 +154,21 @@
     <script src="scripts/app.js"></script>
 
     <script src="scripts/services/slider.js"></script>
+    <script src="scripts/services/utils.js"></script>
+    <script src="scripts/services/newsletter.js"></script>
+    <script src="scripts/services/blog.js"></script>
+    <script src="scripts/services/countries.js"></script>
 
-    <script src="scripts/controllers/header.js"></script>
+    <script src="scripts/controllers/page.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/newsletter.js"></script>
+    <script src="scripts/controllers/services.js"></script>
     <script src="scripts/controllers/courses.js"></script>
     <script src="scripts/controllers/consultancy.js"></script>
+    <script src="scripts/controllers/jobs.js"></script>
+    <script src="scripts/controllers/training.js"></script>
     <script src="scripts/controllers/blog.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/privacy.js"></script>
-    <script src="scripts/controllers/contact.js"></script>
     <script src="scripts/controllers/footer.js"></script>
     <!-- endbuild -->
   </body>

@@ -1,8 +1,30 @@
 <div class="paragraphs">
-  <div class="row">
-    <div class="span4">
-      <div class="content-heading"><h3>Newsletter</h3></div>
-      <p>No newsletters available yet.</p>
-    </div>
+  <div class="clearfix content-heading">
+    <img class="pull-left img-left" data-ng-src="images/newsletter.jpg" alt="The Bounds of Java Newsletter"></img>
+    <h1>The Bounds of Java Newsletter</h1>
+    <p>
+      Welcome to The Bounds of Java Newsletter! I'm Federico Peralta Schaffner and I'm very glad you've reached this page. For information about this site or me, please visit the <a data-ng-href="/about">About section</a>.
+    </p>
+    <p>
+      I plan to write a new post every 2-4 weeks. Please check this site frequently for updates or subscribe to The Bounds of Java Newsletter to receive new posts directly in your inbox.
+    </p>
   </div>
+</div>
+
+<div class="highlighted-button-container text-center">
+  <a type="button" data-ng-href="/newsletter/subscription" class="btn btn-lg btn-primary">SUBSCRIBE</a>
+</div>
+
+<div class="list-group spacing">
+  <a data-ng-repeat="newsletter in newsletters | orderBy:'-date'" data-ng-href="/newsletter/{{newsletter.post}}" class="list-group-item" data-ng-class-even="'list-group-item-even'" data-ng-class-odd="'list-group-item-odd'">
+    <h3 class="list-group-item-heading">
+      <span class="badge pull-right">ISSUE #{{newsletter.issue}}</span>
+      {{newsletter.title}}
+    </h3>
+    <p class="list-group-item-text" data-ng-bind-html="newsletter.summary">
+    </p>
+    <p class="list-group-item-date">
+      <small class="pull-right">{{newsletter.prettyDate}}</small>
+    </p>
+  </a>
 </div>

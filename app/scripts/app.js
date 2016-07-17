@@ -102,6 +102,16 @@ angular
       }
     };
   })
+  .directive('back', function($window) {
+    return {
+      restrict: 'A',
+      link: function (scope, elem) {
+        elem.bind('click', function () {
+          $window.history.back();
+        });
+      }
+    };
+  })
   .run(function ($anchorScroll) {
     $anchorScroll.yOffset = 106;
   });

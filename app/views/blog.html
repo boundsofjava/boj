@@ -13,24 +13,26 @@
 
 				<h1 data-ng-bind-html="post.title"></h1>
 
-				<p><br /><small data-ng-bind-html="post.summary"></small></p>
+				<p class="small newsletter-date-author"><small><br />Posted on {{post.prettyDate}} by <a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></small></p>
+
+				<small data-ng-bind-html="post.summary"></small>
 
 				<div class="separator spacing">&#10022; &#10022; &#10022;</div>
 
 			    <div data-ng-include="'views/blog/' + post.id + '.html'" data-ng-cloak></div>
-			    <br />
+			    
+				<div class="separator spacing">&#10022; &#10022; &#10022;</div>
 
 				<p class="small newsletter-date-author"><small>Posted on {{post.prettyDate}} by <a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></small></p>
-			    <br />
 
-			    <a href="" data-ng-show="visibleCommentsPostId === ''" data-ng-click="showCommentsWidget('{{post.id}}')">Show comments</a>
+			    <a href="" data-ng-show="visibleCommentsPostId === ''" data-ng-click="showCommentsWidget(post.id)">Show comments</a>
 			    
 			    <span data-ng-show="visibleCommentsPostId !== post.id && visibleCommentsPostId !== ''" class="disabled-link disabled">Show comments</span>
 
 			    <div data-ng-show="visibleCommentsPostId === post.id">
 				    <div><a href="" data-ng-click="hideCommentsWidget()">Hide comments</a></div>
 
-				    <dir-disqus id="{{post.id}}" data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="{{postUrl(post.id)}}" data-disqus-title="{{post.title}}" data-disqus-disable-mobile="false" data-disqus-config-language="en"></dir-disqus>
+				    <dir-disqus id="{{post.id}}" data-ng-if="visibleCommentsPostId === post.id" data-disqus-shortname="boundsofjava" data-disqus-identifier="{{post.id}}" data-disqus-url="{{postUrl(post.id)}}" data-disqus-title="{{post.disqusTitle}}" data-disqus-disable-mobile="false" data-disqus-config-language="en"></dir-disqus>
 
 				    <div><a href="" data-ng-click="hideCommentsWidget()">Hide comments</a></div>
 				</div>

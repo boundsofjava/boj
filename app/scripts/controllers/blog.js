@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('BlogCtrl', function ($scope, $location, Blog) {
+  .controller('BlogCtrl', function ($scope, $location, $timeout, Blog) {
     
     var allPosts = Blog.query(null, function (value) {
       if (typeof value === 'undefined' || value.length === 0) {
@@ -10,6 +10,9 @@ angular.module('bojApp')
         $scope.noEntries = false;
         var firstPost = value[0];
         $scope.posts = [firstPost];
+        $timeout(function () {
+          DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
+        });
       }
     });
 
@@ -21,6 +24,9 @@ angular.module('bojApp')
       if (loadedCount < allPosts.length) {
         var postToLoad = allPosts[loadedCount];
         $scope.posts.push(postToLoad);
+        $timeout(function () {
+          DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
+        });
       }
     };
 
@@ -32,6 +38,9 @@ angular.module('bojApp')
 
     $scope.hideCommentsWidget = function () {
       $scope.visibleCommentsPostId = '';
+      $timeout(function () {
+        DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
+      });
     };
 
     $scope.postUrl = function (postId) {

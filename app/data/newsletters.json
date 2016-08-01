@@ -7,5 +7,14 @@
     "issue": "1",
     "date": "2016-06-26",
     "summary": "A <em>higher-order function</em> is a function that takes one or more functions as arguments and that might return a function as its result. Here we take an informal approach to higher-order functions by showing how to apply this functional programming concept to <span class='code'>Runnable</span> instances."
+  },
+  { 
+    "title": "Functional Default Arguments", 
+    "post": "002-functional-default-arguments",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "issue": "2",
+    "date": "2016-08-03",
+    "summary": "Java lacks a built-in way to define default arguments for methods and constructors. Over the years, several approaches have been proposed, each with its pros and cons. The most widely-known one is <em>telescopic method overloading</em>, though varargs, null values, the builder pattern and even maps have been used as well. Here we propose a new approach based on functional constructs."
   }
 ]

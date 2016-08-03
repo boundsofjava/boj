@@ -1,0 +1,47 @@
+<h3><em>Background</em></h3>
+
+<p>Many languages support default arguments for methods and constructors out of the box, i.e. Scala:</p>
+
+<div hljs hljs-no-escape hljs-language="scala">
+def sum(x: Int = 6, y: Int = 7): Int = x + y
+</div>
+
+<p>The <span class="code">sum</span> method can be invoked as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="scala">
+sum(1, 2)         //  3 -> x = 1, y = 2 (no defaults)
+sum(3)            // 10 -> x = 3, default y = 7
+sum(y = 5)        // 11 -> default x = 6, y = 5
+sum()             // 13 -> default x = 6, default y = 7
+sum(y = 3, x = 4) //  7 -> x = 4, y = 3 (no defaults)
+</div>
+
+<p>This is very handy, but Java doesn't support it. There are a few different ways to accomplish something similar, however all of them have some drawback.</p>
+
+<p>The most widely-known one uses <em>method overloading</em> to simulate default arguments:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+public int sum(int x, int y) {
+    return x + y;
+}
+
+public int sum(int x) {
+    return this.sum(x, 7);
+}
+
+public int sum() {
+    return this.sum(6);
+}
+</div>
+
+<p>Despite this is a very common pattern (or anti-pattern) in Java, it has some drawbacks:
+    <ul>
+        <li class="little-spacing">The number of overloads for the method increases exponentially with the number of arguments, since all possible, meaningful argument combinations must be considered.</li>
+
+        <li class="little-spacing">Some overloads are not possible because overloaded methods are differentiated by the number and the type of the arguments passed into the method. In the example above, there's no way to define an overload <span class="code">sum(int y)</span> that defaults the value for <span class="code">x</span>, because we have chosen to specify <span class="code">x</span> as an explicit argument (defaulting <span class="code">y</span> to <span class="code">7</span>).</li>
+        
+        <li class="little-spacing">Definition of default argument values occurs inside the method overloads, thus making defaults global to every caller. In other words, this does not take method's invocation context into account (and defaults might depend on the context sometimes).</li>
+    </ul>
+</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>

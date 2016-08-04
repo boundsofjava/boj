@@ -22,15 +22,15 @@ sum(y = 3, x = 4) //  7 -> x = 4, y = 3 (no defaults)
 
 <div hljs hljs-no-escape hljs-language="java">
 public int sum(int x, int y) {
-    return x + y;
+    return x + y; // actual implementation
 }
 
-public int sum(int x) {
+public int sum(int x) { // default y = 7
     return this.sum(x, 7);
 }
 
-public int sum() {
-    return this.sum(6);
+public int sum() {      // default x = 6 
+    return this.sum(6); // and y = 7 (implicitly)
 }
 </div>
 
@@ -38,10 +38,52 @@ public int sum() {
     <ul>
         <li class="little-spacing">The number of overloads for the method increases exponentially with the number of arguments, since all possible, meaningful argument combinations must be considered.</li>
 
-        <li class="little-spacing">Some overloads are not possible because overloaded methods are differentiated by the number and the type of the arguments passed into the method. In the example above, there's no way to define an overload <span class="code">sum(int y)</span> that defaults the value for <span class="code">x</span>, because we have chosen to specify <span class="code">x</span> as an explicit argument (defaulting <span class="code">y</span> to <span class="code">7</span>).</li>
+        <li class="little-spacing">Some argument combinations are not possible because overloaded methods are differentiated by the number and the type of the arguments passed into the method. In the example above, there's no way to define an overload <span class="code">sum(int y)</span> that defaults the value of <span class="code">x</span>, because we have chosen to specify <span class="code">x</span> as an explicit argument (defaulting <span class="code">y</span> to <span class="code">7</span>).</li>
         
-        <li class="little-spacing">Definition of default argument values occurs inside the method overloads, thus making defaults global to every caller. In other words, this does not take method's invocation context into account (and defaults might depend on the context sometimes).</li>
+        <li class="little-spacing">Definition of default argument values is implemented inside the overloaded methods, thus making defaults global to every caller. In other words, this does not take the method invocation's context into account.</li>
     </ul>
 </p>
+
+<p>Another approach to default arguments in Java is using varargs:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+public int sum(int... arguments) {
+    // Define default values
+    int x = 6;
+    int y = 7;
+
+    // Extract explicit argument values, checking bounds
+    if (arguments != null && arguments.length >= 1) {
+        x = arguments[0];
+        if (arguments.length >= 2) {
+            y = arguments[1];
+        }
+    }
+    
+    return x + y;
+}
+</div>
+
+<p>Here we define the default values and then extract the explicit arguments from the varargs parameter. Each default value is preserved only if its corresponding explicit value is not present in the varargs parameter.</p>
+
+<p>Drawbacks of this approach are:
+    <ul>
+        <li class="little-spacing">As per the Java Language Specification, varargs parameters must be specified at the end of the argument list.</li>
+
+        <li class="little-spacing">If default arguments were of different types, the varargs parameter definition should be changed to <span class="code">Object... arguments</span>. But if we did this, we would lose static type checking, and this would be quite frustrating. We would have to check each argument's type at runtime, cast it and handle all possible errors...</li>
+        
+        <li class="little-spacing">Both definition of default argument values and handling of the varargs parameter are implemented inside the method. As with the method overloading approach, defaults remain global to every caller, so the method invocation's context is not taken into account.</li>
+    </ul>
+</p>
+
+<p>Null values</p>
+
+<p>Builder pattern</p>
+
+<p>Map</p>
+
+<small>Note: some programmers claim the <span class="code"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" target="_blank">Optional</a></span> class is suitable for default arguments. While at first glance it appears to be of use, truth is this approach is not only discouraged and not recommended, but also wrong. Read <a href="" target="_blank">here</a> to learn why.</small>
+
+
 
 <div class="separator spacing">&#10022; &#10022; &#10022;</div>

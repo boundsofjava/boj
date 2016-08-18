@@ -91,6 +91,10 @@ hr.from-right {
   margin-bottom: 40px;
 }
 
+.top-spacing {
+  margin-top: 20px;
+}
+
 .content-wrapper {
   padding: 80px 10px 10px 10px;
   width: 100%;

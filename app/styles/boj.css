@@ -126,7 +126,7 @@ hr.from-right {
   padding-top: 0;
   padding-bottom: 15px;
   color: #555;
-  background-color: rgba(0, 0, 0, 0.8); 
+  background-color: rgba(0, 0, 0, 0.75); 
   font-size: 0.85em;
 }
 
@@ -158,7 +158,7 @@ hr.from-right {
 }
 
 .navbar-inverse {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(7, 15, 12, 0.75);
 }
 
 .navbar-header {

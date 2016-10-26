@@ -14,7 +14,7 @@
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
     "issue": "2",
-    "date": "2016-08-03",
+    "date": "2016-08-19",
     "summary": "Java lacks a built-in way to define default arguments for methods and constructors. Over the years, several approaches have been proposed, each with its pros and cons. The most widely-known one uses <em>method overloading</em>, though varargs, null values, the builder pattern and even maps have been used as well. Here we propose a new approach based on functional constructs."
   }
 ]

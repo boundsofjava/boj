@@ -17,7 +17,9 @@ html {
 }
 
 body {
-  background-color: #262626;
+  width: 100%; 
+  text-rendering: optimizeLegibility;
+  background-color: #000;
 }
 
 a, a:hover, a:focus, a img {
@@ -96,9 +98,10 @@ hr.from-right {
 }
 
 .content-wrapper {
-  padding: 80px 10px 10px 10px;
+  margin-top: 99px;
+  padding: 8px 10px 10px 10px;
   width: 100%;
-  background-color: #333;
+  background: rgba(0, 0, 0, 0.5); 
   color: #a0a0a0;
 }
 
@@ -109,7 +112,7 @@ hr.from-right {
 }
 
 .header {
-  margin-bottom: 36px;
+  margin-bottom: 99px;
 }
 
 .header h3 {
@@ -120,15 +123,11 @@ hr.from-right {
 }
 
 .footer {
-  padding-top: 10px;
+  padding-top: 0;
   padding-bottom: 15px;
   color: #555;
-  background-color: #262626; 
+  background-color: rgba(0, 0, 0, 0.8); 
   font-size: 0.85em;
-}
-
-.container-narrow > hr {
-  margin: 30px 0;
 }
 
 .img-left {
@@ -154,16 +153,16 @@ hr.from-right {
 }
 
 .navbar-brand {
-  padding: 0; 
+  padding: 16px; 
   margin: 0; 
 }
 
 .navbar-inverse {
-  background-color: #262626; 
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .navbar-header {
-  min-height: 100px;
+  min-height: 96px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -191,17 +190,17 @@ div.list-group-item {
 
 a.list-group-item.list-group-item-even,
 div.list-group-item.list-group-item-even {
-  background-color: #262626;
+  background-color: rgba(38, 38, 38, 0.75);
 }
 
 a.list-group-item.list-group-item-odd,
 div.list-group-item.list-group-item-odd {
-  background-color: #1b1b1b;
+  background-color: rgba(27, 27, 27, 0.75);
 }
 
 a.list-group-item:hover,
 a.list-group-item:focus {
-  background-color: #0f0f0f;
+  background-color: rgba(15, 15, 15, 0.75);
   border-color: #555;
 }
 
@@ -307,6 +306,7 @@ a.list-group-item:focus .list-group-item-date
   font-family: monospace;
   color: #c0c0c0;
   font-weight: bold;
+  background: transparent;
 }
 
 [hljs] {
@@ -314,6 +314,7 @@ a.list-group-item:focus .list-group-item-date
   margin: 0 7px 17px 7px;
   border: 2px solid #444;
   border-radius: 9px;
+  background: transparent;
 }
 
 [hljs] pre {
@@ -323,13 +324,14 @@ a.list-group-item:focus .list-group-item-date
   white-space: pre;
   word-break: normal;
   word-wrap: normal;
+  background: transparent;
 }
 
 [hljs] code {
   padding: 7px 14px 7px 14px;
   border: 0;
   margin: 0;
-  background-color: #222;
+  background-color: rgba(34, 34, 34, 0.75);
   overflow: auto;
   white-space: pre;
 }
@@ -346,19 +348,22 @@ a.list-group-item:focus .list-group-item-date
 }
 
 .newsletter-home-container {
-  /*margin: 30px 0 30px 0;*/
   border: 8px solid #555;
   border-radius: 9px;
 }
 
 .newsletter-home-container .newsletter-home-container-content {
-  background-color: #222;
+  background-color: rgba(34, 34, 34, 0.75);
   padding: 20px;
   border: 1px dotted #555;
 }
 
 .newsletter-home-container .newsletter-home-container-content small {
   color: #555;
+}
+
+.opaque {
+  background-color: #070f0c;
 }
 
 @media screen and (min-width: 768px) {
@@ -373,7 +378,7 @@ a.list-group-item:focus .list-group-item-date
   }
 
   .navbar-collapse {
-    min-height: 100px;
+    min-height: 96px;
   }
 
   .navbar-spacing {
@@ -382,7 +387,7 @@ a.list-group-item:focus .list-group-item-date
 
   .navbar-inverse .navbar-nav > li > a {
     padding: 3px 12px 3px 12px;
-    margin: 37px 1px 36px 1px;
+    margin: 35px 1px 34px 1px;
     font-weight: bold;
   }
 

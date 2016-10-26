@@ -7,5 +7,14 @@
     "authorUrl": "/about",
     "summary": "There are at least two different answers for this question. If it's about why I chose <em>&ldquo;The Bounds of Java&rdquo;</em> as a name, the answer might be quite simple. On the other hand, if it refers to why I have launched <em>&ldquo;The Bounds of Java&rdquo;</em> website, I'm afraid I can only start to outline an answer...",
     "date": "2016-07-27"
+  },
+  { 
+    "id": "0002-abusing-design-patterns",
+    "title": "Abusing design patterns",
+    "disqusTitle": "Abusing design patterns",
+    "author": "Federico Peralta Schaffner",
+    "authorUrl": "/about",
+    "summary": "Many times I've seen messy, unmaintainable code, mainly due to the absense of design patterns. But even more times I've seen design patterns being misused, or just abused. Knowing not only when and how to apply design patterns, but also when to <em>not</em> use them, is crucial to good software development.",
+    "date": "2016-09-20"
   }
 ]

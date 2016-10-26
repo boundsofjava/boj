@@ -21,14 +21,14 @@
     <!-- endbuild -->
   </head>
 
-  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar()" data-ng-cloak>
+  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar()" data-back-img="images/background/{{bgImage()}}.jpg" data-ng-cloak>
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <div id="top" name="top" class="header">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <hr />
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation"  change-class-on-scroll offset="3" scroll-class="opaque">
+
         <div class="container">
 
           <div class="navbar-header">
@@ -40,8 +40,8 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a href="/" class="navbar-brand">
-              <img src="images/boj.jpg" alt="The Bounds of Java"></img>
+            <a data-ng-href="/" class="navbar-brand">
+              <img src="images/boj-logo.png" alt="The Bounds of Java"></img>
             </a>
 
           </div>
@@ -83,9 +83,9 @@
       </div>
     </div>
 
-    <hr />
     <div class="footer" data-ng-controller="FooterCtrl">
-      <div class="container">
+      <hr />
+      <div class="container spacing">
         <p class="spacing">
             &copy; Copyright {{currentYear}}, <a data-ng-href="/about" target="_blank">Federico Peralta Schaffner</a>.
         </p>

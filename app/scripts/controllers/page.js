@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('PageCtrl', function ($scope, $location, $window, $anchorScroll) { 
+  .controller('PageCtrl', function ($scope, $location, $window) { 
 
     var homeViews = ['/'];
 
@@ -36,10 +36,16 @@ angular.module('bojApp')
       }, timeout);
     };
 
-    $scope.scrollTop = function () {
-      $window.setTimeout(function () {
-        $anchorScroll('top');
-      }, 0);
+    $scope.bgImage = function() {
+      if ($location.path().startsWith('/newsletter')) {
+        return 'newsletter';
+      } else if ($location.path().startsWith('/services')) {
+        return 'services';
+      } else if ($location.path().startsWith('/blog')) {
+        return 'blog';
+      } else if ($location.path().startsWith('/about')) {
+        return 'about';
+      }
+      return 'home';
     };
-
   });

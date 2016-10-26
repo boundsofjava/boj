@@ -1,0 +1,78 @@
+<div class="img-center-container">
+	<img data-ng-src="/views/blog/0001-why.jpg" alt="Why?"></img>
+</div>
+<br />
+
+<h3><em>Applying desingn paterns</em></h3>
+
+<p>Say you have the <span class="code">OrderState</span> enum and you do different things on different parts of your code, depending on the value of the enum:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+enum OrderState {
+    NEW, APPROVED, CANCELLING, CANCELLED;
+}
+</div>
+
+<p>This is just an example. It really doesn't mattter what kind of orders or the context. Here an order is something that changes its state upon some event, i.e. when the order is created its state is <span class="code">NEW</span>, and when a manager reviews it and says everything is OK, its state is <span class="code">APPROVED</span>.</p>
+
+<p>Now, imagine we need to create a sale for an order. We're coding a method that receives the order and a credit card number and we need to do different things, depending on the state of the order. If the state is <span class="code">CANCELLING</span> or <span class="code">CANCELLED</span>, we need to abort the creation of the sale and throw an exception. If the state is <span class="code">APPROVED</span>, we charge the given credit card with the total amount. And if the state is <span class="code">NEW</span>, we need to send an email to the manager with the order, so that it is reviewed as soon as possible.</p>
+
+<p>In code, the structure of the <span class="code">createSaleFromOrder</span> method would be as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+void createSaleFromOrder(Order order, String cardNumber) {
+	
+	OrderState state = order.getState();
+
+	switch (state) {
+	case CANCELLING:
+	case CANCELLED:
+		// abort sale, send error message, throw exception
+		// ...
+		break;
+	case APPROVED:
+		BigDecimal total = order.getTotal();
+		// charge cardNumber with total, store created sale, adjust stock, etc
+		// ...
+		break;
+	case NEW:
+		// send email to manager with order for review
+		// ...
+		break;
+	default:
+		throw new IllegalArgumentException("order.state");
+	}
+}
+</div>
+
+<p>This seems fine, until we're told to code another method that depends on the order state, i.e. <span class="code">cancelOrder</span>, which will cancel the given order if its state is <span class="code">APPROVED</span> or <span class="code">NEW</span>, but will fail with an exception if its state is <span class="code">CANCELLING</span> or <span class="code">CANCELLED</span>.</p>
+
+<p>In code, the structure of the <span class="code">cancelOrder</span> method would be as follows:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+void cancelOrder(Order order) {
+
+	OrderState state = order.getState();
+
+	switch (state) {
+	case CANCELLING:
+	case CANCELLED:
+		// illegal state, throw exception
+		// ...
+		break;
+	case APPROVED:
+	case NEW:
+		// do some work to cancel given order
+		// ...
+		// change order state
+		order.setState(OrderState.CANCELLING);
+		break;
+	default:
+		throw new IllegalArgumentException("order.state");
+	}
+}
+</div>
+
+<p>Ugh... another <span class="code">switch</span> statement. What will happen when a new method that depends on the order's state needs to be created? Most likely, we'll need to add a new <span class="code">switch</span> statement. At the end, there will be many <span class="code">switch</span> statements scattered over the code, in different methods and classes. This is bad, because we will have logic that depends on the order's state all over the code. Our code will become hard to maintain, since it will be more difficult to find where the state of the order is changed. What is worse, it might make perfect sense to define a new state for the order, i.e. when the manager does not approve it, the order state would become <span class="code">OrderState.REJECTED</span>. And we would need to add new behavior to handle this new state in our previous operations. So we'd need to </p>
+
+

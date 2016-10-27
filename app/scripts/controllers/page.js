@@ -37,8 +37,18 @@ angular.module('bojApp')
     };
 
     $scope.bgImage = function() {
-      if ($location.path().startsWith('/newsletter')) {
+      if ($location.path().startsWith('/newsletter/subscription')) {
+        return 'newsletter-subscription';
+      } else if ($location.path().startsWith('/newsletter')) {
         return 'newsletter';
+      } else if ($location.path().startsWith('/services/courses')) {
+        return 'courses';
+      } else if ($location.path().startsWith('/services/training')) {
+        return 'training';
+      } else if ($location.path().startsWith('/services/consultancy')) {
+        return 'consultancy';
+      } else if ($location.path().startsWith('/services/jobs')) {
+        return 'jobs';
       } else if ($location.path().startsWith('/services')) {
         return 'services';
       } else if ($location.path().startsWith('/blog')) {

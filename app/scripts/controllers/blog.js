@@ -12,7 +12,7 @@ angular.module('bojApp')
         $scope.posts = [firstPost];
         $timeout(function () {
           DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
-        });
+        }, 0);
       }
     });
 
@@ -26,7 +26,7 @@ angular.module('bojApp')
         $scope.posts.push(postToLoad);
         $timeout(function () {
           DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
-        });
+        }, 0);
       }
     };
 
@@ -40,7 +40,7 @@ angular.module('bojApp')
       $scope.visibleCommentsPostId = '';
       $timeout(function () {
         DISQUSWIDGETS.getCount({reset: true}); // jshint ignore:line
-      });
+      }, 0);
     };
 
     $scope.postUrl = function (postId) {

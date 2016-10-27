@@ -25,7 +25,7 @@
 
 				<p class="small newsletter-date-author"><small>Posted on {{post.prettyDate}} by <a data-ng-href="{{post.authorUrl}}" target="_blank">{{post.author}}</a></small></p>
 
-			    <a href="" data-disqus-identifier="{{post.id}}" data-ng-show="visibleCommentsPostId === ''" data-ng-click="showCommentsWidget(post.id)">Show comments</a>
+			    <a data-ng-href="{{postUrl(post.id)}}#disqus_thread" data-disqus-identifier="{{post.id}}" data-ng-show="visibleCommentsPostId === ''" data-ng-click="$event.preventDefault(); showCommentsWidget(post.id); ">Show comments</a>
 			    
 			    <span data-disqus-identifier="{{post.id}}" data-ng-show="visibleCommentsPostId !== post.id && visibleCommentsPostId !== ''" class="disqus-comment-count disabled-link disabled">Show comments</span>
 

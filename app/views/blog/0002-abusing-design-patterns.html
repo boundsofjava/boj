@@ -1,5 +1,5 @@
 <div class="img-center-container">
-	<img data-ng-src="/views/blog/0001-why.jpg" alt="Why?"></img>
+	<img data-ng-src="/views/blog/0002-abusing-design-patterns.jpg" alt="Abusing design patterns?"></img>
 </div>
 <br />
 
@@ -73,6 +73,121 @@ void cancelOrder(Order order) {
 }
 </div>
 
-<p>Ugh... another <span class="code">switch</span> statement. What will happen when a new method that depends on the order's state needs to be created? Most likely, we'll need to add a new <span class="code">switch</span> statement. At the end, there will be many <span class="code">switch</span> statements scattered over the code, in different methods and classes. This is bad, because we will have logic that depends on the order's state all over the code. Our code will become hard to maintain, since it will be more difficult to find where the state of the order is changed. What is worse, it might make perfect sense to define a new state for the order, i.e. when the manager does not approve it, the order state would become <span class="code">OrderState.REJECTED</span>. And we would need to add new behavior to handle this new state in our previous operations. So we'd need to </p>
+<p>Ugh... another <span class="code">switch</span> statement. What will happen when a new method that depends on the order's state needs to be created? Most likely, we'll need to add a new <span class="code">switch</span> statement. At the end, there will be many <span class="code">switch</span> statements scattered over the code, in different methods and classes. This is bad, because we will have logic that depends on the order's state all over the code. Our code will become hard to maintain, since it will be more difficult to find where the state of the order is changed.</p>
+
+<p>What is worse, we might need to define a new state for the order, as per requirements. One example would be when the manager does not approve the order. In this case, its state would become <span class="code">OrderState.REJECTED</span>. And we would need to add new behavior to handle this new state in each one of our previous operations, that were scattered all over the code...</p>
+
+<p>So many years ago, four clever guys noticed this recurring problem and found a nice solution: the <a href="https://en.wikipedia.org/wiki/State_pattern" target="_blank">state pattern</a>. It is not the purpose of this article to explain or discuss the state pattern, here we're just taking it as an example to show how design patterns can end up being overused, or even abused. Here's a skeleton of the solution using the state pattern:</p>
+
+<div hljs hljs-no-escape hljs-language="java">
+public class Order {
+	
+	private final OrderState state = new OrderStateNew();
+
+    public void createSale(String cardNumber) {
+        this.state.createSale(this, cardNumber);
+    }
+
+    public void cancel() {
+        this.state.cancel(this);
+    }
+}
+
+abstract class OrderState {
+
+	abstract void createSale(Order order, String cardNumber);
+
+	abstract void cancel(Order order);
+
+}
+
+class OrderStateCancelling extends OrderState {
+
+    void createSale(Order order, String cardNumber) {
+		// abort sale, send error message, throw exception
+		// ...
+    }	
+
+    void cancel(Order order) {
+		// illegal state, throw exception
+		// ...
+    }
+}
+
+class OrderStateCancelled extends OrderState {
+
+    void createSale(Order order, String cardNumber) {
+		// abort sale, send error message, throw exception
+		// ...
+    }	
+
+    void cancel(Order order) {
+		// illegal state, throw exception
+		// ...
+    }
+}
+
+class OrderStateNew extends OrderState {
+
+    void createSale(Order order, String cardNumber) {
+		// send email to manager with order for review
+		// ...
+    }	
+
+    void cancel(Order order) {
+		// do some work to cancel given order
+		// ...
+		// change order state
+		order.setState(new OrderStateCancelling());
+    }
+}
+
+void createSaleFromOrder(Order order, String cardNumber) {
+	
+	OrderState state = order.getState();
+
+	switch (state) {
+	case CANCELLING:
+	case CANCELLED:
+		// abort sale, send error message, throw exception
+		// ...
+		break;
+	case APPROVED:
+		BigDecimal total = order.getTotal();
+		// charge cardNumber with total, store created sale, adjust stock, etc
+		// ...
+		break;
+	case NEW:
+		// send email to manager with order for review
+		// ...
+		break;
+	default:
+		throw new IllegalArgumentException("order.state");
+	}
+}
+
+void cancelOrder(Order order) {
+
+	OrderState state = order.getState();
+
+	switch (state) {
+	case CANCELLING:
+	case CANCELLED:
+		// illegal state, throw exception
+		// ...
+		break;
+	case APPROVED:
+	case NEW:
+		// do some work to cancel given order
+		// ...
+		// change order state
+		order.setState(OrderState.CANCELLING);
+		break;
+	default:
+		throw new IllegalArgumentException("order.state");
+	}
+}
+</div>
+
 
 

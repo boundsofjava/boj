@@ -23,7 +23,7 @@ angular.module('bojApp')
       formatDate: formatDate,
       prettifyDate: function (obj) {
         var d = new Date(obj.date);
-        obj.prettyDate = formatDate(d);
+        obj.prettyDate = formatDate(new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000));
         return obj;
       }
     };

@@ -10,6 +10,9 @@ angular.module('bojApp')
           transformResponse: function (data) {
             var posts = JSON.parse(data);
             posts.forEach(Utils.prettifyDate);
+            posts.sort(function(a, b) {
+              return new Date(b.date) - new Date(a.date);
+            });
             return posts;
           }
         },

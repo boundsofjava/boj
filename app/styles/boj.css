@@ -264,7 +264,8 @@ a.list-group-item:focus .list-group-item-date
 
 .btn-primary {
   color: #ccc;
-  background-color: #2e6d92;
+  border-style: none;
+  background-color: rgba(46, 109, 146, 0.5);
   white-space: normal;
 }
 

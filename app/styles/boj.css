@@ -97,6 +97,10 @@ hr.from-right {
   margin-top: 20px;
 }
 
+.top-half-spacing {
+  margin-top: 10px;
+}
+
 .content-wrapper {
   margin-top: 99px;
   padding: 8px 10px 10px 10px;
@@ -365,6 +369,17 @@ a.list-group-item:focus .list-group-item-date
 
 .opaque {
   background-color: #070f0c;
+}
+
+.staff-img {
+  border-radius: 50%;
+  margin: 16px;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.75);
+  padding: 0;
+  border: 0;
+  float: left;
+  width: 64px;
+  height: 64px;
 }
 
 @media screen and (min-width: 768px) {

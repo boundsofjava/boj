@@ -71,7 +71,7 @@ void cancelOrder(Order order) {
 }
 <!-- htmlmin:ignore --></div>
 
-<p>Ugh... another <span class="code">switch</span> statement. What will happen when a new method that depends on the order state needs to be created? Most likely, we'll need to add a new <span class="code">switch</span> statement. At the end, there will be many <span class="code">switch</span> statements scattered over the code, in different methods and classes. This is bad, because we will have logic that depends on the order state all over the code. Our code will become hard to maintain, since it will be more difficult to find where the state of the order is changed.</p>
+<p>Ugh... another <span class="code">switch</span> statement. What will happen when a new method that depends on the order state needs to be created? Most likely, we'll need to add a new <span class="code">switch</span> statement. At the end, there will be many <span class="code">switch</span> statements scattered over the code, in different methods and classes. This is bad, because we will have logic that depends on the order state all over the code. Our code will become hard to maintain, as it will be more difficult to find where the state of the order is changed.</p>
 
 <p>What is worse, we might need to define a new state for the order, as per requirements. One example would be when the manager does not approve the order. In this case, we would need to introduce the <span class="code">OrderState.REJECTED</span> state. And we would need to add new behavior to handle this new state in each one of our previous operations, that were scattered all over the code...</p>
 
@@ -182,7 +182,7 @@ class OrderStateNew extends OrderState {
 }
 <!-- htmlmin:ignore --></div>
 
-<p>This is not a final solution. It's just a sketch to show the pattern. There are operations unimplemented, such as <span class="code">approve</span> or <span class="code">reject</span>, and at least one missing state: <span class="code">REJECTED</span>. But the idea is clear: move state-dependent behavior to classes that represent all possible states of the order, and handle state transitions via the <span class="code">setState</span> method of the <span class="code">Order</span> class, from within the appropriate operations.</p>
+<p>This is not a final solution. It's just a sketch to show the pattern. There are operations unimplemented, such as <span class="code">approve</span> or <span class="code">reject</span>, and at least one missing state: <span class="code">REJECTED</span>. But the idea is clear: move state-dependent behavior to classes that represent all possible states of the order, and handle state transitions via the <span class="code">setState</span> method of the <span class="code">Order</span> class, from within the appropriate state-dependent operations.</p>
 
 <p>This is a really nice pattern. It allows for new states to be easily introduced (just create a new class for the new state) and eases maintenance a lot (whenever a modification needs to be done, all code is in the state classes). This pattern is definitely one of the most useful ones.</p>
 

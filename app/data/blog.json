@@ -14,7 +14,7 @@
     "disqusTitle": "About design patterns",
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
-    "summary": "Many times I've seen messy, unmaintainable code, mainly due to the absense of design patterns. But even more times I've seen design patterns being applied at places where no one will ever value them. Knowing not only when and how to apply design patterns, but also when and where to <em>not</em> use them, is crucial to avoid frustrations at work.",
+    "summary": "Many times I've seen messy, unmaintainable code, mainly due to the absence of design patterns. But even more times I've seen design patterns being applied at places where no one will ever value them. Knowing not only when and how to apply design patterns, but also when and where to <em>not</em> use them, is crucial to avoid frustrations at work.",
     "date": "2016-11-02"
   }
 ]

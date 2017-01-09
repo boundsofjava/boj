@@ -1,39 +1,36 @@
-<div class="row hidden-xs slider-wrapper">
-  <div class="col-sm-12" data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
+<div data-ng-include="'views/newsletter/join.html'" data-ng-cloak></div>
+
+<div class="hidden-xs slider-wrapper">
+  <div data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
 
     <div class="content-heading">
       <h1 class="slide-title">{{slide.title}}</h1>
     </div>
     
-    <blockquote class="pull-right">
+    <div class="slider pull-left">
+      <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
 
-      <div class="container slider pull-left">
-        <img class="slide slide-animation non-draggable-image" data-ng-swipe-right="prevSlide()" data-ng-swipe-left="nextSlide()" data-ng-src="{{slide.image}}"></img>
+      <div class="arrow prev" data-ng-click="prevSlide()"></div>
+      <div class="arrow next" data-ng-click="nextSlide()"></div>
 
-        <div class="arrow prev" data-ng-click="prevSlide()"></div>
-        <div class="arrow next" data-ng-click="nextSlide()"></div>
-
-        <div class="nav">
-          <div class="wrapper">
-            <ul class="dots">
-              <li data-ng-repeat="slide in slider.slides" class="dot">
-                <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
-              </li>
-            </ul>
-          </div>
+      <div class="nav">
+        <div class="wrapper">
+          <ul class="dots">
+            <li data-ng-repeat="slide in slider.slides" class="dot">
+              <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
+            </li>
+          </ul>
         </div>
       </div>
+    </div>
 
-      <hr class="from-right little-spacing" />
+    <blockquote class="blockquote-reverse">
       <p><em>{{slide.quote}}</em></p>
       <small><cite>{{slide.author}}</cite></small>
-      <hr class="from-right little-spacing" />
-
     </blockquote>
+
   </div>
 </div>
-
-<div data-ng-include="'views/newsletter/join.html'" data-ng-cloak></div>
 
 <div vertilize-container class="row cleared spacing">
 

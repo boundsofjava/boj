@@ -6,14 +6,15 @@ angular.module('bojApp')
     var homeViews = ['/'];
 
     $scope.isActive = function (viewLocation) { 
+      var path = $location.path();
       if (homeViews.indexOf(viewLocation) < 0) {
-        return $location.path().lastIndexOf(viewLocation, 0) === 0;
+        return path.lastIndexOf(viewLocation, 0) === 0;
       }
-      return homeViews.indexOf($location.path()) >= 0;
+      return homeViews.indexOf(path) >= 0;
     };
 
-    $scope.collapseNavbar = function () {
-      angular.element('#js-navbar-collapse').collapse('hide');
+    $scope.collapseNavbar = function (id) {
+      angular.element(id).collapse('hide');
     };
 
     $scope.autoCloseAlertsTimeoutHandle = undefined;
@@ -36,26 +37,31 @@ angular.module('bojApp')
       }, timeout);
     };
 
-    $scope.bgImage = function() {
-      if ($location.path().startsWith('/newsletter/subscription')) {
-        return 'newsletter-subscription';
-      } else if ($location.path().startsWith('/newsletter')) {
-        return 'newsletter';
-      } else if ($location.path().startsWith('/services/courses')) {
-        return 'courses';
-      } else if ($location.path().startsWith('/services/training')) {
-        return 'training';
-      } else if ($location.path().startsWith('/services/consultancy')) {
-        return 'consultancy';
-      } else if ($location.path().startsWith('/services/jobs')) {
-        return 'jobs';
-      } else if ($location.path().startsWith('/services')) {
-        return 'services';
-      } else if ($location.path().startsWith('/blog')) {
-        return 'blog';
-      } else if ($location.path().startsWith('/about')) {
-        return 'about';
+    $scope.backgroundClass = function() {
+      var backgroundClass = 'background-';
+      var path = $location.path();
+
+      if (path.startsWith('/newsletter/subscription')) {
+        backgroundClass = backgroundClass + 'newsletter-subscription';
+      } else if (path.startsWith('/newsletter')) {
+        backgroundClass = backgroundClass + 'newsletter';
+      } else if (path.startsWith('/services/courses')) {
+        backgroundClass = backgroundClass + 'courses';
+      } else if (path.startsWith('/services/training')) {
+        backgroundClass = backgroundClass + 'training';
+      } else if (path.startsWith('/services/consultancy')) {
+        backgroundClass = backgroundClass + 'consultancy';
+      } else if (path.startsWith('/services/jobs')) {
+        backgroundClass = backgroundClass + 'jobs';
+      } else if (path.startsWith('/services')) {
+        backgroundClass = backgroundClass + 'services';
+      } else if (path.startsWith('/blog')) {
+        backgroundClass = backgroundClass + 'blog';
+      } else if (path.startsWith('/about')) {
+        backgroundClass = backgroundClass + 'about';
+      } else {
+        backgroundClass = backgroundClass + 'home';
       }
-      return 'home';
+      return backgroundClass;
     };
   });

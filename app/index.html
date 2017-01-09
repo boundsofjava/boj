@@ -15,25 +15,36 @@
     <link rel="stylesheet" href="bower_components/highlightjs/styles/darkula.css" />
     <!-- endbower -->
     <!-- endbuild -->
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+
     <!-- build:css(.tmp) styles/boj.css -->
     <link rel="stylesheet" href="styles/boj.css">
     <link rel="stylesheet" href="styles/slider.css">
+    <link rel="stylesheet" href="styles/background.css">
     <!-- endbuild -->
+
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
   </head>
 
-  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar()" data-back-img="images/background/{{bgImage()}}.jpg" data-ng-cloak>
+  <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar('#main-navbar')" data-ng-class="backgroundClass()" data-ng-cloak>
+
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <div id="top" name="top" class="header">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation"  change-class-on-scroll offset="3" scroll-class="opaque">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" change-class-on-scroll offset="3" scroll-class="navbar-opaque">
 
         <div class="container">
 
           <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -41,12 +52,12 @@
             </button>
 
             <a data-ng-href="/" class="navbar-brand">
-              <img src="images/boj-logo.png" alt="The Bounds of Java"></img>
+              <img src="images/boj-logo.png" alt="The Bounds of Java logo"></img>
             </a>
 
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+          <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="nav navbar-nav">
 
               <li data-ng-class="{active: isActive('/')}">
@@ -73,7 +84,9 @@
           </div>
 
         </div>
+
         <hr />
+
       </div>
     </div>
 
@@ -83,7 +96,7 @@
       </div>
     </div>
 
-    <div class="footer" data-ng-controller="FooterCtrl">
+    <div class="footer" data-ng-controller="FooterCtrl" data-ng-cloak>
       <hr />
       <div class="container spacing">
         <p class="spacing">

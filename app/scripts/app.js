@@ -112,16 +112,6 @@ angular
       }
     };
   })
-  .directive('backImg', function() {
-    return function(scope, element, attrs) {
-      attrs.$observe('backImg', function(value) {
-        element.css({
-          'background': 'url(' + value + ') no-repeat center center fixed',
-          'background-size': 'cover !important'
-        });
-      });
-    };
-  })
   .directive('changeClassOnScroll', function($window) {
     return {
       restrict: 'A',
@@ -143,4 +133,3 @@ angular
   .run(function ($anchorScroll) {
     $anchorScroll.yOffset = 100;
   });
-

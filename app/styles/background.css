@@ -1,0 +1,94 @@
+.background-newsletter-subscription {
+  background: #262626;
+}
+
+.background-newsletter {
+  background: #262626;
+}
+
+.background-courses {
+  background: #262626;
+}
+
+.background-training {
+  background: #262626;
+}
+
+.background-consultancy {
+  background: #262626;
+}
+
+.background-jobs {
+  background: #262626;
+}
+
+.background-services {
+  background: #262626;
+}
+
+.background-blog {
+  background: #262626;
+}
+
+.background-about {
+  background: #262626;
+}
+
+.background-home {
+  background: #262626;
+}
+
+
+@media (min-width: 768px) {
+
+  .background-newsletter-subscription {
+    background: url(../images/background/newsletter-subscription.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-newsletter {
+    background: url(../images/background/newsletter.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-courses {
+    background: url(../images/background/courses.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-training {
+    background: url(../images/background/training.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-consultancy {
+    background: url(../images/background/consultancy.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-jobs {
+    background: url(../images/background/jobs.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-services {
+    background: url(../images/background/services.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-blog {
+    background: url(../images/background/blog.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-about {
+    background: url(../images/background/about.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+  .background-home {
+    background: url(../images/background/home.jpg) no-repeat center center fixed;
+    background-size: cover !important;
+  }
+
+}

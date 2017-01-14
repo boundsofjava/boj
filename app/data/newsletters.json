@@ -24,6 +24,6 @@
     "authorUrl": "/about",
     "issue": "3",
     "date": "2017-01-10",
-    "summary": "In this issue of The Bounds of Java Newsletter, we present four basic functional constructs that every developer should be aware of. We also introduce the concept of <em>monad</em>, which is very important to write useful functional code, but we carefully avoid digging into the intricacies of category theory."
+    "summary": "In this issue of The Bounds of Java Newsletter, we present four basic functional constructs that every developer should be aware of. We also introduce the concept of <em>monad</em>, which is very important to write useful functional code, though we carefully avoid digging into the intricacies of category theory."
   }
 ]

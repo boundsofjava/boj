@@ -2,11 +2,16 @@
 <html class="no-js">
 
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter." />
+    <meta name="keywords" content="java, bounds, bounds of java, newsletter, bounds of java newsletter, advanced tricks, software, architecture, software architecture, patterns, software patterns, design patterns, engineering, object-oriented, object-oriented design, object-oriented principles, SOLID, KISS, functional programming, courses, online courses, training, online training, consultancy, expert, blog, bounds of java blog" />
+    <meta name="author" content="Federico Peralta Schaffner" />
+
     <title>The Bounds of Java</title>
-    <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter.">
-    <meta name="viewport" content="width=device-width">
-    <base href="/">
+
+    <base href="/" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -16,12 +21,12 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
 
     <!-- build:css(.tmp) styles/boj.css -->
-    <link rel="stylesheet" href="styles/boj.css">
-    <link rel="stylesheet" href="styles/slider.css">
-    <link rel="stylesheet" href="styles/background.css">
+    <link rel="stylesheet" href="styles/boj.css" />
+    <link rel="stylesheet" href="styles/slider.css" />
+    <link rel="stylesheet" href="styles/background.css" />
     <!-- endbuild -->
 
     <style type="text/css">
@@ -61,23 +66,23 @@
             <ul class="nav navbar-nav">
 
               <li data-ng-class="{active: isActive('/')}">
-                <a href="/">HOME</a>
+                <a data-hover="HOME" href="/">HOME</a>
               </li>
 
               <li data-ng-class="{active: isActive('/newsletter')}">
-                <a data-ng-href="/newsletter">NEWSLETTER</a>
+                <a data-hover="NEWSLETTER" data-ng-href="/newsletter">NEWSLETTER</a>
               </li>
 
               <li data-ng-class="{active: isActive('/services')}">
-                <a data-ng-href="/services">SERVICES</a>
+                <a data-hover="SERVICES" data-ng-href="/services">SERVICES</a>
               </li>
 
               <li data-ng-class="{active: isActive('/blog')}">
-                <a data-ng-href="/blog">BLOG</a>
+                <a data-hover="BLOG" data-ng-href="/blog">BLOG</a>
               </li>
 
               <li data-ng-class="{active: isActive('/about')}">
-                <a data-ng-href="/about">ABOUT</a>
+                <a data-hover="ABOUT" data-ng-href="/about">ABOUT</a>
               </li>
 
             </ul>
@@ -96,7 +101,7 @@
       </div>
     </div>
 
-    <div class="footer" data-ng-controller="FooterCtrl" data-ng-cloak>
+    <div class="footer" data-ng-cloak>
       <hr />
       <div class="container spacing">
         <p class="spacing">
@@ -106,7 +111,7 @@
           Postal address: Perez y Fuentes M.284 S.1, El Pinar 15800, Uruguay
         </p>
         <p class="small">
-          This site uses cookies and local storage (if available) for displaying purposes only.
+          This site uses cookies and local storage (if available) to improve the user experience.
         </p>
         <p class="small">
           The Bounds of Java Newsletter is distributed via <a href="http://mailchimp.com" target="_blank">Mailchimp</a>. All comments in this website are hosted at <a href="http://disqus.com" target="_blank">Disqus</a>. Please refer to their terms and privacy policies for details.
@@ -125,7 +130,6 @@
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
       ga('create', 'UA-79990924-1', 'auto');
       ga('send', 'pageview');
     </script>
@@ -175,7 +179,6 @@
     <script src="scripts/controllers/training.js"></script>
     <script src="scripts/controllers/blog.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/footer.js"></script>
     <!-- endbuild -->
   </body>
 </html>

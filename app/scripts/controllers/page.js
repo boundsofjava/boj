@@ -64,4 +64,7 @@ angular.module('bojApp')
       }
       return backgroundClass;
     };
+
+    $scope.currentYear = new Date().getFullYear();
+
   });

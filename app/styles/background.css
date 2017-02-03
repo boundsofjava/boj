@@ -44,51 +44,61 @@
   .background-newsletter-subscription {
     background: url(../images/background/newsletter-subscription.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-newsletter {
     background: url(../images/background/newsletter.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-courses {
     background: url(../images/background/courses.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-training {
     background: url(../images/background/training.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-consultancy {
     background: url(../images/background/consultancy.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-jobs {
     background: url(../images/background/jobs.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-services {
     background: url(../images/background/services.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-blog {
     background: url(../images/background/blog.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-about {
     background: url(../images/background/about.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
   .background-home {
     background: url(../images/background/home.jpg) no-repeat center center fixed;
     background-size: cover !important;
+    transition: background 0.5s ease-in-out;
   }
 
 }

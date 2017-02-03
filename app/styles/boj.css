@@ -40,6 +40,7 @@ a, a:hover, a:focus, a:active, a img {
 
 a {
   color: #3070c0;
+  transition: color 0.3s ease-in-out;
 }
 
 a:hover, a:focus {
@@ -186,6 +187,12 @@ hr.from-right {
   border-width: 0;
 }
 
+.navbar-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 15px 0 10px;
+}
+
 .navbar-brand {
   padding: 16px; 
   margin: 0; 
@@ -193,6 +200,11 @@ hr.from-right {
 
 .navbar-header {
   min-height: 96px;
+  width: 100%;
+}
+
+.navbar-toggle {
+  margin-right: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -221,11 +233,13 @@ div.list-group-item {
 a.list-group-item.list-group-item-even,
 div.list-group-item.list-group-item-even {
   background-color: rgba(38, 38, 38, 0.75);
+  transition: background 0.3s ease-in-out;
 }
 
 a.list-group-item.list-group-item-odd,
 div.list-group-item.list-group-item-odd {
   background-color: rgba(27, 27, 27, 0.75);
+  transition: background 0.3s ease-in-out;
 }
 
 a.list-group-item:hover,
@@ -238,12 +252,14 @@ a.list-group-item.list-group-item-even .list-group-item-heading,
 div.list-group-item.list-group-item-even .list-group-item-heading {
   color: #0aa2ff;
   margin: 7px 7px 12px 0;
+  transition: color 0.3s ease-in-out;
 }
 
 a.list-group-item.list-group-item-odd .list-group-item-heading,
 div.list-group-item.list-group-item-odd .list-group-item-heading {
   color: #0aa2c7;
   margin: 7px 7px 12px 0;
+  transition: color 0.3s ease-in-out;
 }
 
 a.list-group-item:hover .list-group-item-heading, 
@@ -253,9 +269,9 @@ a.list-group-item:focus .list-group-item-heading {
 }
 
 a.list-group-item .list-group-item-text,
-div.list-group-item .list-group-item-text
-{
+div.list-group-item .list-group-item-text {
   color: #a0a0a0;
+  transition: color 0.3s ease-in-out;
 }
 
 a.list-group-item:hover .list-group-item-text,
@@ -266,6 +282,7 @@ a.list-group-item:focus .list-group-item-text
 
 a.list-group-item .list-group-item-date {
   padding-bottom: 8px;
+  transition: color 0.3s ease-in-out;
 }
 
 a.list-group-item:hover .list-group-item-date,
@@ -297,6 +314,8 @@ a.list-group-item:focus .list-group-item-date
   border-style: none;
   background-color: rgba(46, 109, 146, 0.5);
   white-space: normal;
+  transition: color 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out;
 }
 
 .angucomplete-dropdown {
@@ -386,7 +405,7 @@ a.list-group-item:focus .list-group-item-date
 }
 
 .newsletter-home-container .newsletter-home-container-content {
-  background-color: rgba(34, 34, 34, 0.75);
+  background-color: rgba(15, 11, 1, 0.75);
   padding: 20px;
   border: 1px dotted #555;
 }
@@ -404,6 +423,11 @@ a.list-group-item:focus .list-group-item-date
   float: left;
   width: 64px;
   height: 64px;
+}
+
+.contact-info {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
 }
 
 @media (max-width: 767.999999px) {
@@ -429,6 +453,13 @@ a.list-group-item:focus .list-group-item-date
     background: rgba(0, 0, 0, 0.5); 
   }
 
+  .navbar-container {
+    display: flex;
+    width: 80%;
+    min-width: 730px;
+    padding: 0;
+  }
+
   .navbar-collapse {
     min-height: 96px;
   }
@@ -444,6 +475,20 @@ a.list-group-item:focus .list-group-item-date
   .navbar-inverse .navbar-nav li  {
     padding: 3px 12px 3px 12px;
     margin: 30px 1px 29px 1px;
+  }
+
+  .navbar-header {
+    width: auto;
+  }
+
+  #main-navbar {
+    flex: 1;
+  }
+
+  #main-navbar ul {
+    display: flex; 
+    justify-content: space-between;
+    width: 100%;
   }
 
   #main-navbar a {
@@ -463,7 +508,7 @@ a.list-group-item:focus .list-group-item-date
     bottom: -0.1rem;
     width: 0;
     height: 0.1rem;
-    background-color: #fcb50f;
+    background-color: #dedede;
     box-shadow: 0 0 0.5rem #000;
     content: '';
     transition: width 0.3s;
@@ -474,7 +519,7 @@ a.list-group-item:focus .list-group-item-date
   }
 
   #main-navbar a:hover {
-    color: #fcb50f;
+    color: #dedede;
     text-shadow: 0 0 0.5rem #000;
   }
 
@@ -485,6 +530,10 @@ a.list-group-item:focus .list-group-item-date
   #main-navbar .active a {
     color: #fcb50f;
     text-shadow: 0 0 0.5rem #000;
+  }
+
+  #main-navbar .active a::after {
+    background-color: #fcb50f;
   }
 
   .header,

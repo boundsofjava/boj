@@ -17,7 +17,7 @@
     overflow: hidden;
     position: relative;
     border: 8px solid #e8e8e8;
-    background-color: #e6e6e6;
+    background-color: #000;
     margin: 0 12px 5.5rem 0;
 }
 
@@ -25,6 +25,14 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.slide-repeater .slide-animation {
+    transition: all ease-in-out 0.5s;
+}
+
+.slide-repeater.ng-hide .slide-animation {
+    opacity: 0;
 }
 
 .slider .arrow {
@@ -42,14 +50,14 @@
     opacity: 0.4;
     left: 0;
     background-image: url(../assets/img/paddle_prev_999.png);
-    transition: 0.2s linear all;
+    transition: 0.3s linear all;
 }
 
 .slider .arrow.next {
     opacity: 0.4;
     right: 0;
     background-image: url(../assets/img/paddle_next_999.png);
-    transition: 0.2s linear all;
+    transition: 0.3s linear all;
 }
 
 .slider .arrow.prev:hover {

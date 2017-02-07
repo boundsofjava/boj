@@ -29,33 +29,25 @@ angular.module('bojApp')
     $scope.$watch('slider.currentIndex', function(newValue) {
       Slider.storeIndex(newValue);
     }, true);
-  })
-  .animation('.slide-animation', function () {
-    return {
-  		beforeAddClass: function (element, className, done) {
-  			var scope = element.scope();
-  			if (className === 'ng-hide') {
-  				var finishPoint = element.parent().width();
-  				if (scope.slider.direction !== 'right') {
-  					finishPoint = -finishPoint;
-  				}
-  				TweenLite.to(element, 0.5, { left: finishPoint, onComplete: done });
-  			} else {
-  				done();
-  			}
-  		},
-  		removeClass: function (element, className, done) {
-  			var scope = element.scope();
-  			if (className === 'ng-hide') {
-  				element.removeClass('ng-hide');
-  				var startPoint = element.parent().width();
-  				if (scope.slider.direction === 'right') {
-  					startPoint = -startPoint;
-  				}
-  				TweenLite.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
-  			} else {
-  				done();
-  			}
-  		}
-  	};
   });
+  // .animation('.slide-animation', function () {
+  //   return {
+  // 		enter: function (element, done) {
+  // 			var scope = element.scope();
+		// 		var finishPoint = element.parent().width();
+		// 		if (scope.slider.direction !== 'right') {
+		// 			finishPoint = -finishPoint;
+		// 		}
+		// 		TweenLite.to(element, 0.5, { left: finishPoint, onComplete: done });
+  // 		},
+  // 		leave: function (element, done) {
+  // 			var scope = element.scope();
+ 	// 			// element.removeClass('ng-hide');
+		// 		var startPoint = element.parent().width();
+		// 		if (scope.slider.direction === 'right') {
+		// 			startPoint = -startPoint;
+		// 		}
+		// 		TweenLite.fromTo(element, 0.5, { left: startPoint }, { left: 0, onComplete: done });
+  // 		}
+  // 	};
+  // });

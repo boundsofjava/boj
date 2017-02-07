@@ -1,7 +1,7 @@
 <div data-ng-include="'views/newsletter/join.html'" data-ng-cloak></div>
 
 <div class="hidden-xs slider-wrapper">
-  <div data-ng-repeat="slide in slider.slides" data-ng-hide="!isCurrentSlideIndex($index)">
+  <div data-ng-repeat="slide in slider.slides" data-ng-show="isCurrentSlideIndex($index)" class="slide-repeater">
 
     <div class="content-heading">
       <h1 class="slide-title">{{slide.title}}</h1>
@@ -16,7 +16,7 @@
       <div class="nav">
         <div class="wrapper">
           <ul class="dots">
-            <li data-ng-repeat="slide in slider.slides" class="dot">
+            <li data-ng-repeat="s in slider.slides" class="dot">
               <a data-ng-class="{'active': isCurrentSlideIndex($index)}" data-ng-click="setCurrentSlideIndex($index)"></a>
             </li>
           </ul>

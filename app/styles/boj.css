@@ -170,9 +170,8 @@ hr.from-right {
 }
 
 .navbar {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1rem;
   font-weight: bold;
+  transition: background ease-in-out 0.4s;
 }
 
 .navbar-inverse {
@@ -426,8 +425,9 @@ a.list-group-item:focus .list-group-item-date
 }
 
 .contact-info {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1.1rem;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  /*font-size: 1.1rem;*/
+  font-weight: bold;
 }
 
 @media (max-width: 767.999999px) {

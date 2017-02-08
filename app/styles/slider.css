@@ -28,7 +28,7 @@
 }
 
 .slide-repeater .slide-animation {
-    transition: all ease-in-out 0.5s;
+    transition: all ease-in-out 0.8s;
 }
 
 .slide-repeater.ng-hide .slide-animation {

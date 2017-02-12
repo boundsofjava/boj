@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bojApp')
-  .controller('PageCtrl', function ($scope, $location, $window) { 
+  .controller('PageCtrl', function ($scope, $location, $window, $anchorScroll) { 
 
     var homeViews = ['/'];
 
@@ -66,5 +66,9 @@ angular.module('bojApp')
     };
 
     $scope.currentYear = new Date().getFullYear();
+
+    $scope.backToTop = function() {
+      $anchorScroll('top');
+    };
 
   });

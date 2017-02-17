@@ -6,7 +6,7 @@ angular.module('bojApp')
     $scope.newsletters = Newsletters.query();
   
   })
-  .controller('SelectedNewsletterCtrl', function ($scope, $routeParams, Newsletters) {
+  .controller('SelectedNewsletterCtrl', function ($scope, $routeParams, $location, Newsletters) {
     
     $scope.post = $routeParams.post;
 
@@ -16,11 +16,33 @@ angular.module('bojApp')
         for (var i = 0, len = values.length; i < len; i++) {
             if (values[i].post === $scope.post) {
                 $scope.newsletter = values[i];
+                var previous = i - 1;
+                if (previous < 0) {
+                  previous = len - 1;
+                }
+                $scope.previousNewsletter = values[previous];
+                var next = i + 1;
+                if (next >= len) {
+                  next = 0;
+                }
+                $scope.nextNewsletter = values[next];
                 return;
             }
         }
     });
+
+    $scope.previous = function() {
+      $location.path('/newsletter/' + $scope.previousNewsletter.post);
+    };
   
+    $scope.index = function() {
+      $location.path('/newsletter');
+    };
+
+    $scope.next = function() {
+      $location.path('/newsletter/' + $scope.nextNewsletter.post);
+    };
+
   })
   .controller('NewsletterSubscriptionCtrl', function($scope, Countries) {
     

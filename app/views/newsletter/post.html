@@ -20,4 +20,19 @@
 
 	<div data-ng-include="'views/newsletter/' + post + '/contents.html'" data-ng-cloak></div>
 
+    <div class="nav-newsletter">
+    	<div class="nav-newsletter-button" data-ng-click="previous()">
+    		<span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-left"></span>
+    		<strong class="nav-newsletter-button-text">PREVIOUS</strong>
+    	</div>
+    	<div class="nav-newsletter-button" data-ng-click="index()">
+		    <span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-up"></span>
+		    <strong class="nav-newsletter-button-text">INDEX</strong>
+    	</div>
+    	<div class="nav-newsletter-button" data-ng-click="next()">
+		    <span class="nav-newsletter-button-icon glyphicon glyphicon-chevron-right"></span>
+		    <strong class="nav-newsletter-button-text">NEXT</strong>
+    	</div>
+   	</div>
+
 </div>

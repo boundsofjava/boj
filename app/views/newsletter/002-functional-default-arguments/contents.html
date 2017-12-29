@@ -1,4 +1,4 @@
-<h3><em>Background</em></h3>
+<h2><em>Background</em></h2>
 
 <p>Many languages support default arguments for methods and constructors out of the box, i.e. Scala:</p>
 
@@ -19,7 +19,7 @@ sum(y = 3, x = 4) //  7 -> x = 4, y = 3 (no defaults)
 <p>This is very handy, but Java doesn't support it. There are a few different ways to accomplish something similar, however all of them have some drawback.</p>
 
 
-<h4 class="top-spacing"><em>Method overloading</em></h4>
+<h3 class="top-spacing"><em>Method overloading</em></h3>
 
 <p>The most widely-known one uses <em>method overloading</em> to simulate default arguments:</p>
 
@@ -48,7 +48,7 @@ public int sum() {      // default x = 6
 </p>
 
 
-<h4 class="top-spacing"><em>Varargs</em></h4>
+<h3 class="top-spacing"><em>Varargs</em></h3>
 
 <p>Another approach to default arguments in Java is using <em>varargs</em>:</p>
 
@@ -83,7 +83,7 @@ public int sum(int... arguments) {
 </p>
 
 
-<h4 class="top-spacing"><em>Null values</em></h4>
+<h3 class="top-spacing"><em>Null values</em></h3>
 
 <p>This approach is quite simple: if you invoke the method with a <span class="code">null</span> argument, then its corresponding default value is used instead:</p>
 
@@ -108,14 +108,14 @@ public int sum(Integer x, Integer y) {
 </p>
 
 
-<h4 class="top-spacing"><em>Other approaches: maps, <span class="code">Optional</span> and the builder pattern</em></h4>
+<h3 class="top-spacing"><em>Other approaches: maps, <span class="code">Optional</span> and the builder pattern</em></h3>
 
-<p>In this <a href="http://stackoverflow.com/a/12994104/1876620" target="_blank">StackOverflow answer</a> given by user Vitalii Fedorenko, all common approaches to default arguments are visited. I won't analyze them here, since there are already a lot of articles that explore their pros and cons. Instead, I would like to introduce a new way to work with default arguments in Java that takes functional programming into consideration.</p>
+<p>In this <a href="//stackoverflow.com/a/12994104/1876620" target="_blank">StackOverflow answer</a> given by user Vitalii Fedorenko, all common approaches to default arguments are visited. I won't analyze them here, since there are already a lot of articles that explore their pros and cons. Instead, I would like to introduce a new way to work with default arguments in Java that takes functional programming into consideration.</p>
 
 <div class="separator spacing">&#10022; &#10022; &#10022;</div>
 
 
-<h3><em>Default arguments and functional programming</em></h3>
+<h2><em>Default arguments and functional programming</em></h2>
 
 <p>Let me introduce you to the <span class="code">MaleProgrammer</span> class, which I'll use as an example for the rest of this newsletter:</p>
 
@@ -200,7 +200,7 @@ public enum Task {
 
 <p>Now, we'd like to define default values for the arguments of the <span class="code">performTask</span> method of the <span class="code">MaleProgrammer</span> class. Let's see first how we could do it with method overloading:</p>
 
-<h4 class="top-spacing"><em>The traditional, common way</em></h4>
+<h3 class="top-spacing"><em>The traditional, common way</em></h3>
 
 <div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
 package com.boundsofjava.newsletter.defaultargument;
@@ -290,7 +290,7 @@ public class MethodOverloadingMaleProgrammer extends MaleProgrammer {
 <p>I have always disliked this way to handle default arguments, it feels so hacky... We could do it much better with a little help from functional programming...</p>
 
 
-<h4 class="top-spacing"><em>The functional way</em></h4>
+<h3 class="top-spacing"><em>The functional way</em></h3>
 
 <p>Since Java 8, any method can be referenced by means of a functional interface, no matter its return type or the number and type of its arguments.</p>
 
@@ -383,7 +383,7 @@ class SomeClass {
 }
 <!-- htmlmin:ignore --></div>
 
-<p>One possibility is to use the <span class="code"><a href="http://docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank">Runnable</a></span> interface:</p>
+<p>One possibility is to use the <span class="code"><a href="//docs.oracle.com/javase/8/docs/api/java/lang/Runnable.html" target="_blank">Runnable</a></span> interface:</p>
 
 <div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
 SomeClass someClass = new SomeClass();

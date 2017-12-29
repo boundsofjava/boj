@@ -55,6 +55,10 @@ img {
   border: 0;
 }
 
+ul li, ol li {
+  margin-bottom: 8px;
+}
+
 hr {
   border: 0;
   height: 3px;
@@ -170,7 +174,7 @@ hr.from-right {
 }
 
 .navbar {
-  font-weight: bold;
+  font-weight: 600;
   transition: background ease-in-out 0.4s;
 }
 
@@ -425,7 +429,7 @@ a.list-group-item:focus .list-group-item-date
 }
 
 .contact-info {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .back-to-top {
@@ -447,7 +451,7 @@ a.list-group-item:focus .list-group-item-date
   border: none;
   border-radius: 8px;
   opacity: 0;
-  transition: all 0.6s linear;
+  transition: all 0.3s linear;
 }
 
 .back-to-top .top-icon {
@@ -497,7 +501,7 @@ a.list-group-item:focus .list-group-item-date
   margin: 0 4px 0 4px;
   border-radius: 8px;
   opacity: 0.6;
-  transition: all 0.6s linear;
+  transition: all 0.3s linear;
 }
 
 .nav-newsletter-button:hover {

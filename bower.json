@@ -17,7 +17,8 @@
     "angucomplete-alt": "^2.2.0",
     "angular-vertilize": "https://github.com/federico-peralta-schaffner/angular-vertilize.git#1.0.2",
     "highlightjs": "^9.4.0",
-    "angular-highlightjs": "^0.6.1"
+    "angular-highlightjs": "^0.6.1",
+    "raleway": "^1.0.1"
   },
   "overrides": {
     "bootstrap": {

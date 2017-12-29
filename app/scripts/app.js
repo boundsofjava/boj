@@ -38,6 +38,10 @@ angular
         templateUrl: 'views/newsletter/subscription.html',
         controller: 'NewsletterCtrl'
       })
+      .when('/newsletter/not-found', {
+        templateUrl: 'views/newsletter/not-found.html',
+        controller: 'NewsletterCtrl'
+      })
       .when('/newsletter/:post', {
         templateUrl: 'views/newsletter/post.html',
         controller: 'NewsletterCtrl'

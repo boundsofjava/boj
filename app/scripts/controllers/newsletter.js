@@ -13,22 +13,27 @@ angular.module('bojApp')
     $scope.path = '/views/newsletter/' + $scope.post;
     
     Newsletters.query(null, function (values) {
-        for (var i = 0, len = values.length; i < len; i++) {
-            if (values[i].post === $scope.post) {
-                $scope.newsletter = values[i];
-                var previous = i - 1;
-                if (previous < 0) {
-                  previous = len - 1;
-                }
-                $scope.previousNewsletter = values[previous];
-                var next = i + 1;
-                if (next >= len) {
-                  next = 0;
-                }
-                $scope.nextNewsletter = values[next];
-                return;
-            }
+      var found = false;
+      for (var i = 0, len = values.length; i < len; i++) {
+        if (values[i].post === $scope.post) {
+          found = true;
+          $scope.newsletter = values[i];
+          var previous = i - 1;
+          if (previous < 0) {
+            previous = len - 1;
+          }
+          $scope.previousNewsletter = values[previous];
+          var next = i + 1;
+          if (next >= len) {
+            next = 0;
+          }
+          $scope.nextNewsletter = values[next];
+          return;
         }
+      }
+      if (!found) {
+        $location.path('/newsletter/not-found');
+      }
     });
 
     $scope.previous = function() {

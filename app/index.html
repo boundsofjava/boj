@@ -6,22 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
     <meta name="description" content="The Bounds of Java is the home of The Bounds of Java Newsletter, where expert Java developer and software architect Federico Peralta Schaffner introduces advanced tricks and explores Java's edge concepts in depth. Software architecture and patterns, best engineering practices, object-oriented design principles and functional programming techniques are covered and analyzed in diverse posts of the newsletter." />
-    <meta name="keywords" content="java, bounds, bounds of java, newsletter, bounds of java newsletter, advanced tricks, software, architecture, software architecture, patterns, software patterns, design patterns, engineering, object-oriented, object-oriented design, object-oriented principles, SOLID, KISS, functional programming, courses, online courses, training, online training, consultancy, expert, blog, bounds of java blog" />
+    <meta name="keywords" content="java, bounds, bounds of java, newsletter, bounds of java newsletter, advanced tricks, software, architecture, software architecture, patterns, software patterns, design patterns, engineering, object-oriented, object-oriented design, object-oriented principles, SOLID, KISS, DRY, YAGNI, functional programming, courses, online courses, training, online training, consultancy, expert, blog, bounds of java blog" />
     <meta name="author" content="Federico Peralta Schaffner" />
 
     <title>The Bounds of Java</title>
 
     <base href="/" />
+
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <style>.async-hide { opacity: 0 !important} </style>
+    <script>
+      if (window.location.host.indexOf('localhost') === -1) {
+        (function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+        h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+        (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'async-hide','dataLayer',4000,
+        {'GTM-W73MMCX':true});
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-79990924-1', 'auto');
+        ga('require', 'GTM-W73MMCX');
+        ga('send', 'pageview');
+
+        var boj_d = document,
+          boj_h = boj_d.getElementsByTagName('head')[0],
+          boj_s = boj_d.createElement('script');
+        boj_s.type = 'text/javascript';
+        boj_s.async = true;
+        boj_s.src = '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+        boj_h.appendChild(boj_s);
+
+        (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9093120881145477",
+          enable_page_level_ads: true
+        });
+      }
+    </script>
+
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css" />
     <link rel="stylesheet" href="bower_components/highlightjs/styles/darkula.css" />
+    <link rel="stylesheet" href="bower_components/raleway/raleway.css" />
     <!-- endbower -->
     <!-- endbuild -->
-
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
 
     <!-- build:css(.tmp) styles/boj.css -->
     <link rel="stylesheet" href="styles/boj.css" />
@@ -29,11 +67,6 @@
     <link rel="stylesheet" href="styles/background.css" />
     <!-- endbuild -->
 
-    <style type="text/css">
-        [ng\:cloak], [ng-cloak], [data-ng-cloak], .ng-cloak {
-            display: none !important;
-        }
-    </style>
   </head>
 
   <body data-ng-app="bojApp" data-ng-controller="PageCtrl" data-document-click="collapseNavbar('#main-navbar')" data-ng-class="backgroundClass()" data-ng-cloak>
@@ -113,7 +146,7 @@
           Postal address: Perez y Fuentes M.284 S.1, El Pinar 15800, Uruguay
         </p>
         <p class="small">
-          This site uses cookies and local storage (if available) to improve the user experience.
+          This site uses cookies and local storage (if available) to improve user experience.
         </p>
         <p class="small">
           The Bounds of Java Newsletter is distributed via <a href="http://mailchimp.com" target="_blank">Mailchimp</a>. All comments in this website are hosted at <a href="http://disqus.com" target="_blank">Disqus</a>. Please refer to their terms and privacy policies for details.
@@ -131,15 +164,6 @@
       <span class="top-icon glyphicon glyphicon-circle-arrow-up"></span>
       <strong class="top-text">TOP</strong>
     </div>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-79990924-1', 'auto');
-      ga('send', 'pageview');
-    </script>
 
     <script id="dsq-count-scr" src="//boundsofjava.disqus.com/count.js" async></script>
 

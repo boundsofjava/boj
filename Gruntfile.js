@@ -89,7 +89,13 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= yeoman.dist %>'
+          base: '<%= yeoman.dist %>',
+          middleware: function (connect) {
+            return [
+              modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg$ /index.html [L]']),
+              mountFolder(connect, 'dist')
+            ];
+          }
         }
       }
     },
@@ -319,6 +325,11 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: 'bower_components/raleway',
+          src: ['fonts/{,**/}*.*'],
+          dest: '<%= yeoman.dist %>/styles'
         }]
       },
       styles: {

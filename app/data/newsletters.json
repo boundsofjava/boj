@@ -33,6 +33,6 @@
     "authorUrl": "/about",
     "issue": "3b",
     "date": "2017-12-30",
-    "summary": "This issue of The Bounds of Java Newsletter is the second part of a series about combinators. Here we introduce additional combinators and show how they can be used together (along with the ones from the previous newsletter) to create complex control flows, yet keeping the code readable and simple."
+    "summary": "This issue of The Bounds of Java Newsletter is the second part of a series about combinators. Here we introduce additional combinators and show how they can be implemented by building on some combinators presented in the previous newsletter."
   }
 ]

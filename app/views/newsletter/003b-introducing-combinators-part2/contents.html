@@ -1,7 +1,7 @@
 <h2><em>More combinators</em></h2>
 
 <p>
-    In the previous part of this series, I introduced the <em>Before</em>, <em>After</em> and <em>Around</em> combinators. Let's go on and show more combinators and how we can use them.
+    In the <a href="//boundsofjava.com/newsletter/003-introducing-combinators-part1" target="_blank">previous part</a> of this series, I introduced the <em>Before</em>, <em>After</em> and <em>Around</em> combinators. Let's go on and show more combinators and how we can use them.
 </p>
 
 <div class="separator spacing">&#10022; &#10022; &#10022;</div>
@@ -33,15 +33,226 @@ public interface Provided&lt;T, R&gt;
                 Function&lt;T, R&gt;&gt;&gt; {
 
     static &lt;T, R&gt; Provided&lt;T, R&gt; create() {
-        return condition -&gt; function -&gt; argument -&gt; 
-            condition.test(argument) ? function.apply(argument) : null;
+        return condition -&gt; function -&gt; fallback -&gt;
+            arg -&gt; (condition.test(arg) ? function : fallback).apply(arg);
     }
 
     static &lt;T, R&gt; Function&lt;T, R&gt; decorate(
-            Predicate&lt;T&gt; condition, 
-            Function&lt;T, R&gt; function) {
-        return Provided.&lt;T, R&gt;create().apply(condition).apply(function);
+            Predicate&lt;T&gt; condition,
+            Function&lt;T, R&gt; function,
+            Function&lt;T, R&gt; fallback) {
+        return Provided.&lt;T, R&gt;create().apply(condition).apply(function).apply(fallback);
     }
 }
 <!-- htmlmin:ignore --></div>
 
+<p>
+    This combinator receives the <span class="code">condition</span> predicate, the original <span class="code">function</span> to be decorated and a <span class="code">fallback</span> function, and returns a decorated function. The argument and return types of all <span class="code">function</span>, <span class="code">fallback</span> and the result function match, while the type of the <span class="code">condition</span> predicate's argument matches the type of the original <span class="code">function</span>'s argument.
+</p>
+
+<p>
+    It works by choosing either the original or the fallback function, based on the result of the condition. First, the <span class="code">condition</span> predicate is tested against the <span class="code">arg</span> argument, which is the argument of the original <span class="code">function</span>. Then, if the test on <span class="code">condition</span> returns <span class="code">true</span>, the original <span class="code">function</span> is selected, whereas if the test returns <span class="code">false</span>, the <span class="code">fallback</span> function is selected. Thus, the result function is a function that selects one function out of two based on a condition, and applies its argument to the selected function.
+</p>
+
+<p>
+    The following example shows how to use the <span class="code">Provided</span> combinator:
+</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class ProvidedExample {
+
+    void demo() {
+        System.out.println("------------------------------------");
+        System.out.println("Starting PROVIDED combinator demo...");
+        System.out.println("------------------------------------");
+
+        Function&lt;BigDecimal, String&gt; addTaxDecorated =
+                Provided.decorate(this::isTaxable, this::addTax, this::fallback);
+
+        String result1 = addTaxDecorated.apply(new BigDecimal("100"));
+
+        System.out.println("Done - Result is " + result1);
+        System.out.println("------------------------------------");
+
+        String result2 = addTaxDecorated.apply(new BigDecimal("5"));
+
+        System.out.println("Done - Result is " + result2);
+        System.out.println("------------------------------------");
+    }
+
+    private boolean isTaxable(BigDecimal argument) {
+        boolean condition = argument.compareTo(BigDecimal.TEN) &gt;= 0; // argument &gt;= 10
+        System.out.println("PROVIDED: Argument is " + argument + ", condition is " + condition);
+        return condition;
+    }
+
+    private String addTax(BigDecimal amount) {
+        System.out.println("Adding heavy taxes to poor citizen...");
+        return "$" + amount.multiply(new BigDecimal("1.22"));
+    }
+
+    private String fallback(BigDecimal amount) {
+        System.out.println("Fallback: tax exemption");
+        return "$" + amount;
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>
+    Here <span class="code">this::addTax</span> represents our original function and <span class="code">this::isTaxable</span> acts as our condition predicate, while <span class="code">this::fallback</span> is the function that will be executed if the condition is not satisfied. The logic is to execute the original function if the argument of the decorated function is greater than or equal to <span class="code">10</span>, otherwise execute the fallback function. Here's the output:
+</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog"><!-- htmlmin:ignore -->
+------------------------------------
+Starting PROVIDED combinator demo...
+------------------------------------
+PROVIDED: Argument is 100, condition is true
+Adding heavy taxes to poor citizen...
+Done - Result is $122.00
+------------------------------------
+PROVIDED: Argument is 5, condition is false
+Fallback: tax exemption
+Done - Result is $5
+------------------------------------
+<!-- htmlmin:ignore --></div>
+
+<p>
+    This output shows that, when called with an argument of <span class="code">100</span>, a terrifying <span class="code">22%</span> tax is applied, while, when called with an argument of <span class="code">5</span>, the amount remains tax free.
+</p>
+
+<p>
+    The <span class="code">Provided</span> combinator can be used almost everywhere... Any time the execution of some code depends on the successful evaluation of a condition, it is a good opportunity to use this combinator.
+</p>
+
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+
+<h3><em>Precondition</em></h3>
+
+<p>
+    This combinator is very useful too. It can be seen as a variant of the <span class="code">Provided</span> combinator, in which we throw an exception instead of executing a fallback function. Here's the code:
+</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+@FunctionalInterface
+public interface Precondition&lt;T, R, X extends RuntimeException&gt;
+        extends Function&lt;Predicate&lt;T&gt;,
+                Function&lt;Function&lt;T, R&gt;,
+                Function&lt;Function&lt;T, X&gt;,
+                Function&lt;T, R&gt;&gt;&gt;&gt; {
+
+    static &lt;T, R, X extends RuntimeException&gt; Precondition&lt;T, R, X&gt; create() {
+        return condition -&gt; function -&gt; error -&gt; Provided.decorate(
+            condition,
+            function,
+            arg -&gt; {
+                throw error.apply(arg);
+            });
+    }
+
+    static &lt;T, R, X extends RuntimeException&gt; Function&lt;T, R&gt; decorate(
+            Predicate&lt;T&gt; condition,
+            Function&lt;T, R&gt; function,
+            Function&lt;T, X&gt; error) {
+        return Precondition.&lt;T, R, X&gt;create().apply(condition).apply(function).apply(error);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>
+    This combinator's implementation delegates to the <span class="code">Provided</span> combinator's <span class="code">decorate</span> method. It receives the <span class="code">condition</span> predicate, the original <span class="code">function</span> to be decorated and an <span class="code">error</span> function, and returns a decorated function. The only difference is that now we are passing an <span class="code">error</span> function instead of a fallback function. The type of this <span class="code">error</span> function's argument matches the type of the original <span class="code">function</span>'s argument, however its result is a descendant of <span class="code">RuntimeException</span>, which will be thrown if the <span class="code">condition</span> predicate is not satisfied.
+</p>
+
+<p>
+    Take a look at the following example to see how useful the <span class="code">Precondition</span> combinator can be:
+</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class PreconditionExample {
+
+    void demo() {
+        System.out.println("----------------------------------------");
+        System.out.println("Starting PRECONDITION combinator demo...");
+        System.out.println("----------------------------------------");
+
+        Function&lt;BigDecimal, String&gt; addTaxDecorated = Precondition.decorate(
+                this::isGreaterThanZero,
+                this::addTax,
+                NonPositiveAmountTaxException::new);
+
+        String result1 = addTaxDecorated.apply(new BigDecimal("10"));
+
+        System.out.println("Done - Result is " + result1);
+        System.out.println("----------------------------------------");
+
+        try {
+            String result2 = addTaxDecorated.apply(new BigDecimal("-5"));
+            System.out.println("Done - Result is " + result2);
+
+        } catch (NonPositiveAmountTaxException e) {
+
+            System.out.println("Exception: " + e.getMessage());
+        }
+        System.out.println("----------------------------------------");
+    }
+
+    private boolean isGreaterThanZero(BigDecimal argument) {
+        boolean condition = argument.compareTo(BigDecimal.ZERO) > 0; // argument &gt; 0
+        System.out.println("PRECONDITION: Argument is " + argument + ", condition is " + condition);
+        return condition;
+    }
+
+    private String addTax(BigDecimal amount) {
+        System.out.println("Adding heavy taxes to poor citizen...");
+        return "$" + amount.multiply(new BigDecimal("1.22"));
+    }
+}
+
+public class NonPositiveAmountTaxException
+        extends RuntimeException {
+
+    private NonPositiveAmountTaxException(String message) {
+        super(message);
+    }
+
+    public NonPositiveAmountTaxException(BigDecimal amount) {
+        this("Amount to be taxed must be > 0 but was " + amount);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>
+    Again, <span class="code">this::addTax</span> represents our original function. The predicate condition, though, is given by the <span class="code">this::isGreaterThanZero</span> method, while <span class="code">NonPositiveAmountTaxException::new</span> is a constrcutor reference that acts as the error function (note that the public constructor of <span class="code">NonPositiveAmountTaxException</span> expects an argument of the same type as the original function). The logic is to execute the original function if the argument of the decorated function is greater than <span class="code">0</span>, otherwise throw <span class="code">NonPositiveAmountTaxException</span>. Here's the output:
+</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog"><!-- htmlmin:ignore -->
+----------------------------------------
+Starting PRECONDITION combinator demo...
+----------------------------------------
+PRECONDITION: Argument is 10, condition is true
+Adding heavy taxes to poor citizen...
+Done - Result is $12.20
+----------------------------------------
+PRECONDITION: Argument is -5, condition is false
+Exception: Amount to be taxed must be > 0 but was -5
+----------------------------------------
+<!-- htmlmin:ignore --></div>
+
+<p>
+    This output shows that, when called with an argument of <span class="code">10</span>, a <span class="code">22%</span> tax is applied, while, when called with an argument of <span class="code">-5</span>, a <span class="code">NonPositiveAmountTaxException</span> is thrown.
+</p>
+
+<p>
+    The <span class="code">Precondition</span> combinator can be used whenever a runtime exception must be thrown if a condition is not met before executing some code.
+</p>
+
+
+
+	
+<p>
+	Regards,<br />
+	fps.-
+</p>
+
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>

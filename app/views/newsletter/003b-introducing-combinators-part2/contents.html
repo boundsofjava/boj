@@ -161,7 +161,7 @@ public interface Precondition&lt;T, R, X extends RuntimeException&gt;
 <!-- htmlmin:ignore --></div>
 
 <p>
-    This combinator's implementation delegates to the <span class="code">Provided</span> combinator's <span class="code">decorate</span> method. It receives the <span class="code">condition</span> predicate, the original <span class="code">function</span> to be decorated and an <span class="code">error</span> function, and returns a decorated function. The only difference is that now we are passing an <span class="code">error</span> function instead of a fallback function. The type of this <span class="code">error</span> function's argument matches the type of the original <span class="code">function</span>'s argument, however its result is a descendant of <span class="code">RuntimeException</span>, which will be thrown if the <span class="code">condition</span> predicate is not satisfied.
+    The implementation of this combinator delegates to the <span class="code">Provided</span> combinator's <span class="code">decorate</span> method. It receives the <span class="code">condition</span> predicate, the original <span class="code">function</span> to be decorated and an <span class="code">error</span> function, and returns a decorated function. The function that is passed as a fallback to the <span class="code">Provided</span> combinator is implemented by throwing the exception returned by the <span class="code">error</span> function. The logic is the one of the <span class="code">Provided</span> combinator: if the <span class="code">condition</span> predicate is not satisfied, the fallback function will be executed, i.e. the exception returned by the <span class="code">error</span> function will be thrown.
 </p>
 
 <p>
@@ -248,10 +248,155 @@ Exception: Amount to be taxed must be > 0 but was -5
 </p>
 
 
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
+
+<h3><em>Postcondition</em></h3>
+
+<p>
+    If there exists a <span class="code">Precondition</span> combinator, there must exist a <span class="code">Postcondition</span> one. Let me introduce it to you:
+</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+@FunctionalInterface
+public interface Postcondition&lt;T, R, X extends RuntimeException&gt;
+        extends Function&lt;Function&lt;T, R&gt;,
+                Function&lt;BiPredicate&lt;T, R&gt;,
+                Function&lt;BiFunction&lt;T, R, X&gt;,
+                Function&lt;T, R&gt;&gt;&gt;&gt; {
+
+    static &lt;T, R, X extends RuntimeException&gt; Postcondition&lt;T, R, X&gt; create() {
+        return function -&gt; condition -&gt; error -&gt; After.decorate(
+                function,
+                (argument, result) -&gt; {
+                    if (!condition.test(argument, result)) {
+                        throw error.apply(argument, result);
+                    }
+                });
+    }
+
+    static &lt;T, R, X extends RuntimeException&gt; Function&lt;T, R&gt; decorate(
+            Function&lt;T, R&gt; function,
+            BiPredicate&lt;T, R&gt; condition,
+            BiFunction&lt;T, R, X&gt; error) {
+        return Postcondition.&lt;T, R, X&gt;create().apply(function).apply(condition).apply(error);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>
+    This combinator is implemented by means of delegation to the <span class="code">After</span> combinator's <span class="code">decorate</span> method. It receives the original <span class="code">function</span> to be decorated, a <span class="code">condition</span> predicate and an <span class="code">error</span> function, and returns a decorated function. After the original <span class="code">function</span> is executed, a <span class="code">BiFunction</span> that receives both the original function's <span class="code">argument</span> and its <span class="code">result</span> is executed. This <span class="code">BiFunction</span> checks the condition <span class="code">BiPredicate</span> and throws the exception returned by the <span class="code">error</span> function if the condition hasn't been met.
+</p>
+
+<p>
+    Here's an example that shows how the <span class="code">Postcondition</span> combinator can be used:
+</p>
+
+<div hljs hljs-no-escape hljs-language="java"><!-- htmlmin:ignore -->
+class PostconditionExample {
+
+    void demo() {
+        System.out.println("-----------------------------------------");
+        System.out.println("Starting POSTCONDITION combinator demo...");
+        System.out.println("-----------------------------------------");
+
+        Function&lt;BigDecimal, String&gt; addTaxDecorated1 = Postcondition.decorate(
+                this::addTax,
+                this::checkResultStartsWith$,
+                InvalidTaxResultFormatException::new);
+
+        String result1 = addTaxDecorated1.apply(new BigDecimal("10"));
+
+        System.out.println("Done - Result is " + result1);
+        System.out.println("-----------------------------------------");
+
+        try {
+            Function&lt;BigDecimal, String&gt; addTaxDecorated2 = Postcondition.decorate(
+                    this::addTaxIncorrect,
+                    this::checkResultStartsWith$,
+                    InvalidTaxResultFormatException::new);
+
+            String result2 = addTaxDecorated2.apply(new BigDecimal("10"));
+            System.out.println("Done - Result is " + result2);
+
+        } catch (InvalidTaxResultFormatException e) {
+
+            System.out.println("Exception: " + e.getMessage());
+        }
+        System.out.println("-----------------------------------------");
+    }
+
+    private String addTax(BigDecimal amount) {
+        System.out.println("Adding heavy taxes to poor citizen...");
+        return "$" + amount.multiply(new BigDecimal("1.22"));
+    }
+
+    private String addTaxIncorrect(BigDecimal amount) {
+        System.out.println("Incorrectly adding heavy taxes to poor citizen...");
+        return "€" + amount.multiply(new BigDecimal("1.22"));
+    }
+
+    private boolean checkResultStartsWith$(BigDecimal argument, String result) {
+        boolean condition = result.startsWith("$");
+        System.out.println("POSTCONDITION: Argument is " + argument + 
+                ", result is " + result + ", condition is " + condition);
+        return condition;
+    }
+}
+
+public class InvalidTaxResultFormatException
+        extends RuntimeException {
+
+    private InvalidTaxResultFormatException(String message) {
+        super(message);
+    }
+
+    public InvalidTaxResultFormatException(BigDecimal amount, String formatted) {
+        this("Result of adding tax to amount " + amount + 
+                " has incorrect format: " + formatted);
+    }
+}
+<!-- htmlmin:ignore --></div>
+
+<p>
+    The <span class="code">this::addTax</span> method reference again represents our original function, which in this case returns a correctly formatted result. We're using the <span class="code">this::addTaxIncorrect</span> method reference as an example of function that doesn't satisfy our postcondition. Precisely, the predicate for this postcondition is given by the <span class="code">this::checkResultStartsWith$</span> method reference, while <span class="code">InvalidTaxResultFormatException::new</span> is a constructor reference that acts as the error function (note that the public constructor of <span class="code">InvalidTaxResultFormatException</span> expects arguments that match the original function's argument and result types). The logic is to execute the original function and then check if its result starts with the <span class="code">$</span> sign. If it doesn't, an <span class="code">InvalidTaxResultFormatException</span> is thrown. Here's the output:
+</p>
+
+<div hljs hljs-no-escape hljs-language="accesslog"><!-- htmlmin:ignore -->
+-----------------------------------------
+Starting POSTCONDITION combinator demo...
+-----------------------------------------
+Adding heavy taxes to poor citizen...
+POSTCONDITION: Argument is 10, result is $12.20, condition is true
+Done - Result is $12.20
+-----------------------------------------
+Incorrectly adding heavy taxes to poor citizen...
+POSTCONDITION: Argument is 10, result is €12.20, condition is false
+Exception: Result of adding tax to amount 10 has incorrect format: €12.20
+-----------------------------------------
+<!-- htmlmin:ignore --></div>
+
+<p>
+    This output shows that, when the result of applying taxes to our poor citizen starts with the <span class="code">$</span> sign, everything works as expected, while, when it starts with the <span class="code">€</span> sign, an <span class="code">InvalidTaxResultFormatException</span> is thrown.
+</p>
+
+<p>
+    The <span class="code">Postcondition</span> combinator comes in very handy when writing tests, though it might also be used for testing conditions that must hold true after executing some logic.
+</p>
 
 	
+<div class="separator spacing">&#10022; &#10022; &#10022;</div>
+
 <p>
-	Regards,<br />
+    This was just a brief and very informal introduction to combinators. In fully functional programming languages, they are extremely important to control the execution flow of applications. Although as of today they're not essential in Java, it's good to know about them, as the trend is to <em>go more functional</em> over time.
+</p>
+
+<p>
+    All the code and examples shown here are available in its own <a href="//github.com/boundsofjava/boj-newsletter-003b" target="_blank">GitHub repo</a>. Please <a data-ng-href="/about" target="_blank">contact me</a> if you find something to correct or improve.
+</p>
+
+<p>
+	Cheers!<br />
 	fps.-
 </p>
 

@@ -32,7 +32,7 @@
     "author": "Federico Peralta Schaffner",
     "authorUrl": "/about",
     "issue": "3b",
-    "date": "2017-12-30",
+    "date": "2018-03-31",
     "summary": "This issue of The Bounds of Java Newsletter is the second part of a series about combinators. Here we introduce additional combinators and show how they can be implemented by building on some combinators presented in the previous newsletter."
   }
 ]

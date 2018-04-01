@@ -79,7 +79,7 @@ module.exports = function (grunt) {
                 connect.static('./app/styles')
               ),
               connect.static(appConfig.app),
-              modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg$ /index.html [L]']),
+              modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.eot|\\.ttf|\\.woff|\\.woff2$ /index.html [L]']),
               mountFolder(connect, 'app')
             ];
           }
@@ -91,7 +91,7 @@ module.exports = function (grunt) {
           base: '<%= yeoman.dist %>',
           middleware: function (connect) {
             return [
-              modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg$ /index.html [L]']),
+              modRewrite(['!\\.html|\\.js|\\.svg|\\.css|\\.png|\\.jpg|\\.eot|\\.ttf|\\.woff|\\.woff2$ /index.html [L]']),
               mountFolder(connect, 'dist')
             ];
           }
@@ -167,9 +167,7 @@ module.exports = function (grunt) {
       dist: {
         src: [
           '<%= yeoman.dist %>/scripts/{,**/}*.js',
-          '<%= yeoman.dist %>/styles/{,**/}*.css',
-          //'<%= yeoman.dist %>/images/{,**/}*.{png,jpg,jpeg,gif,webp,svg}',
-          '<%= yeoman.dist %>/styles/fonts/*'
+          '<%= yeoman.dist %>/styles/{,**/}*.css'
         ]
       }
     },
@@ -184,7 +182,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat', 'uglifyjs'],
+              js: ['concat', 'uglify'],
               css: ['cssmin']
             },
             post: {}
@@ -196,41 +194,16 @@ module.exports = function (grunt) {
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,**/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,**/}*.css'],
+      css: ['<%= yeoman.dist %>/styles/*.css'],
       options: {
         assetsDirs: [
           '<%= yeoman.dist %>',
-          //'<%= yeoman.dist %>/images',
-          '<%= yeoman.dist %>/styles'
+          '<%= yeoman.dist %>/styles',
+          '<%= yeoman.dist %>/styles/fonts',
+          '<%= yeoman.dist %>/fonts'
         ]
       }
     },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
-    // concat: {
-    //   dist: {}
-    // },
 
     imagemin: {
       dist: {

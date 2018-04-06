@@ -30,7 +30,8 @@
 public interface Provided&lt;T, R&gt;
         extends Function&lt;Predicate&lt;T&gt;,
                 Function&lt;Function&lt;T, R&gt;,
-                Function&lt;T, R&gt;&gt;&gt; {
+                Function&lt;Function&lt;T, R&gt;,
+                Function&lt;T, R&gt;&gt;&gt;&gt; {
 
     static &lt;T, R&gt; Provided&lt;T, R&gt; create() {
         return condition -&gt; function -&gt; fallback -&gt;

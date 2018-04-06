@@ -23,6 +23,14 @@ angular
       tabReplace: '    '
     });
   })
+  .config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+      'self',
+      'http://boundsofjava.us11.list-manage.com/subscribe/post-json**',
+      'https://boundsofjava.us11.list-manage.com/subscribe/post-json**',
+      '//boundsofjava.us11.list-manage.com/subscribe/post-json**'
+    ]);
+  })
   .config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true).hashPrefix('!');
     $routeProvider

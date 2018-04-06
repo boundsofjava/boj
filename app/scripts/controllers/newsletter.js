@@ -74,7 +74,7 @@ angular.module('bojApp')
     
     $scope.subscribe = function(mailchimp) {
       $scope.$on('mailchimp-response', function (event, result) {
-        $scope.scrollTop();
+        $scope.backToTop();
         if (result === 'error') {
           $scope.showSubscriptionErrorAlert = true;
           $scope.autoCloseAlerts(12000, $scope.onCloseErrorAlert, mailchimp);
